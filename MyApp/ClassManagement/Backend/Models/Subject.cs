@@ -7,5 +7,4 @@ public class Subject
     public int SubjectId { get; set; }
     public string SubjectName { get; set; }
     public virtual IEnumerable<SubjectRegisted> SubjectRegisted { get; set; }
-
 }

@@ -7,4 +7,5 @@ public class Province
     public int ProvinceId { get; }
     public string ProvinceName { get; }
     public virtual IEnumerable<District> District { get; }
+
 }
