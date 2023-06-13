@@ -1,17 +1,12 @@
-using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClassManagement.Models;
-
-[Keyless]
+[PrimaryKey(nameof(IdNumber), nameof(SubjectId), nameof(DateAbsent))]
 public class Absent
 {
-
-    public int StudentId { get; set; }
-    [ForeignKey("StudentId")]
+    public int IdNumber { get; set; }
     public Student Student { get; set; }
     public int SubjectId { get; set; }
-    [ForeignKey("SubjectId")]
     public Subject Subject { get; set; }
     public DateTime DateAbsent { get; set; }
 }
