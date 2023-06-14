@@ -49,7 +49,6 @@ public class ClassManagementDbContext : DbContext
     public DbSet<Teacher> Teacher { get; set; }
     public DbSet<Absent> Absent { get; set; }
     public DbSet<StudentScore> StudentScore { get; set; }
-    public DbSet<Province> Province { get; }
-    public DbSet<District> District { get; }
-    public DbSet<Address> Address { get; set; }
+    public DbSet<Province> Province { get; set; }
+    public DbSet<District> District { get; set; }
 }

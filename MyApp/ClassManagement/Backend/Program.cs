@@ -12,6 +12,8 @@ builder.Services.AddDbContext<ClassManagementDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("ClassManagementDbContext"));
 });
+builder.Services.AddRepository();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

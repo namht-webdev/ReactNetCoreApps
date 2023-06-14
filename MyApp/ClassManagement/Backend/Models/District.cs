@@ -10,5 +10,5 @@ public class District
     public string DistrictName { get; set; }
     public int ProvinceId { get; set; }
     public Province Province { get; set; }
-    public virtual ICollection<Address> Address { get; set; }
+    public Student Student { get; set; }
 }

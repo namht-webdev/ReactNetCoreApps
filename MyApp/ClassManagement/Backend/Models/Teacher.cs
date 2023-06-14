@@ -6,4 +6,5 @@ public class Teacher : Person
     [Key]
     public int TeacherId { get; set; }
     public Class Class { get; set; }
+    public SubjectRegisted? SubjectRegisted { get; set; }
 }

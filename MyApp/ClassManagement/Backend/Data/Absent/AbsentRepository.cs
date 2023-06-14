@@ -1,11 +1,10 @@
+using System.Collections;
 using ClassManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClassManagement.Data;
 class AbsentRepository : IAbsentRepository
 {
-    private readonly ClassManagementDbContext _dbContext;
-
     public Task<bool> CreateAsync(Absent Absent)
     {
         throw new NotImplementedException();
@@ -16,12 +15,12 @@ class AbsentRepository : IAbsentRepository
         throw new NotImplementedException();
     }
 
-    public Task<IActionResult> ReadAsync(int? StudentId, int? SubjectId, DateTime? DateAbsent)
+    public Task<ICollection> ReadAsync(int? StudentId, int? SubjectId, DateTime? DateAbsent)
     {
         throw new NotImplementedException();
     }
 
-    public Task<IActionResult> UpdateAsync(Absent AbsentOld, Absent AbsentNew)
+    public Task<ICollection> UpdateAsync(Absent AbsentOld, Absent AbsentNew)
     {
         throw new NotImplementedException();
     }
