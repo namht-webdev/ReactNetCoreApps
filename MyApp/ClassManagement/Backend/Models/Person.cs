@@ -4,8 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using ClassManagement.Models;
 public abstract class Person
 {
-    [Key]
-    public int IdNumber { get; set; }
     [Required(ErrorMessage = "{0} must not be empty!")]
     [StringLength(255, ErrorMessage = "{2} has maximum length is {1} characters")]
     public string FullName { get; set; }

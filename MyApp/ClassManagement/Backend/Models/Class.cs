@@ -12,6 +12,6 @@ public class Class
     public int TeacherId { get; set; }
     public Teacher Teacher { get; set; }
     public string? Description { get; set; }
-    public virtual IEnumerable<SubjectRegisted> SubjectRegisted { get; set; }
-    public virtual IEnumerable<Student> Student { get; set; }
+    public virtual ICollection<SubjectRegisted> SubjectRegisted { get; set; }
+    public virtual ICollection<Student> Student { get; set; }
 }

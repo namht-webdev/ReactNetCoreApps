@@ -5,6 +5,7 @@ namespace ClassManagement.Models;
 [PrimaryKey(nameof(SubjectId), nameof(ClassId), nameof(TeacherId))]
 public class SubjectRegisted
 {
+    public int SubjectRegistedId { get; set; }
     public int SubjectId { get; set; }
     public Subject Subject { get; set; }
     public int ClassId { get; set; }

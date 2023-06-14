@@ -4,8 +4,8 @@ namespace ClassManagement.Models;
 public class Province
 {
     [Key]
-    public int ProvinceId { get; }
-    public string ProvinceName { get; }
-    public virtual IEnumerable<District> District { get; }
+    public int ProvinceId { get; set; }
+    public string ProvinceName { get; set; }
+    public virtual ICollection<District> District { get; set; }
 
 }
