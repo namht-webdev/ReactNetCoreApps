@@ -6,7 +6,7 @@ public class District
 {
     [Key]
     [Unicode(false)]
-    [StringLength(16, ErrorMessage = "{0} must be at least {2} characters and maximum {1} characters")]
+    [StringLength(36, ErrorMessage = "{0} must be at least {2} characters and maximum {1} characters")]
     public string DistrictId { get; set; }
     public string DistrictName { get; set; }
     public string ProvinceId { get; set; }

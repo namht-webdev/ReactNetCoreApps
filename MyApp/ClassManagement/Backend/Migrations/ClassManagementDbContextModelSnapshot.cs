@@ -25,10 +25,10 @@ namespace Backend.Migrations
             modelBuilder.Entity("ClassManagement.Models.Absent", b =>
                 {
                     b.Property<string>("StudentId")
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("varchar(36)");
 
                     b.Property<string>("SubjectId")
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("varchar(36)");
 
                     b.Property<DateTime>("DateAbsent")
                         .HasColumnType("datetime2");
@@ -43,9 +43,9 @@ namespace Backend.Migrations
             modelBuilder.Entity("ClassManagement.Models.Class", b =>
                 {
                     b.Property<string>("ClassId")
-                        .HasMaxLength(16)
+                        .HasMaxLength(36)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("varchar(36)");
 
                     b.Property<string>("ClassName")
                         .IsRequired()
@@ -57,7 +57,7 @@ namespace Backend.Migrations
 
                     b.Property<string>("TeacherId")
                         .IsRequired()
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("varchar(36)");
 
                     b.HasKey("ClassId");
 
@@ -70,9 +70,9 @@ namespace Backend.Migrations
             modelBuilder.Entity("ClassManagement.Models.District", b =>
                 {
                     b.Property<string>("DistrictId")
-                        .HasMaxLength(16)
+                        .HasMaxLength(36)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("varchar(36)");
 
                     b.Property<string>("DistrictName")
                         .IsRequired()
@@ -80,7 +80,7 @@ namespace Backend.Migrations
 
                     b.Property<string>("ProvinceId")
                         .IsRequired()
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("varchar(36)");
 
                     b.HasKey("DistrictId");
 
@@ -92,9 +92,9 @@ namespace Backend.Migrations
             modelBuilder.Entity("ClassManagement.Models.Province", b =>
                 {
                     b.Property<string>("ProvinceId")
-                        .HasMaxLength(16)
+                        .HasMaxLength(36)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("varchar(36)");
 
                     b.Property<string>("ProvinceName")
                         .IsRequired()
@@ -108,21 +108,21 @@ namespace Backend.Migrations
             modelBuilder.Entity("ClassManagement.Models.Student", b =>
                 {
                     b.Property<string>("StudentId")
-                        .HasMaxLength(16)
+                        .HasMaxLength(36)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("varchar(36)");
 
                     b.Property<string>("Avatar")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ClassId")
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("varchar(36)");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DistrictId")
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("varchar(36)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -131,6 +131,12 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -153,10 +159,10 @@ namespace Backend.Migrations
             modelBuilder.Entity("ClassManagement.Models.StudentScore", b =>
                 {
                     b.Property<string>("StudentId")
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("varchar(36)");
 
                     b.Property<string>("SubjectId")
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("varchar(36)");
 
                     b.Property<double>("Score")
                         .HasColumnType("float");
@@ -171,9 +177,9 @@ namespace Backend.Migrations
             modelBuilder.Entity("ClassManagement.Models.Subject", b =>
                 {
                     b.Property<string>("SubjectId")
-                        .HasMaxLength(16)
+                        .HasMaxLength(36)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("varchar(36)");
 
                     b.Property<string>("SubjectName")
                         .IsRequired()
@@ -187,16 +193,16 @@ namespace Backend.Migrations
             modelBuilder.Entity("ClassManagement.Models.SubjectRegisted", b =>
                 {
                     b.Property<string>("SubjectId")
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("varchar(36)");
 
                     b.Property<int>("Semester")
                         .HasColumnType("int");
 
                     b.Property<string>("ClassId")
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("varchar(36)");
 
                     b.Property<string>("TeacherId")
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("varchar(36)");
 
                     b.Property<DateTime>("Year")
                         .HasColumnType("datetime2");
@@ -215,9 +221,9 @@ namespace Backend.Migrations
             modelBuilder.Entity("ClassManagement.Models.Teacher", b =>
                 {
                     b.Property<string>("TeacherId")
-                        .HasMaxLength(16)
+                        .HasMaxLength(36)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("varchar(36)");
 
                     b.Property<string>("Avatar")
                         .HasColumnType("nvarchar(max)");
@@ -226,7 +232,7 @@ namespace Backend.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DistrictId")
-                        .HasColumnType("varchar(16)");
+                        .HasColumnType("varchar(36)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -235,6 +241,12 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(10)");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -391,8 +403,7 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("ClassManagement.Models.Teacher", b =>
                 {
-                    b.Navigation("Class")
-                        .IsRequired();
+                    b.Navigation("Class");
 
                     b.Navigation("SubjectRegisted");
                 });
