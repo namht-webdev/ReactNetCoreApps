@@ -3,8 +3,8 @@ namespace ClassManagement.Data;
 public interface IStudentRepository
 {
     Task<bool> CreateAsync(Student Student);
-    Task<Student> ReadStudentAsync(int StudentId);
+    Task<Student> ReadStudentAsync(string StudentId);
     Task<IEnumerable<Student>> ReadStudentsAsync();
-    Task<Student> UpdateAsync(int StudentId, Student Student);
-    Task<bool> DeleteAsync(int StudentId);
+    Task<Student> UpdateAsync(string StudentId, Student Student);
+    Task<bool> DeleteAsync(string StudentId);
 }

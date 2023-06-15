@@ -24,11 +24,11 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("ClassManagement.Models.Absent", b =>
                 {
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
+                    b.Property<string>("StudentId")
+                        .HasColumnType("varchar(16)");
 
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
+                    b.Property<string>("SubjectId")
+                        .HasColumnType("varchar(16)");
 
                     b.Property<DateTime>("DateAbsent")
                         .HasColumnType("datetime2");
@@ -42,11 +42,10 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("ClassManagement.Models.Class", b =>
                 {
-                    b.Property<int>("ClassId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClassId"));
+                    b.Property<string>("ClassId")
+                        .HasMaxLength(16)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(16)");
 
                     b.Property<string>("ClassName")
                         .IsRequired()
@@ -56,8 +55,9 @@ namespace Backend.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TeacherId")
-                        .HasColumnType("int");
+                    b.Property<string>("TeacherId")
+                        .IsRequired()
+                        .HasColumnType("varchar(16)");
 
                     b.HasKey("ClassId");
 
@@ -69,18 +69,18 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("ClassManagement.Models.District", b =>
                 {
-                    b.Property<int>("DistrictId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DistrictId"));
+                    b.Property<string>("DistrictId")
+                        .HasMaxLength(16)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(16)");
 
                     b.Property<string>("DistrictName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ProvinceId")
-                        .HasColumnType("int");
+                    b.Property<string>("ProvinceId")
+                        .IsRequired()
+                        .HasColumnType("varchar(16)");
 
                     b.HasKey("DistrictId");
 
@@ -91,11 +91,10 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("ClassManagement.Models.Province", b =>
                 {
-                    b.Property<int>("ProvinceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProvinceId"));
+                    b.Property<string>("ProvinceId")
+                        .HasMaxLength(16)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(16)");
 
                     b.Property<string>("ProvinceName")
                         .IsRequired()
@@ -108,23 +107,22 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("ClassManagement.Models.Student", b =>
                 {
-                    b.Property<int>("StudentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"));
+                    b.Property<string>("StudentId")
+                        .HasMaxLength(16)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(16)");
 
                     b.Property<string>("Avatar")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ClassId")
-                        .HasColumnType("int");
+                    b.Property<string>("ClassId")
+                        .HasColumnType("varchar(16)");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DistrictId")
-                        .HasColumnType("int");
+                    b.Property<string>("DistrictId")
+                        .HasColumnType("varchar(16)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -154,11 +152,11 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("ClassManagement.Models.StudentScore", b =>
                 {
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
+                    b.Property<string>("StudentId")
+                        .HasColumnType("varchar(16)");
 
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
+                    b.Property<string>("SubjectId")
+                        .HasColumnType("varchar(16)");
 
                     b.Property<double>("Score")
                         .HasColumnType("float");
@@ -172,11 +170,10 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("ClassManagement.Models.Subject", b =>
                 {
-                    b.Property<int>("SubjectId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubjectId"));
+                    b.Property<string>("SubjectId")
+                        .HasMaxLength(16)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(16)");
 
                     b.Property<string>("SubjectName")
                         .IsRequired()
@@ -189,32 +186,24 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("ClassManagement.Models.SubjectRegisted", b =>
                 {
-                    b.Property<int>("SubjectRegistedId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubjectRegistedId"));
-
-                    b.Property<int?>("ClassId")
-                        .HasColumnType("int");
+                    b.Property<string>("SubjectId")
+                        .HasColumnType("varchar(16)");
 
                     b.Property<int>("Semester")
                         .HasColumnType("int");
 
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("int");
+                    b.Property<string>("ClassId")
+                        .HasColumnType("varchar(16)");
 
-                    b.Property<int?>("TeacherId")
-                        .HasColumnType("int");
+                    b.Property<string>("TeacherId")
+                        .HasColumnType("varchar(16)");
 
                     b.Property<DateTime>("Year")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("SubjectRegistedId");
+                    b.HasKey("SubjectId", "Semester");
 
                     b.HasIndex("ClassId");
-
-                    b.HasIndex("SubjectId");
 
                     b.HasIndex("TeacherId")
                         .IsUnique()
@@ -225,11 +214,10 @@ namespace Backend.Migrations
 
             modelBuilder.Entity("ClassManagement.Models.Teacher", b =>
                 {
-                    b.Property<int>("TeacherId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeacherId"));
+                    b.Property<string>("TeacherId")
+                        .HasMaxLength(16)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(16)");
 
                     b.Property<string>("Avatar")
                         .HasColumnType("nvarchar(max)");
@@ -237,8 +225,8 @@ namespace Backend.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("DistrictId")
-                        .HasColumnType("int");
+                    b.Property<string>("DistrictId")
+                        .HasColumnType("varchar(16)");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");

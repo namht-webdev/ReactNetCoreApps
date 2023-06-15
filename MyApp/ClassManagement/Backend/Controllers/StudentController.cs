@@ -18,7 +18,7 @@ public class StudentController : ControllerBase
         return Ok(response);
     }
     [HttpGet("student/{StudentId}")]
-    public async Task<IActionResult> ReadStudent(int StudentId)
+    public async Task<IActionResult> ReadStudent(string StudentId)
     {
         return Ok(await _studentRepository.ReadStudentAsync(StudentId));
     }

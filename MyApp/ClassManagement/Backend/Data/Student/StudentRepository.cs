@@ -16,12 +16,12 @@ public class StudentRepository : IStudentRepository
         throw new NotImplementedException();
     }
 
-    public Task<bool> DeleteAsync(int StudentId)
+    public Task<bool> DeleteAsync(string StudentId)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<Student> ReadStudentAsync(int StudentId)
+    public async Task<Student> ReadStudentAsync(string StudentId)
     {
         var student = await (from s in _dbContext.Student where s.StudentId == StudentId select s).FirstOrDefaultAsync();
         return student;
@@ -41,7 +41,7 @@ public class StudentRepository : IStudentRepository
         return Enumerable.Empty<Student>();
     }
 
-    public Task<Student> UpdateAsync(int StudentId, Student Student)
+    public Task<Student> UpdateAsync(string StudentId, Student Student)
     {
         throw new NotImplementedException();
     }

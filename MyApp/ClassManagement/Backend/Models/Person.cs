@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 using ClassManagement.Models;
 public abstract class Person
@@ -8,7 +8,7 @@ public abstract class Person
     [StringLength(255, ErrorMessage = "{2} has maximum length is {1} characters")]
     public string FullName { get; set; }
     public DateTime DateOfBirth { get; set; }
-    public int? DistrictId { get; set; }
+    public string? DistrictId { get; set; }
     public District District { get; set; }
     public string? Street { get; set; }
     public string PhoneNumber { get; set; }
