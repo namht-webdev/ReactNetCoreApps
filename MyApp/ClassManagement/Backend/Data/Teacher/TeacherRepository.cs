@@ -56,13 +56,13 @@ public class TeacherRepository : ITeacherRepository
         var teacher = await (from s in _dbContext.Teacher where s.TeacherId == TeacherId select s).FirstOrDefaultAsync();
         if (teacher != null)
         {
-            Teacher.FullName = Teacher.FullName;
-            Teacher.DateOfBirth = Teacher.DateOfBirth;
-            Teacher.DistrictId = Teacher.DistrictId;
-            Teacher.Street = Teacher.Street;
-            Teacher.PhoneNumber = Teacher.PhoneNumber;
-            Teacher.Email = Teacher.Email;
-            Teacher.Avatar = Teacher.Avatar;
+            teacher.FullName = Teacher.FullName;
+            teacher.DateOfBirth = Teacher.DateOfBirth;
+            teacher.DistrictId = Teacher.DistrictId;
+            teacher.Street = Teacher.Street;
+            teacher.PhoneNumber = Teacher.PhoneNumber;
+            teacher.Email = Teacher.Email;
+            teacher.Avatar = Teacher.Avatar;
             await _dbContext.SaveChangesAsync();
         }
         return teacher;

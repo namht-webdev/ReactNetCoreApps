@@ -44,7 +44,7 @@ public class ClassManagementDbContext : DbContext
     }
     public DbSet<Class> Class { get; set; }
     public DbSet<Subject> Subject { get; set; }
-    public DbSet<SubjectRegisted> SubjectRegisted { get; set; }
+    public DbSet<SubjectRegistered> SubjectRegistered { get; set; }
     public DbSet<Student> Student { get; set; }
     public DbSet<Teacher> Teacher { get; set; }
     public DbSet<Absent> Absent { get; set; }

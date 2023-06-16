@@ -2,8 +2,8 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 namespace ClassManagement.Models;
 
-[PrimaryKey(nameof(SubjectId), nameof(Semester))]
-public class SubjectRegisted
+[PrimaryKey(nameof(SubjectId), nameof(Semester), nameof(Year))]
+public class SubjectRegistered
 {
     public string SubjectId { get; set; }
     public Subject? Subject { get; set; }
@@ -13,5 +13,6 @@ public class SubjectRegisted
     public Teacher? Teacher { get; set; }
     [Required(ErrorMessage = "Semester cannot be empty!")]
     public int Semester { get; set; }
-    public DateTime Year { get; set; }
+    [Required(ErrorMessage = "Year cannot be empty!")]
+    public int Year { get; set; }
 }

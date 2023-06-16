@@ -6,6 +6,8 @@ public static class IServiceCollectionExtensions
     {
         return services.AddScoped<IStudentRepository, StudentRepository>()
                         .AddScoped<ITeacherRepository, TeacherRepository>()
-                        .AddScoped<ISubjectRepository, SubjectRepository>();
+                        .AddScoped<IClassRepository, ClassRepository>()
+                        .AddScoped<ISubjectRepository, SubjectRepository>()
+                        .AddScoped<ISubjectRegisteredRepository, SubjectRegisteredRepository>();
     }
 }

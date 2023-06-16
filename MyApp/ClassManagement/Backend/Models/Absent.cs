@@ -8,5 +8,6 @@ public class Absent
     public Student? Student { get; set; }
     public string SubjectId { get; set; }
     public Subject? Subject { get; set; }
+    public bool IsConfirmed { get; set; }
     public DateTime DateAbsent { get; set; }
 }

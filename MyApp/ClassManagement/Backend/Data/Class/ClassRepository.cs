@@ -1,5 +1,6 @@
 using ClassManagement.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClassManagement.Data;
 class ClassRepository : IClassRepository
@@ -10,24 +11,48 @@ class ClassRepository : IClassRepository
     {
         _dbContext = dbContext;
     }
-    public Task<bool> CreateAsync(Class myclass)
+    public async Task<bool> CreateClassAsync(Class Class)
     {
-        throw new NotImplementedException();
+        var dbClass = await _dbContext.Class.Where(c => c.ClassId == Class.ClassId).FirstOrDefaultAsync();
+        if (dbClass != null) return false;
+
+        await _dbContext.Class.AddAsync(Class);
+        int result = await _dbContext.SaveChangesAsync();
+        return result == 1;
     }
 
-    public Task<bool> DeleteAsync(int id)
+    public async Task<bool> DeleteClassAsync(string ClassId)
     {
-        throw new NotImplementedException();
+        var dbClass = await _dbContext.Class.Where(c => c.ClassId == ClassId).FirstOrDefaultAsync();
+        if (dbClass == null) return false;
+        _dbContext.Class.Remove(dbClass);
+        int result = await _dbContext.SaveChangesAsync();
+        return result == 1;
     }
 
-    public Task<IActionResult> ReadAsync(int id)
+    public async Task<IEnumerable<Class>> ReadClassesAsync()
     {
-        throw new NotImplementedException();
+        return await _dbContext.Class.ToListAsync();
     }
 
-    public Task<IActionResult> UpdateAsync(int id, Class myclass)
+    public async Task<Class> ReadClassAsync(string ClassId)
     {
-        throw new NotImplementedException();
+        var dbClass = await _dbContext.Class.Where(c => c.ClassId == ClassId).FirstOrDefaultAsync();
+        return dbClass;
+    }
+
+    public async Task<Class> UpdateClassAsync(string ClassId, Class Class)
+    {
+        var dbClass = await _dbContext.Class.Where(c => c.ClassId == ClassId).FirstOrDefaultAsync();
+
+        if (dbClass != null)
+        {
+            dbClass.ClassName = Class.ClassName;
+            dbClass.Description = Class.Description;
+            dbClass.TeacherId = Class.TeacherId;
+            await _dbContext.SaveChangesAsync();
+        }
+        return Class;
     }
 }
 

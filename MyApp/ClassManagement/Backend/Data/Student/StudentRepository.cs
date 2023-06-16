@@ -12,21 +12,7 @@ public class StudentRepository : IStudentRepository
     {
         var student = await (from s in _dbContext.Student where s.StudentId == Student.StudentId select s).FirstOrDefaultAsync();
         if (student != null) return false;
-        await _dbContext.Student.AddAsync(new Student()
-        {
-            StudentId = Student.StudentId,
-            FullName = Student.FullName,
-            DateOfBirth = Student.DateOfBirth,
-            Gender = Student.Gender,
-            Street = Student.Street,
-            PhoneNumber = Student.PhoneNumber,
-            Email = Student.Email,
-            Avatar = Student.Avatar,
-            ClassId = Student.ClassId,
-            DistrictId = Student.DistrictId,
-            Absent = Student.Absent,
-            StudentScore = Student.StudentScore
-        });
+        await _dbContext.Student.AddAsync(Student);
         var response = await _dbContext.SaveChangesAsync();
         return response == 1;
     }
@@ -66,6 +52,7 @@ public class StudentRepository : IStudentRepository
             student.PhoneNumber = Student.PhoneNumber;
             student.Email = Student.Email;
             student.Avatar = Student.Avatar;
+            student.ClassId = Student.ClassId;
             await _dbContext.SaveChangesAsync();
         }
         return student;

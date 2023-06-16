@@ -33,6 +33,9 @@ namespace Backend.Migrations
                     b.Property<DateTime>("DateAbsent")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
+
                     b.HasKey("StudentId", "SubjectId", "DateAbsent");
 
                     b.HasIndex("SubjectId");
@@ -56,13 +59,13 @@ namespace Backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TeacherId")
-                        .IsRequired()
                         .HasColumnType("varchar(36)");
 
                     b.HasKey("ClassId");
 
                     b.HasIndex("TeacherId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[TeacherId] IS NOT NULL");
 
                     b.ToTable("Class");
                 });
@@ -190,12 +193,15 @@ namespace Backend.Migrations
                     b.ToTable("Subject");
                 });
 
-            modelBuilder.Entity("ClassManagement.Models.SubjectRegisted", b =>
+            modelBuilder.Entity("ClassManagement.Models.SubjectRegistered", b =>
                 {
                     b.Property<string>("SubjectId")
                         .HasColumnType("varchar(36)");
 
                     b.Property<int>("Semester")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
                         .HasColumnType("int");
 
                     b.Property<string>("ClassId")
@@ -204,10 +210,7 @@ namespace Backend.Migrations
                     b.Property<string>("TeacherId")
                         .HasColumnType("varchar(36)");
 
-                    b.Property<DateTime>("Year")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("SubjectId", "Semester");
+                    b.HasKey("SubjectId", "Semester", "Year");
 
                     b.HasIndex("ClassId");
 
@@ -215,7 +218,7 @@ namespace Backend.Migrations
                         .IsUnique()
                         .HasFilter("[TeacherId] IS NOT NULL");
 
-                    b.ToTable("SubjectRegisted");
+                    b.ToTable("SubjectRegistered");
                 });
 
             modelBuilder.Entity("ClassManagement.Models.Teacher", b =>
@@ -285,9 +288,7 @@ namespace Backend.Migrations
                 {
                     b.HasOne("ClassManagement.Models.Teacher", "Teacher")
                         .WithOne("Class")
-                        .HasForeignKey("ClassManagement.Models.Class", "TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClassManagement.Models.Class", "TeacherId");
 
                     b.Navigation("Teacher");
                 });
@@ -337,7 +338,7 @@ namespace Backend.Migrations
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("ClassManagement.Models.SubjectRegisted", b =>
+            modelBuilder.Entity("ClassManagement.Models.SubjectRegistered", b =>
                 {
                     b.HasOne("ClassManagement.Models.Class", "Class")
                         .WithMany("SubjectRegisted")
@@ -351,7 +352,7 @@ namespace Backend.Migrations
 
                     b.HasOne("ClassManagement.Models.Teacher", "Teacher")
                         .WithOne("SubjectRegisted")
-                        .HasForeignKey("ClassManagement.Models.SubjectRegisted", "TeacherId");
+                        .HasForeignKey("ClassManagement.Models.SubjectRegistered", "TeacherId");
 
                     b.Navigation("Class");
 

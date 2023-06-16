@@ -12,11 +12,7 @@ class SubjectRepository : ISubjectRepository
     {
         var subject = await (from s in _dbContext.Subject where s.SubjectId == Subject.SubjectId select s).FirstOrDefaultAsync();
         if (subject != null) return false;
-        await _dbContext.Subject.AddAsync(new Subject()
-        {
-            SubjectId = Subject.SubjectId,
-            SubjectName = Subject.SubjectName
-        });
+        await _dbContext.Subject.AddAsync(Subject);
         int res = _dbContext.SaveChanges();
         return res == 1;
     }

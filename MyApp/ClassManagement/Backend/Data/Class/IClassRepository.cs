@@ -3,8 +3,9 @@ using ClassManagement.Models;
 namespace ClassManagement.Data;
 public interface IClassRepository
 {
-    Task<bool> CreateAsync(Class myclass);
-    Task<IActionResult> ReadAsync(int id);
-    Task<IActionResult> UpdateAsync(int id, Class myclass);
-    Task<bool> DeleteAsync(int id);
+    Task<bool> CreateClassAsync(Class Class);
+    Task<IEnumerable<Class>> ReadClassesAsync();
+    Task<Class> ReadClassAsync(string ClassId);
+    Task<Class> UpdateClassAsync(string ClassId, Class Class);
+    Task<bool> DeleteClassAsync(string ClassId);
 }
