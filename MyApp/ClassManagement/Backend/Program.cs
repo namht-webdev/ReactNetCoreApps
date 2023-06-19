@@ -5,7 +5,13 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+var ClassManagement = "ClassManagement";
+builder.Services.AddCors(options =>
+    options.AddPolicy(name: ClassManagement, policy =>
+    {
+        policy.WithOrigins("http://localhost:3000");
+    })
+);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -37,6 +43,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseCors(ClassManagement);
 
 app.MapControllers();
 

@@ -4,8 +4,10 @@ namespace ClassManagement.Data;
 public interface IStudentScoreRepository
 {
     Task<bool> CreateStudentScoreAsync(StudentScore StudentScore);
-    Task<IEnumerable<StudentScore>> ReadStudentScoreAsync(string StudentId);
-    Task<IEnumerable<StudentScore>> ReadClassStudentScoreAsync(string ClassId);
-    Task<StudentScore> UpdateStudentScoreAsync(string SubjectId, string StudentId, DateTime DateStudentScore, StudentScore StudentScoreNew);
+    Task<ScoreOneSubjectViewModel> ReadScoreOneSubjectAsync(string SubjectId, string StudentId);
+    Task<ScoreAllSubjectViewModel> ReadScoreAllSubjectAsync(string StudentId);
+
+    Task<IEnumerable<ScoreOneSubjectViewModel>> ReadClassStudentScoreAsync(string ClassId);
+    Task<StudentScore> UpdateStudentScoreAsync(string SubjectId, string StudentId, double Score);
     Task<bool> DeleteStudentScoreAsync(string SubjectId, string StudentId);
 }
