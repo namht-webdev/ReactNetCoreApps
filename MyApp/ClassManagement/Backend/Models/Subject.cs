@@ -12,5 +12,6 @@ public class Subject
     public string SubjectId { get; set; }
     public string SubjectName { get; set; }
     public virtual ICollection<SubjectRegistered>? SubjectRegisted { get; set; }
+    public virtual List<StudentScore>? StudentScore { get; set; }
     public virtual ICollection<Absent>? Absent { get; set; }
 }

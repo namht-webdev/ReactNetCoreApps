@@ -1,9 +1,10 @@
 using ClassManagement.Models;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Authorization;
 namespace ClassManagement.Data;
 
 [ApiController]
+[Authorize]
 [Route(("api/[controller]"))]
 public class TeacherController : ControllerBase
 {
@@ -14,7 +15,7 @@ public class TeacherController : ControllerBase
         _teacherRepository = teacherRepository;
     }
     [HttpGet("{TeacherId?}")]
-    public async Task<IActionResult> ReadStudent(string? TeacherId)
+    public async Task<IActionResult> ReadTeacher(string? TeacherId)
     {
         if (TeacherId == null) return Ok(await _teacherRepository.ReadTeachersAsync());
         return Ok(await _teacherRepository.ReadTeacherAsync(TeacherId));

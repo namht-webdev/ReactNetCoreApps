@@ -24,7 +24,7 @@ class AbsentRepository : IAbsentRepository
         return result == 1;
     }
 
-    public async Task<IEnumerable<Absent>> ReadAbsentClassAsync(Absent Absent)
+    public async Task<IEnumerable<Absent>> ReadClassAbsentAsync(Absent Absent)
     {
         var absent = await _dbContext.Absent.FromSql<Absent>(@$"EXEC ReadAbsents {Absent.SubjectId},
                                                                                 {Absent.StudentId},

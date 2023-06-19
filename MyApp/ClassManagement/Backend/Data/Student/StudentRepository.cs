@@ -1,7 +1,6 @@
 
 using ClassManagement.Data;
 using ClassManagement.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 public class StudentRepository : IStudentRepository
 {

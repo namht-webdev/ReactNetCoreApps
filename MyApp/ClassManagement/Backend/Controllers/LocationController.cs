@@ -15,9 +15,9 @@ public class LocationController : ControllerBase
         return Ok(provinces);
     }
     [HttpGet("district")]
-    public async Task<IActionResult> GetDistricts(string ProvinceId)
+    public async Task<IActionResult> GetDistricts(string provinceId)
     {
-        var districts = await (from d in _dbContext.District where d.ProvinceId == ProvinceId select d).ToListAsync();
+        var districts = await (from d in _dbContext.District where d.ProvinceId == provinceId select d).ToListAsync();
         return Ok(districts);
     }
 }

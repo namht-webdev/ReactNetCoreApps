@@ -1,6 +1,6 @@
 using ClassManagement.Models;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Authorization;
 namespace ClassManagement.Data;
 
 [ApiController]
@@ -40,6 +40,7 @@ public class StudentController : ControllerBase
     #endregion
 
     #region Delete Student Requests
+
     [HttpDelete]
     public async Task<IActionResult> DeleteStudent(string StudentId)
     {

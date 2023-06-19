@@ -1,4 +1,4 @@
-ALTER PROCEDURE ReadSubjectsRegistered
+CREATE PROCEDURE ReadSubjectsRegistered
 	@ClassId VARCHAR(36),
 	@SubjectId VARCHAR(36),
 	@TeacherId VARCHAR(36),
