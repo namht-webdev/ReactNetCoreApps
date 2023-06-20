@@ -9,6 +9,6 @@ html, body{
 
 @layer base{
     nav ul li{
-        @apply cursor-pointer hover:bg-slate-400 p-3;
+        @apply cursor-pointer hover:bg-slate-800 p-3;
     }
 }

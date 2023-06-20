@@ -8,7 +8,7 @@ function App() {
     // </Routes>
     <div>
       <Navbar></Navbar>
-      <div className="h-[1000px]">a</div>
+      <div className="h-[1000px]"></div>
     </div>
   );
 }
