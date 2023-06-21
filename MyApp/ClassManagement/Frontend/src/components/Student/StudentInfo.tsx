@@ -1,8 +1,8 @@
-import { Student as StudentInterface } from '../../../interfaces/Student';
+import { Student as StudentInterface } from '../../interfaces/Student';
 interface StudentProps {
   student?: StudentInterface;
 }
-const Student = ({ student }: StudentProps) => {
+const StudentInfo = ({ student }: StudentProps) => {
   return (
     <div className="p-24">
       <table className="w-full">
@@ -22,4 +22,4 @@ const Student = ({ student }: StudentProps) => {
   );
 };
 
-export default Student;
+export default StudentInfo;
