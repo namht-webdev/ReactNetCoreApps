@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClassManagement.Models;
 
-public class Student : Person
+public class Student : User
 {
     [Key]
     [Unicode(false)]

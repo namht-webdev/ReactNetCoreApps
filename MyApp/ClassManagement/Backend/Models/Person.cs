@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
 using ClassManagement.Models;
-public abstract class Person
+public abstract class User
 {
     [Required(ErrorMessage = "{0} must not be empty!")]
     [StringLength(255, ErrorMessage = "{2} has maximum length is {1} characters")]

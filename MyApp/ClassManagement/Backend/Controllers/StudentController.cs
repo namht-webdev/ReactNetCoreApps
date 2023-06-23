@@ -51,7 +51,7 @@ public class StudentController : ControllerBase
     {
         try
         {
-            var response = await _studentRepository.UpdateTeacherAsync(StudentId, Student);
+            var response = await _studentRepository.UpdateStudentAsync(StudentId, Student);
             return response != null ? Ok(Student) : BadRequest(new { Message = "Student does not exist", Success = false });
         }
         catch (System.Exception)

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 namespace ClassManagement.Models;
 
-public class Teacher : Person
+public class Teacher : User
 {
     [Key]
     [Unicode(false)]
