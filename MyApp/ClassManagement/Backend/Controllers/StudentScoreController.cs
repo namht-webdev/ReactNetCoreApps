@@ -10,16 +10,33 @@ public class StudentScoreController : ControllerBase
     [HttpGet("{StudentId}")]
     public async Task<IActionResult> GetStudentScoreAllSubject(string StudentId)
     {
-        if (string.IsNullOrEmpty(StudentId)) return NotFound();
-        var result = await _studentScoreRepository.ReadScoreAllSubjectAsync(StudentId);
-        return result == null ? NotFound(new { Message = "This student does not register any subject", Success = false }) : Ok(result);
+        try
+        {
+            if (string.IsNullOrEmpty(StudentId)) return NotFound();
+            var result = await _studentScoreRepository.ReadScoreAllSubjectAsync(StudentId);
+            return result == null ? NotFound(new { Message = "This student does not register any subject", Success = false }) : Ok(result);
+        }
+        catch (System.Exception)
+        {
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
     }
 
     [HttpGet]
     public async Task<IActionResult> GetStudentScoreOneSubject(string SubjectId, string StudentId)
     {
-        if (string.IsNullOrEmpty(StudentId)) return NotFound();
-        var result = await _studentScoreRepository.ReadScoreOneSubjectAsync(SubjectId, StudentId);
-        return result == null ? NotFound(new { Message = "This student does not register this subject", Success = false }) : Ok(result);
+        try
+        {
+            if (string.IsNullOrEmpty(StudentId)) return NotFound();
+            var result = await _studentScoreRepository.ReadScoreOneSubjectAsync(SubjectId, StudentId);
+            return result == null ? NotFound(new { Message = "This student does not register this subject", Success = false }) : Ok(result);
+        }
+        catch (System.Exception)
+        {
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
     }
 }

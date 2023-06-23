@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-namespace ClassManagement.Data;
+using ClassManagement.Data;
+
 [ApiController]
 [Route("api/[controller]")]
 public class LocationController : ControllerBase
@@ -11,13 +12,30 @@ public class LocationController : ControllerBase
     [HttpGet("province")]
     public async Task<IActionResult> GetProvinces()
     {
-        var provinces = await _dbContext.Province.ToListAsync();
-        return Ok(provinces);
+        try
+        {
+            var provinces = await _dbContext.Province.ToListAsync();
+            return Ok(provinces);
+        }
+        catch (System.Exception)
+        {
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
     }
     [HttpGet("district")]
     public async Task<IActionResult> GetDistricts(string provinceId)
     {
-        var districts = await (from d in _dbContext.District where d.ProvinceId == provinceId select d).ToListAsync();
-        return Ok(districts);
+        try
+        {
+            var districts = await (from d in _dbContext.District where d.ProvinceId == provinceId select d).ToListAsync();
+            return Ok(districts);
+        }
+        catch (System.Exception)
+        {
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
     }
 }

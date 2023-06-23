@@ -15,8 +15,16 @@ public class SubjectController : ControllerBase
     [HttpGet("{SubjectId?}")]
     public async Task<IActionResult> ReadSubject(string? SubjectId)
     {
-        if (SubjectId == null) return Ok(await _subjectRepository.ReadSubjectsAsync());
-        return Ok(await _subjectRepository.ReadSubjectAsync(SubjectId));
+        try
+        {
+            if (SubjectId == null) return Ok(await _subjectRepository.ReadSubjectsAsync());
+            return Ok(await _subjectRepository.ReadSubjectAsync(SubjectId));
+        }
+        catch (System.Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
     }
     #endregion
 
@@ -24,8 +32,16 @@ public class SubjectController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateSubject(Subject Subject)
     {
-        var response = await _subjectRepository.CreateSubjectAsync(Subject);
-        return response ? Ok(Subject) : BadRequest(new { Message = "Subject already exist", Success = false });
+        try
+        {
+            var response = await _subjectRepository.CreateSubjectAsync(Subject);
+            return response ? Ok(Subject) : BadRequest(new { Message = "Subject already exist", Success = false });
+        }
+        catch (System.Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
     }
     #endregion
 
@@ -33,8 +49,16 @@ public class SubjectController : ControllerBase
     [HttpPut]
     public async Task<IActionResult> UpdateSubject(string SubjectId, [FromBody] Subject Subject)
     {
-        var response = await _subjectRepository.UpdateSubjectAsync(SubjectId, Subject);
-        return response != null ? Ok(Subject) : BadRequest(new { Message = "Subject does not exist", Success = false });
+        try
+        {
+            var response = await _subjectRepository.UpdateSubjectAsync(SubjectId, Subject);
+            return response != null ? Ok(Subject) : BadRequest(new { Message = "Subject does not exist", Success = false });
+        }
+        catch (System.Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
     }
     #endregion
 
@@ -42,8 +66,16 @@ public class SubjectController : ControllerBase
     [HttpDelete]
     public async Task<IActionResult> DeleteSubject(string SubjectId)
     {
-        var response = await _subjectRepository.DeleteSubjectAsync(SubjectId);
-        return response ? Ok(new { Message = "Subject has been deleted", Success = true }) : BadRequest(new { Message = "Subject does not exist", Success = false });
+        try
+        {
+            var response = await _subjectRepository.DeleteSubjectAsync(SubjectId);
+            return response ? Ok(new { Message = "Subject has been deleted", Success = true }) : BadRequest(new { Message = "Subject does not exist", Success = false });
+        }
+        catch (System.Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
     }
     #endregion
 }

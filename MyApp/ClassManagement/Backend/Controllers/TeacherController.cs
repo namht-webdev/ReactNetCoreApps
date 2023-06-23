@@ -1,7 +1,7 @@
 using ClassManagement.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-namespace ClassManagement.Data;
+using ClassManagement.Data;
 
 [ApiController]
 [Authorize]
@@ -17,8 +17,17 @@ public class TeacherController : ControllerBase
     [HttpGet("{TeacherId?}")]
     public async Task<IActionResult> ReadTeacher(string? TeacherId)
     {
-        if (TeacherId == null) return Ok(await _teacherRepository.ReadTeachersAsync());
-        return Ok(await _teacherRepository.ReadTeacherAsync(TeacherId));
+
+        try
+        {
+            if (TeacherId == null) return Ok(await _teacherRepository.ReadTeachersAsync());
+            return Ok(await _teacherRepository.ReadTeacherAsync(TeacherId));
+        }
+        catch (System.Exception)
+        {
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
     }
     #endregion
 
@@ -26,8 +35,17 @@ public class TeacherController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateTeacher(Teacher Teacher)
     {
-        var response = await _teacherRepository.CreateTeacherAsync(Teacher);
-        return response ? Ok(Teacher) : BadRequest(new { Message = "Teacher already exist", Success = false });
+
+        try
+        {
+            var response = await _teacherRepository.CreateTeacherAsync(Teacher);
+            return response ? Ok(Teacher) : BadRequest(new { Message = "Teacher already exist", Success = false });
+        }
+        catch (System.Exception)
+        {
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
     }
     #endregion
 
@@ -35,8 +53,17 @@ public class TeacherController : ControllerBase
     [HttpPut]
     public async Task<IActionResult> UpdateTeacher(string TeacherId, [FromBody] Teacher Teacher)
     {
-        var response = await _teacherRepository.UpdateTeacherAsync(TeacherId, Teacher);
-        return response != null ? Ok(Teacher) : BadRequest(new { Message = "Teacher does not exist", Success = false });
+
+        try
+        {
+            var response = await _teacherRepository.UpdateTeacherAsync(TeacherId, Teacher);
+            return response != null ? Ok(Teacher) : BadRequest(new { Message = "Teacher does not exist", Success = false });
+        }
+        catch (System.Exception)
+        {
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
     }
     #endregion
 
@@ -44,8 +71,17 @@ public class TeacherController : ControllerBase
     [HttpDelete]
     public async Task<IActionResult> DeleteTeacher(string TeacherId)
     {
-        var response = await _teacherRepository.DeleteTeacherAsync(TeacherId);
-        return response ? Ok(new { Message = "Teacher has been deleted", Success = true }) : BadRequest(new { Message = "Teacher does not exist", Success = false });
+
+        try
+        {
+            var response = await _teacherRepository.DeleteTeacherAsync(TeacherId);
+            return response ? Ok(new { Message = "Teacher has been deleted", Success = true }) : BadRequest(new { Message = "Teacher does not exist", Success = false });
+        }
+        catch (System.Exception)
+        {
+
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
     }
     #endregion
 
