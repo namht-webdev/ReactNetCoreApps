@@ -63,17 +63,23 @@ public class CompanyManagementDbContext : DbContext
         //        user.HasMany(user => user.schedules).WithOne(schedule => schedule.user);
         //    });
 
+        // modelBuilder.Entity<Requirement>(requirement =>
+        // {
+        //     requirement.HasOne(requirement => requirement.from_user).WithMany().HasForeignKey(requirement => requirement.from_user).OnDelete(DeleteBehavior.NoAction);
+        //     requirement.HasOne(requirement => requirement.to_user).WithMany().HasForeignKey(requirement => requirement.to_user).OnDelete(DeleteBehavior.NoAction);
+        // });
+
     }
-    // public DbSet<User> user { get; set; }
-    // public DbSet<FingerPrinting> fingerprinting { get; set; }
-    // public DbSet<Level> level { get; set; }
-    // public DbSet<Role> role { get; set; }
+    public DbSet<User> user { get; set; }
+    public DbSet<FingerPrinting> fingerprinting { get; set; }
+    public DbSet<Level> level { get; set; }
+    public DbSet<Role> role { get; set; }
     public DbSet<Ward> ward { get; set; }
     public DbSet<District> district { get; set; }
     public DbSet<Province> province { get; set; }
     public DbSet<Address> addresse { get; set; }
-    // public DbSet<Department> department { get; set; }
-    // public DbSet<Announcement> announcement { get; set; }
-    // public DbSet<Schedule> schedule { get; set; }
-    // public DbSet<Requirement> requirement { get; set; }
+    public DbSet<Department> department { get; set; }
+    public DbSet<Announcement> announcement { get; set; }
+    public DbSet<Schedule> schedule { get; set; }
+    public DbSet<Requirement> requirement { get; set; }
 }

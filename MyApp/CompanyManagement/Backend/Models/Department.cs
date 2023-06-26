@@ -9,8 +9,6 @@ public class Department
     public string department_id { get; set; }
     public string department_name { get; set; }
     public byte floor { get; set; }
-    public string user_id { get; set; }
     public User? user { get; set; }
     public virtual ICollection<Announcement>? announcements { get; set; }
-
 }
