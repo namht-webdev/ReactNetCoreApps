@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body{
+    height: 100%;
+    width: 100%;
+}
+
+@layer base{
+    nav ul li{
+        @apply cursor-pointer hover:bg-slate-800 p-3;
+    }
+}
