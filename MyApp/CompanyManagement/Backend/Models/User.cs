@@ -29,7 +29,7 @@ public class User
     public string role_id { get; set; }
     [ForeignKey("role_id")]
     public Role? role { get; set; }
-
+    public bool is_deleted { get; set; }
     public virtual ICollection<Schedule> schedules { get; set; }
     public virtual ICollection<Announcement>? announcements { get; set; }
 }

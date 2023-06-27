@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using CompanyManagement.Models;
+
+namespace CompanyManagement.Data;
 public class CompanyManagementDbContext : DbContext
 {
     public CompanyManagementDbContext(DbContextOptions<CompanyManagementDbContext> options) : base(options) { }
