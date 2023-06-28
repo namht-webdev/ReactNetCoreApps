@@ -19,6 +19,8 @@ builder.Services.AddDbContext<CompanyManagementDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("CompanyManagementDbContext"));
 });
+builder.Services.AddRepository();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

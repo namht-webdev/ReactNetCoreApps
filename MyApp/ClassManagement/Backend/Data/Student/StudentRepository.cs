@@ -77,4 +77,5 @@ public class StudentRepository : IStudentRepository
         var result = passwordHasher.VerifyHashedPassword(user, HashedPassword, Password);
         return result == PasswordVerificationResult.Success;
     }
+
 }
