@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using CompanyManagement.Data;
 using CompanyManagement.Models;
 
@@ -22,43 +23,65 @@ public class UserRepository : IUserRepository
         throw new NotImplementedException();
     }
 
-    public Task<IEnumerable<User>> GetAllUser(string userId)
+    public async Task<IEnumerable<User>> GetAllUser()
     {
-        throw new NotImplementedException();
+        var users = await _dbContext.user.ToListAsync();
+        return users;
     }
 
-    public Task<User> GetUser(string userId)
+    public async Task<User> GetUser(string userId)
     {
-        throw new NotImplementedException();
+        var user = await _dbContext.user.FindAsync(userId);
+        return user;
     }
 
-    public Task<IEnumerable<User>> GetUserInDepartment(string userId)
+    public async Task<IEnumerable<User>> GetUsersInDepartment(string departmentId)
     {
-        throw new NotImplementedException();
+        var users = await _dbContext.user.Where(u => u.department_id == departmentId).ToListAsync();
+        return users;
     }
 
-    public Task<IEnumerable<User>> GetUserWithRole(string userId)
+    public async Task<IEnumerable<User>> GetUsersWithRole(string roleId)
     {
-        throw new NotImplementedException();
+        var users = await _dbContext.user.Where(u => u.role_id == roleId).ToListAsync();
+        return users;
     }
 
-    public Task<bool> UpdateUser(string userId, User user)
+    public async Task<User> UpdateUser(string userId, User user)
     {
-        throw new NotImplementedException();
+        var userExists = await _dbContext.user.FindAsync(userId);
+        if (userExists != null)
+        {
+            _dbContext.user.Remove(userExists);
+            await _dbContext.SaveChangesAsync();
+            await _dbContext.AddAsync(user);
+        }
+        return user;
     }
 
-    private string HashPassword(string PhoneNumber, string Password)
+    public async Task<bool> ChangePassword(string userId, string oldPassword, string newPassword)
     {
-        var user = new IdentityUser { UserName = PhoneNumber };
+        var user = await _dbContext.user.FindAsync(userId);
+        if (!VerifyPassword(userId, oldPassword, user!.password_hash))
+        {
+            return false;
+        }
+        user.password_hash = HashPassword(userId, newPassword);
+        var result = await _dbContext.SaveChangesAsync();
+        return result == 1;
+    }
+    private string HashPassword(string userId, string password)
+    {
+        var user = new IdentityUser { UserName = userId };
         var passwordHasher = new PasswordHasher<IdentityUser>();
-        return passwordHasher.HashPassword(user, Password);
+        return passwordHasher.HashPassword(user, password);
     }
 
-    private bool VerifyPassword(string PhoneNumber, string Password, string HashedPassword)
+    private bool VerifyPassword(string userId, string password, string hashedPassword)
     {
-        var user = new IdentityUser { UserName = PhoneNumber };
+        var user = new IdentityUser { UserName = userId };
         var passwordHasher = new PasswordHasher<IdentityUser>();
-        var result = passwordHasher.VerifyHashedPassword(user, HashedPassword, Password);
+        var result = passwordHasher.VerifyHashedPassword(user, hashedPassword, password);
         return result == PasswordVerificationResult.Success;
     }
 }

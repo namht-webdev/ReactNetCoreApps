@@ -5,9 +5,10 @@ public interface IUserRepository
 {
     Task<bool> CreateUser(User user);
     Task<User> GetUser(string userId);
-    Task<IEnumerable<User>> GetAllUser(string userId);
-    Task<IEnumerable<User>> GetUserWithRole(string userId);
-    Task<IEnumerable<User>> GetUserInDepartment(string userId);
-    Task<bool> UpdateUser(string userId, User user);
+    Task<IEnumerable<User>> GetAllUser();
+    Task<IEnumerable<User>> GetUsersWithRole(string roleId);
+    Task<IEnumerable<User>> GetUsersInDepartment(string departmentId);
+    Task<User> UpdateUser(string userId, User user);
+    Task<bool> ChangePassword(string userId, string oldPassword, string newPassword);
     Task<bool> DeleteUser(string userId);
 }
