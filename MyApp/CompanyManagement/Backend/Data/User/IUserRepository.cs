@@ -10,5 +10,6 @@ public interface IUserRepository
     Task<IEnumerable<User>> GetUsersInDepartment(string departmentId);
     Task<User> UpdateUser(string userId, User user);
     Task<bool> ChangePassword(string userId, string oldPassword, string newPassword);
-    Task<bool> DeleteUser(string userId);
+    Task<bool> UserSoftDelete(string userId);
+    Task<bool> UserHardDelete(string userId);
 }

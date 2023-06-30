@@ -18,9 +18,22 @@ public class UserRepository : IUserRepository
         return result == 1;
     }
 
-    public Task<bool> DeleteUser(string userId)
+    public async Task<bool> UserSoftDelete(string userId)
     {
-        throw new NotImplementedException();
+        var userExists = await _dbContext.user.FindAsync(userId);
+        if (userExists == null) return false;
+        userExists.is_deleted = true;
+        int result = await _dbContext.SaveChangesAsync();
+        return result == 1;
+    }
+
+    public async Task<bool> UserHardDelete(string userId)
+    {
+        var userExists = await _dbContext.user.FindAsync(userId);
+        if (userExists == null) return false;
+        _dbContext.user.Remove(userExists);
+        int result = await _dbContext.SaveChangesAsync();
+        return result == 1;
     }
 
     public async Task<IEnumerable<User>> GetAllUser()

@@ -19,7 +19,7 @@ public class UserController : ControllerBase
         }
         catch (System.Exception)
         {
-            return BadRequest(new { success = false, message = "An error occur while processing time! Please try again after a second", statusCode = 400 });
+            return BadRequest(new { success = false, message = "An error occur while processing! Please try again after a second", statusCode = 400 });
         }
     }
 
@@ -55,5 +55,19 @@ public class UserController : ControllerBase
     {
         var result = await _userRepository.ChangePassword(userId, oldPassword, newPassword);
         return result ? Ok(new { success = true, message = "Your password has been changed" }) : BadRequest(new { success = false, message = "Your old password is not correct" });
+    }
+
+    [HttpPost("delete")]
+    public async Task<IActionResult> DeleteUser(string userId)
+    {
+        try
+        {
+            var result = await _userRepository.UserSoftDelete(userId);
+            return result ? Ok(new { success = true, message = "User has been deleted!" }) : BadRequest(new { success = false, message = "This user has been deleted before!" });
+        }
+        catch (System.Exception)
+        {
+            return Problem(detail: "Internal Server Error", statusCode: StatusCodes.Status500InternalServerError);
+        }
     }
 }
