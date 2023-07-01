@@ -58,11 +58,11 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("delete")]
-    public async Task<IActionResult> DeleteUser(string userId)
+    public async Task<IActionResult> DeleteUser(string userId, bool isSoftDelete)
     {
         try
         {
-            var result = await _userRepository.UserSoftDelete(userId);
+            var result = isSoftDelete ? await _userRepository.UserSoftDelete(userId) : await _userRepository.UserHardDelete(userId);
             return result ? Ok(new { success = true, message = "User has been deleted!" }) : BadRequest(new { success = false, message = "This user has been deleted before!" });
         }
         catch (System.Exception)
