@@ -49,7 +49,7 @@ namespace Backend.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<string>("department_id")
                         .HasColumnType("nvarchar(450)");
@@ -117,13 +117,13 @@ namespace Backend.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<DateTime>("comein_time")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<DateTime>("comeout_time")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("smalldatetime");
 
                     b.HasKey("user_id", "date");
 
@@ -172,7 +172,7 @@ namespace Backend.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<string>("from_user")
                         .IsRequired()
@@ -214,7 +214,7 @@ namespace Backend.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<string>("note")
                         .IsRequired()
@@ -256,10 +256,10 @@ namespace Backend.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("date_end")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<DateTime>("date_start")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<string>("department_id")
                         .IsRequired()

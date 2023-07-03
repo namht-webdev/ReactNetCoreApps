@@ -68,8 +68,10 @@ public class UserRepository : IUserRepository
             _dbContext.user.Remove(userExists);
             await _dbContext.SaveChangesAsync();
             await _dbContext.AddAsync(user);
+            await _dbContext.SaveChangesAsync();
+            return user;
         }
-        return user;
+        return userExists;
     }
 
     public async Task<bool> ChangePassword(string userId, string oldPassword, string newPassword)

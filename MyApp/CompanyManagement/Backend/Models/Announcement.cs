@@ -14,6 +14,7 @@ public class Announcement
     public string? user_id { get; set; }
     [ForeignKey("user_id")]
     public User? user { get; set; }
+    [Column(TypeName = "smalldatetime")]
     public DateTime date { get; set; }
     public string message { get; set; }
 }

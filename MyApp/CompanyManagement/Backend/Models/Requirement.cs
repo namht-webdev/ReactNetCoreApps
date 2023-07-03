@@ -16,6 +16,7 @@ public class Requirement
     public string? to_user { get; set; }
     [ForeignKey("to_user")]
     public User? reciever { get; set; }
+    [Column(TypeName = "smalldatetime")]
     public DateTime date { get; set; }
     public string require_message { get; set; }
 }

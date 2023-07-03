@@ -17,7 +17,9 @@ public class User
     public string phone_number { get; set; }
     public string email { get; set; }
     public string avatar { get; set; }
+    [Column(TypeName = "smalldatetime")]
     public DateTime date_start { get; set; }
+    [Column(TypeName = "smalldatetime")]
     public DateTime date_end { get; set; }
     public double salary { get; set; }
     public string department_id { get; set; }

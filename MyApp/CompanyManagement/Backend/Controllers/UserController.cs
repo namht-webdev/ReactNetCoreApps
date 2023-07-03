@@ -70,4 +70,19 @@ public class UserController : ControllerBase
             return Problem(detail: "Internal Server Error", statusCode: StatusCodes.Status500InternalServerError);
         }
     }
+
+    [HttpPut("update")]
+
+    public async Task<IActionResult> UpdateUser([FromQuery] string userId, [FromBody] User user)
+    {
+        try
+        {
+            var userUpdated = await _userRepository.UpdateUser(userId, user);
+            return userUpdated != null ? Ok(userUpdated) : BadRequest(new { success = false, message = "Seems that user has been deleted!" });
+        }
+        catch (System.Exception)
+        {
+            return Problem(detail: "Something went wrong!");
+        }
+    }
 }

@@ -134,8 +134,8 @@ namespace Backend.Migrations
                     phone_number = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    date_start = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    date_end = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date_start = table.Column<DateTime>(type: "smalldatetime", nullable: false),
+                    date_end = table.Column<DateTime>(type: "smalldatetime", nullable: false),
                     salary = table.Column<double>(type: "float", nullable: false),
                     department_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     level_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -178,7 +178,7 @@ namespace Backend.Migrations
                     annc_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     department_id = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     user_id = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date = table.Column<DateTime>(type: "smalldatetime", nullable: false),
                     message = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -201,9 +201,9 @@ namespace Backend.Migrations
                 columns: table => new
                 {
                     user_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    comein_time = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    comeout_time = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    date = table.Column<DateTime>(type: "smalldatetime", nullable: false),
+                    comein_time = table.Column<DateTime>(type: "smalldatetime", nullable: false),
+                    comeout_time = table.Column<DateTime>(type: "smalldatetime", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -223,7 +223,7 @@ namespace Backend.Migrations
                     requirement_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     from_user = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     to_user = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date = table.Column<DateTime>(type: "smalldatetime", nullable: false),
                     require_message = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -248,7 +248,7 @@ namespace Backend.Migrations
                 {
                     schedule_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     user_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    date = table.Column<DateTime>(type: "smalldatetime", nullable: false),
                     note = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     time_start = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     time_end = table.Column<string>(type: "nvarchar(max)", nullable: false)
