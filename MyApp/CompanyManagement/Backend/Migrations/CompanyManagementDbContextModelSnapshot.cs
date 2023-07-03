@@ -253,7 +253,7 @@ namespace Backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("birth_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<DateTime>("date_end")
                         .HasColumnType("smalldatetime");

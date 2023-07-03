@@ -57,7 +57,7 @@ public class UserController : ControllerBase
         return result ? Ok(new { success = true, message = "Your password has been changed" }) : BadRequest(new { success = false, message = "Your old password is not correct" });
     }
 
-    [HttpPost("delete")]
+    [HttpDelete("delete")]
     public async Task<IActionResult> DeleteUser(string userId, bool isSoftDelete)
     {
         try

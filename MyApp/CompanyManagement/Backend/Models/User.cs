@@ -9,6 +9,7 @@ public class User
     public string user_id { get; set; }
     public string full_name { get; set; }
     public string password_hash { get; set; }
+    [Column(TypeName = "smalldatetime")]
     public DateTime birth_date { get; set; }
     public string gender { get; set; }
     public string address_id { get; set; }

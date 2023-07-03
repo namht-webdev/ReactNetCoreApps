@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(CompanyManagementDbContext))]
-    [Migration("20230703025511_init")]
+    [Migration("20230703071521_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -256,7 +256,7 @@ namespace Backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("birth_date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<DateTime>("date_end")
                         .HasColumnType("smalldatetime");

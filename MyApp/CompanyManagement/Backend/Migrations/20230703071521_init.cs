@@ -128,7 +128,7 @@ namespace Backend.Migrations
                     user_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     full_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     password_hash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    birth_date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    birth_date = table.Column<DateTime>(type: "smalldatetime", nullable: false),
                     gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     address_id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     phone_number = table.Column<string>(type: "nvarchar(max)", nullable: false),
