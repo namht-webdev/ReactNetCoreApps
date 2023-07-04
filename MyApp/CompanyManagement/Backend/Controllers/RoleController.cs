@@ -6,9 +6,9 @@ using CompanyManagement.Data;
 [Route("/api/role")]
 public class RoleController : ControllerBase
 {
-    private readonly IUserRole _role;
+    private readonly IRoleRepository _role;
 
-    public RoleController(IUserRole role) => _role = role;
+    public RoleController(IRoleRepository role) => _role = role;
 
     [HttpPost]
     public async Task<IActionResult> CreateRole(Role role)

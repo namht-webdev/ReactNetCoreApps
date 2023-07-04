@@ -5,6 +5,7 @@ import HomePage from './components/Home/HomePage';
 import UserList from './components/User/UserList';
 import NotFound from './NotFound';
 import { Create } from './components/User/Create';
+import { RoleList } from './components/Role/RoleList';
 function App() {
   return (
     // <Routes>
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<HomePage />}></Route>
           <Route path="user" element={<UserList />}></Route>
           <Route path="user/create" element={<Create />}></Route>
+          <Route path="role" element={<RoleList />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>

@@ -14,3 +14,14 @@ html, body{
 
 }
 
+@layer components{
+    .footer{
+        @apply shadow-md sm:rounded-lg absolute bottom-3 h-3 w-full;
+    }
+    @media only screen and (max-height: 600px) {
+        .footer{
+            display: none;
+        }
+    }
+}
+

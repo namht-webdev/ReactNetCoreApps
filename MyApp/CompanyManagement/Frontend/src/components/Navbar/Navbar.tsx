@@ -19,7 +19,7 @@ const Navbar = () => {
   // );
   return (
     <div>
-      <nav className="bg-gray-500 text-slate-100 fixed flex items-center w-full">
+      <nav className="bg-gray-500 text-slate-100 fixed flex items-center w-full z-50">
         <div className="absolute top-0 p-3 sm:relative sm:top-0 w-full sm:w-auto bg-gray-500 text-white ">
           <span className="text-black">logo</span>
           <button
@@ -41,7 +41,7 @@ const Navbar = () => {
             <Link to="user">User</Link>
           </li>
           <li>
-            <Link to="user">Student</Link>
+            <Link to="role">Role</Link>
           </li>
           <li>
             <Link to="user">Class</Link>
@@ -54,6 +54,7 @@ const Navbar = () => {
           </li>
         </ul>
       </nav>
+      <div className="footer"></div>
     </div>
   );
 };
