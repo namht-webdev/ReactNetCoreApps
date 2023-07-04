@@ -28,9 +28,9 @@ export const RoleList = () => {
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-6 py-3 w-1/3">
                 <div className="flex items-center">
-                  Product name
+                  Mã
                   <FontAwesomeIcon
                     className="px-2 hover:cursor-pointer active:opacity-50"
                     icon={faSort}
@@ -38,30 +38,28 @@ export const RoleList = () => {
                 </div>
               </th>
 
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-6 py-3 w-1/3">
                 <div className="flex items-center">
-                  Color
+                  Tên
                   <FontAwesomeIcon
                     className="px-2 hover:cursor-pointer active:opacity-50"
                     icon={faSort}
                   />
                 </div>
               </th>
-              <th scope="col" className="px-6 py-3">
-                <span className="sr-only">Edit</span>
-              </th>
+              <th scope="col" className="px-6 py-3 w-1/3 text-center"></th>
             </tr>
           </thead>
           <tbody>
             <tr className="bg-white dark:bg-gray-800">
               <td className="px-6 py-4">Black</td>
               <td className="px-6 py-4">$99</td>
-              <td className="px-6 py-4 text-right">
+              <td className="px-6 py-4 text-center">
                 <Link
                   to=""
                   className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                 >
-                  Edit
+                  Chỉnh sửa
                 </Link>
               </td>
             </tr>
