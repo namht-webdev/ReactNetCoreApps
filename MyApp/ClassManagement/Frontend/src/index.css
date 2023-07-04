@@ -2,13 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body{
+html, body, #root{
     height: 100%;
     width: 100%;
 }
 
 @layer base{
     nav ul li{
-        @apply cursor-pointer hover:bg-slate-800 p-3;
+        @apply cursor-pointer transition-colors duration-300 hover:text-slate-800 p-3;
     }
 }

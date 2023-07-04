@@ -29,7 +29,6 @@ AuthorizationHandler<MustBeTeacherRequirement>
             context.Fail();
             return;
         }
-        // TODO - get the question id from the request
         // TODO - get the user id from the name identifier claim, userId can be null here
         var userId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (userId == null)

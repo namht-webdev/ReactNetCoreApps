@@ -1,13 +1,7 @@
-// import { useEffect } from 'react';
-// import axios from 'axios';
-// import { DEFAULT_API_URL } from '../../api/api';
+import { faBars, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 const Navbar = () => {
-  // useEffect(() => {
-  //   axios.get(`${DEFAULT_API_URL}/api/Student/1`).then((res) => {
-  //     console.log(res);
-  //   });
-  // }, []);
   const [toggleBtn, setToggleBtn] = useState(false);
 
   return (
@@ -19,7 +13,12 @@ const Navbar = () => {
             onClick={() => setToggleBtn(!toggleBtn)}
             className="float-right px-3 inline sm:hidden text-black"
           >
-            btn
+            <FontAwesomeIcon
+              className={`transform duration-300 ease-in-out ${
+                !toggleBtn ? 'rotate-90' : ''
+              }`}
+              icon={toggleBtn ? faBars : faXmark}
+            />
           </button>
         </div>
         <ul

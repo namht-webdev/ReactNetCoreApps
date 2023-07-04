@@ -15,6 +15,17 @@ const UserList = () => {
         </Link>
       </div>
       <Filter headers={headers} />
+      <div>
+        <table className="w-full">
+          <thead>
+            <tr className="flex justify-between">
+              {headers.map((header, index) => {
+                return <th key={index}>{header}</th>;
+              })}
+            </tr>
+          </thead>
+        </table>
+      </div>
     </div>
   );
 };
