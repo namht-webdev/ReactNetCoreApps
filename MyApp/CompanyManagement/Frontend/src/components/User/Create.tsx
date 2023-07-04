@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
-
+import { Form, minLength, required } from '../Context/Form';
+import { Field } from '../Context/Field';
 export const Create = () => {
   const [selectedImage, setSelectedImage] = useState<
     string | ArrayBuffer | null
@@ -17,11 +18,13 @@ export const Create = () => {
     }
   };
   return (
-    <div className="pt-20 text-center font-bold text-2xl text-slate-500">
-      CUNG CẤP THÔNG TIN NHÂN VIÊN
+    <div>
+      <p className="pt-10 text-center font-bold text-2xl text-slate-500">
+        THÊM NHÂN VIÊN
+      </p>
       <hr className="mt-2 w-3/4 mx-auto border" />
-      <div className="md:flex md:justify-between sm:px-32 px-10 text-lg pt-10">
-        <div className="py-4 md:pr-3 pr-8">
+      <div className="px-10 text-lg py-10">
+        <div className="text-center">
           <input
             type="file"
             accept="image/*"
@@ -29,7 +32,10 @@ export const Create = () => {
             className="hidden"
             id="imageInput"
           />
-          <label htmlFor="imageInput" className="cursor-pointer p-0">
+          <label
+            htmlFor="imageInput"
+            className="cursor-pointer p-0 inline-block w-auto"
+          >
             {selectedImage ? (
               <img
                 src={selectedImage as string}
@@ -43,17 +49,31 @@ export const Create = () => {
             )}
           </label>
         </div>
-        <div className="md:w-1/2 flex w-full text-base lg:text-lg">
-          <ul className="text-start w-1/2">
-            <li>User Id</li>
-            <li>abc</li>
-          </ul>
-          <ul className="text-start w-1/2">
-            <li>abc</li>
-            <li>abc</li>
-          </ul>
-        </div>
       </div>
+
+      <Form
+        submitCaption="Thêm"
+        onSubmit={() => {}}
+        validationRules={{
+          ahihi: [{ validator: required }, { validator: minLength, args: 10 }],
+        }}
+      >
+        <Field name="ahihi" label="Họ tên"></Field>
+        <div className="grid md:grid-cols-2 md:gap-6">
+          <Field name="name" label="ahuhu"></Field>
+          <Field name="name" label="ahuhu"></Field>
+        </div>
+        <div className="grid md:grid-cols-2 md:gap-6">
+          <div className="grid md:grid-cols-2 md:gap-6">
+            <Field name="name" label="ahuhu"></Field>
+            <Field name="name" label="ahuhu"></Field>
+          </div>
+          <div className="grid md:grid-cols-2 md:gap-6">
+            <Field name="name" label="ahuhu"></Field>
+            <Field name="name" type="Select" defaltOPtion="Chọn tỉnh"></Field>
+          </div>
+        </div>
+      </Form>
     </div>
   );
 };
