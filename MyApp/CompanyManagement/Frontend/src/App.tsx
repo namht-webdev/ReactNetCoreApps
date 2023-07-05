@@ -6,6 +6,7 @@ import UserList from './components/User/UserList';
 import NotFound from './NotFound';
 import { Create } from './components/User/Create';
 import { RoleList } from './components/Role/RoleList';
+import { CreateRole } from './components/Role/CreateRole';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="user" element={<UserList />}></Route>
           <Route path="user/create" element={<Create />}></Route>
           <Route path="role" element={<RoleList />}></Route>
+          <Route path="role/create" element={<CreateRole />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>

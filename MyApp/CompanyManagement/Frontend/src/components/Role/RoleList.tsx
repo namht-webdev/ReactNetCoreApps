@@ -17,29 +17,23 @@ export const RoleList = () => {
   useEffect(() => {
     dispatch(fetchAll());
   }, [dispatch]);
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  // if (error) {
+  //   return <div>Error: {error}</div>;
+  // }
 
   const handleSubmit = (role: Values) => {
-    dispatch(addNew(role as Role));
+    if (role.role_id && role.role_name) dispatch(addNew(role as Role));
   };
   return (
     <div>
       <p className="py-10 text-center font-bold text-slate-500">
         DANH SÁCH VAI TRÒ
       </p>
-      <Form
-        submitCaption="Thêm"
-        onSubmit={handleSubmit}
-        validationRules={{
-          role_name: { validator: required },
-          role_id: { validator: required },
-        }}
-      >
-        <div className="grid md:grid-cols-2 md:gap-6">
-          <Field name="role_id" label="Mã vai trò"></Field>
-          <Field name="role_name" label="Tên vai trò"></Field>
-        </div>
-      </Form>
-
+      <Link to="create">Thêm mới vai trò</Link>
       <div className="relative overflow-x-auto py-16 lg:px-32 px-6">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -67,26 +61,22 @@ export const RoleList = () => {
             </tr>
           </thead>
           <tbody>
-            {isLoading ? (
-              <div>Loading ...</div>
-            ) : (
-              roles.map((role) => {
-                return (
-                  <tr key={role.role_id} className="bg-white dark:bg-gray-800">
-                    <td className="px-6 py-4">{role.role_id}</td>
-                    <td className="px-6 py-4">{role.role_name}</td>
-                    <td className="px-6 py-4 text-center">
-                      <Link
-                        to=""
-                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                      >
-                        Chỉnh sửa
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })
-            )}
+            {roles.map((role) => {
+              return (
+                <tr key={role.role_id} className="bg-white dark:bg-gray-800">
+                  <td className="px-6 py-4">{role.role_id}</td>
+                  <td className="px-6 py-4">{role.role_name}</td>
+                  <td className="px-6 py-4 text-center">
+                    <Link
+                      to=""
+                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    >
+                      Chỉnh sửa
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

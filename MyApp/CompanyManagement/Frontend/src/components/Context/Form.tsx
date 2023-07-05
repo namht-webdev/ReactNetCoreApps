@@ -121,17 +121,15 @@ export const Form: React.FC<Props> = ({
     if (validationRules) {
       Object.keys(validationRules).forEach((fieldName) => {
         newErrors[fieldName] = validate(fieldName);
-        if (newErrors[fieldName]) {
+        if (newErrors[fieldName].length > 0) {
           haveErrors = true;
         }
       });
     }
-    return haveErrors;
+    console.log(haveErrors, newErrors);
+    return !haveErrors;
   };
 
-  const disabled = submitResult
-    ? submitResult.success
-    : submitting || (submitted && !submitError);
   const showError = submitResult
     ? !submitResult.success
     : submitted && submitError;
@@ -157,7 +155,7 @@ export const Form: React.FC<Props> = ({
         noValidate={true}
         onSubmit={handleSubmit}
       >
-        <fieldset disabled={disabled}>
+        <fieldset>
           {children}
           <PrimaryButton type={type} title={submitCaption} />
           {showError && <p className="text-red-500">{failureMessage}</p>}
