@@ -17,13 +17,6 @@ export const RoleList = () => {
   useEffect(() => {
     dispatch(fetchAll());
   }, [dispatch]);
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
 
   const handleSubmit = (role: Values) => {
     dispatch(addNew(role as Role));
@@ -37,8 +30,8 @@ export const RoleList = () => {
         submitCaption="Thêm"
         onSubmit={handleSubmit}
         validationRules={{
-          role_id: [{ validator: required }],
-          role_name: [{ validator: required }],
+          role_name: { validator: required },
+          role_id: { validator: required },
         }}
       >
         <div className="grid md:grid-cols-2 md:gap-6">
@@ -74,22 +67,26 @@ export const RoleList = () => {
             </tr>
           </thead>
           <tbody>
-            {roles.map((role) => {
-              return (
-                <tr key={role.role_id} className="bg-white dark:bg-gray-800">
-                  <td className="px-6 py-4">{role.role_id}</td>
-                  <td className="px-6 py-4">{role.role_name}</td>
-                  <td className="px-6 py-4 text-center">
-                    <Link
-                      to=""
-                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    >
-                      Chỉnh sửa
-                    </Link>
-                  </td>
-                </tr>
-              );
-            })}
+            {isLoading ? (
+              <div>Loading ...</div>
+            ) : (
+              roles.map((role) => {
+                return (
+                  <tr key={role.role_id} className="bg-white dark:bg-gray-800">
+                    <td className="px-6 py-4">{role.role_id}</td>
+                    <td className="px-6 py-4">{role.role_name}</td>
+                    <td className="px-6 py-4 text-center">
+                      <Link
+                        to=""
+                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                      >
+                        Chỉnh sửa
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
           </tbody>
         </table>
       </div>

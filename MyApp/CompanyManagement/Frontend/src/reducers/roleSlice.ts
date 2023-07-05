@@ -3,6 +3,11 @@ import { Role } from '../interfaces/Role';
 import axios from 'axios';
 import { DEFAULT_API_URL } from '../api/api';
 
+// interface Error{
+//   success: boolean;
+//   message: string;
+// }
+
 interface RoleState {
   roles: Role[];
   isLoading: boolean;
@@ -54,7 +59,7 @@ export const roleSlice = createSlice({
       })
       .addCase(addNew.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.roles.push(action.payload as Role);
+        state.roles.push(action?.payload as Role);
       })
       .addCase(addNew.rejected, (state, action) => {
         state.isLoading = false;
