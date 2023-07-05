@@ -9,7 +9,7 @@ public class RoleRepository : IRoleRepository
     public async Task<bool> CreateRole(Role role)
     {
         var roleExists = await _dbcontext.role.FindAsync(role.role_id);
-        if (roleExists == null) return false;
+        if (roleExists != null) return false;
         await _dbcontext.role.AddAsync(role);
         var result = await _dbcontext.SaveChangesAsync();
         return result == 1;

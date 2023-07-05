@@ -1,11 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import roleSlice from './roleSlice';
 // import { ObjectState, objectSlice } from './Slices';
 
-const rootReducer = combineReducers({
-  //   objects: objectSlice.reducer,
+export const rootReducer = combineReducers({
+  role: roleSlice,
 });
-export const store = configureStore({
+const store = configureStore({
   reducer: rootReducer,
 });
 

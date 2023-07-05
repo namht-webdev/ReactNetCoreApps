@@ -9,7 +9,7 @@ public class DepartmentRepository : IDepartmentRepository
     public async Task<bool> CreateDepartment(Department department)
     {
         var departmentExists = await _dbcontext.department.FindAsync(department.department_id);
-        if (departmentExists == null) return false;
+        if (departmentExists != null) return false;
         await _dbcontext.department.AddAsync(department);
         var result = await _dbcontext.SaveChangesAsync();
         return result == 1;
