@@ -1,22 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Values, required } from '../Context/Form';
 import { Field } from '../Context/Field';
-import { RootState, useAppDispatch, useAppSelector } from '../../reducers';
+import { DataResponse, useAppDispatch } from '../../reducers';
 import { addNew } from '../../reducers/roleSlice';
 import { Role } from '../../interfaces/Role';
 
 export const CreateRole = () => {
   const dispatch = useAppDispatch();
-  const { roles, isLoading, error } = useAppSelector(
-    (state: RootState) => state.role,
-  );
-  const handleSubmit = (role: Values) => {
-    if (role.role_id && role.role_name) dispatch(addNew(role as Role));
+  const [messageReturn, setMessage] = useState('');
+  const handleSubmit = async (role: Values) => {
+    const response = await dispatch(addNew(role as Role));
+    const { success, message } = response.payload as DataResponse;
+    setMessage(message);
+    return { success };
   };
   return (
     <div>
       <p className="py-10 text-center font-bold text-slate-500">
-        DANH SÁCH VAI TRÒ
+        THÊM MỚI VAI TRÒ
       </p>
       <Form
         submitCaption="Thêm"
@@ -25,6 +26,8 @@ export const CreateRole = () => {
           role_id: [{ validator: required }],
           role_name: [{ validator: required }],
         }}
+        failureMessage={messageReturn}
+        successMessage={messageReturn}
       >
         <div className="grid md:grid-cols-2 md:gap-6">
           <Field name="role_id" label="Mã vai trò"></Field>

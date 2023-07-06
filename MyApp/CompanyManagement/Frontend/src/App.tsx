@@ -7,6 +7,7 @@ import NotFound from './NotFound';
 import { Create } from './components/User/Create';
 import { RoleList } from './components/Role/RoleList';
 import { CreateRole } from './components/Role/CreateRole';
+import { UpdateRole } from './components/Role/UpdateRole';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="user" element={<UserList />}></Route>
           <Route path="user/create" element={<Create />}></Route>
           <Route path="role" element={<RoleList />}></Route>
+          <Route path="role/:role_id" element={<UpdateRole />} />
           <Route path="role/create" element={<CreateRole />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>

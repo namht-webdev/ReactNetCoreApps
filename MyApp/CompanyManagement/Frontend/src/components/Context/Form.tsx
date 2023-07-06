@@ -1,5 +1,6 @@
-import React, { useState, createContext, FormEvent } from 'react';
+import React, { useState, createContext, FormEvent, useEffect } from 'react';
 import { PrimaryButton } from '../PrimaryButton';
+import { useNavigate } from 'react-router-dom';
 export interface Values {
   [key: string]: any;
 }
@@ -50,92 +51,92 @@ export const FormContext = createContext<FormContextProps>({
 });
 export interface SubmitResult {
   success: boolean;
-  error?: Errors;
+  errors?: Errors;
+  redirectUrl?: string;
 }
 interface Props {
   submitCaption?: string;
   children?: React.ReactNode;
   type?: 'submit';
+  initialValue?: Values;
   validationRules?: ValidationProp;
-  onSubmit: (value: Values) => Promise<SubmitResult> | void;
+  onSubmit: (value: Values) => Promise<SubmitResult>;
   submitResult?: SubmitResult;
   successMessage?: string;
   failureMessage?: string;
 }
 
-export const Form: React.FC<Props> = ({
+export const Form = ({
   submitCaption,
   children,
   type = 'submit',
+  initialValue,
   validationRules,
   onSubmit,
-  submitResult,
   successMessage = 'Successed',
   failureMessage = 'Something went wrong',
-}) => {
+}: Props) => {
   const [values, setValues] = useState<Values>({});
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Touched>({});
-  const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState(false);
-
   const validate = (fieldName: string): string[] => {
-    if (!validationRules || !validationRules[fieldName]) return [];
+    if (!validationRules) {
+      return [];
+    }
+    if (!validationRules[fieldName]) {
+      return [];
+    }
     const rules = Array.isArray(validationRules[fieldName])
       ? (validationRules[fieldName] as Validation[])
       : ([validationRules[fieldName]] as Validation[]);
     const fieldErrors: string[] = [];
     rules.forEach((rule) => {
       const error = rule.validator(values[fieldName], rule.args);
-      if (error) fieldErrors.push(error);
+      if (error) {
+        fieldErrors.push(error);
+      }
     });
-
     const newErrors = { ...errors, [fieldName]: fieldErrors };
     setErrors(newErrors);
     return fieldErrors;
   };
 
+  const navigate = useNavigate();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateForm()) {
-      setSubmitting(true);
       setSubmitError(false);
-
       const result = await onSubmit(values);
-      // The result may be passed through as a prop
-      if (result === undefined) {
-        return;
-      }
-
-      setErrors(result.error || {});
+      setErrors(result.errors || {});
       setSubmitError(!result.success);
-      setSubmitting(false);
       setSubmitted(true);
+      if (result.success && result.redirectUrl) {
+        navigate(result.redirectUrl);
+      }
     }
   };
 
   const validateForm = () => {
     const newErrors: Errors = {};
-    let haveErrors: boolean = false;
+    let haveError: boolean = false;
     if (validationRules) {
       Object.keys(validationRules).forEach((fieldName) => {
         newErrors[fieldName] = validate(fieldName);
         if (newErrors[fieldName].length > 0) {
-          haveErrors = true;
+          haveError = true;
         }
       });
     }
-    console.log(haveErrors, newErrors);
-    return !haveErrors;
+    setErrors(newErrors);
+    return !haveError;
   };
 
-  const showError = submitResult
-    ? !submitResult.success
-    : submitted && submitError;
-  const showSuccess = submitResult
-    ? submitResult.success
-    : submitted && !submitError;
+  useEffect(() => {
+    setValues(initialValue ? initialValue : {});
+  }, [initialValue]);
+
   return (
     <FormContext.Provider
       value={{
@@ -158,8 +159,12 @@ export const Form: React.FC<Props> = ({
         <fieldset>
           {children}
           <PrimaryButton type={type} title={submitCaption} />
-          {showError && <p className="text-red-500">{failureMessage}</p>}
-          {showSuccess && <p className="text-green-500">{successMessage}</p>}
+          {submitted && submitError && (
+            <p className="text-red-500 pt-3">{failureMessage}</p>
+          )}
+          {submitted && !submitError && (
+            <p className="text-green-500 pt-3">{successMessage}</p>
+          )}
         </fieldset>
       </form>
     </FormContext.Provider>

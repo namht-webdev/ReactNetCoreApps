@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
-import { Form, minLength, required } from '../Context/Form';
-import { Field } from '../Context/Field';
+
 export const Create = () => {
   const [selectedImage, setSelectedImage] = useState<
     string | ArrayBuffer | null
@@ -51,7 +50,7 @@ export const Create = () => {
         </div>
       </div>
 
-      <Form
+      {/* <Form
         submitCaption="Thêm"
         onSubmit={() => {}}
         validationRules={{
@@ -73,7 +72,7 @@ export const Create = () => {
             <Field name="name" type="Select" defaltOPtion="Chọn tỉnh"></Field>
           </div>
         </div>
-      </Form>
+      </Form> */}
     </div>
   );
 };

@@ -29,6 +29,11 @@ public class RoleRepository : IRoleRepository
         var roles = await _dbcontext.role.ToListAsync();
         return roles == null ? Enumerable.Empty<Role>() : roles;
     }
+    public async Task<Role> GetOneRole(string roleId)
+    {
+        var role = await _dbcontext.role.FindAsync(roleId);
+        return role;
+    }
 
     public async Task<Role> UpdateRole(string roleId, Role role)
     {

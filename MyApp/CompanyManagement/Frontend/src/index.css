@@ -9,7 +9,7 @@ html, body{
 
 @layer base{
     nav ul li{
-        @apply cursor-pointer hover:bg-slate-800 p-3 sm:text-xl;
+        @apply cursor-pointer hover:text-slate-800 p-3 sm:text-xl;
     }
 
 }

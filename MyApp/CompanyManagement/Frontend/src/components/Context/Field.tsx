@@ -1,4 +1,4 @@
-import { FC, useContext, ChangeEvent } from 'react';
+import { useContext, ChangeEvent } from 'react';
 import { FormContext } from './Form';
 
 interface Option {
@@ -8,24 +8,23 @@ interface Option {
 interface Props {
   name: string;
   label?: string;
+  isDisabled?: boolean;
   type?: 'Text' | 'TextArea' | 'Password' | 'Select';
   optionData?: Option[] | null;
   defaltOPtion?: string;
 }
 
-export const Field: FC<Props> = ({
+export const Field = ({
   name,
   label,
+  isDisabled,
   type = 'Text',
   optionData,
   defaltOPtion,
-}) => {
+}: Props) => {
   const { setValue, touched, validate, setTouched } = useContext(FormContext);
   const handleChange = (
-    e:
-      | ChangeEvent<HTMLInputElement>
-      | ChangeEvent<HTMLTextAreaElement>
-      | ChangeEvent<HTMLSelectElement>,
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
     if (setValue) {
       setValue(name, e.currentTarget.value);
@@ -52,6 +51,7 @@ export const Field: FC<Props> = ({
               onChange={handleChange}
               onBlur={handleBlur}
               placeholder=" "
+              disabled={isDisabled}
             />
           )}
           {type === 'TextArea' && (
@@ -91,15 +91,11 @@ export const Field: FC<Props> = ({
 
           {errors[name] &&
             errors[name].length > 0 &&
-            errors[name].map((error) => {
-              console.log(name, error);
-              return (
-                <div className="text-[12px] text-red-500" key={error}>
-                  {error}
-                </div>
-              );
-            })}
-          {errors[name]}
+            errors[name].map((error) => (
+              <div className="text-[12px] text-red-500" key={error}>
+                {error}
+              </div>
+            ))}
         </div>
       )}
     </FormContext.Consumer>

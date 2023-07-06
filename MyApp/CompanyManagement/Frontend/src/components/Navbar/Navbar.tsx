@@ -44,17 +44,17 @@ const Navbar = () => {
             <Link to="role">Role</Link>
           </li>
           <li>
-            <Link to="user">Class</Link>
+            <Link to="user">Department</Link>
           </li>
           <li>
-            <Link to="user">Subject</Link>
+            <Link to="user">Schedule</Link>
           </li>
           <li className="p-3 sm:absolute sm:right-0">
             <Link to="user">Login</Link>
           </li>
         </ul>
       </nav>
-      <div className="footer"></div>
+      {/* <div className="footer"></div> */}
     </div>
   );
 };

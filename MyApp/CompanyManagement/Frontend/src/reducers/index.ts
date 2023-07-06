@@ -3,6 +3,12 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import roleSlice from './roleSlice';
 // import { ObjectState, objectSlice } from './Slices';
 
+export interface DataResponse {
+  success: boolean;
+  message: string;
+  data?: any;
+}
+
 export const rootReducer = combineReducers({
   role: roleSlice,
 });
