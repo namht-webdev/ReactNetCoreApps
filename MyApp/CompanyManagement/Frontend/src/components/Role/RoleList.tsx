@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle, faSort } from '@fortawesome/free-solid-svg-icons';
-import { useEffect } from 'react';
+import { faPen, faPlusCircle, faSort } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../../reducers';
-import { fetchAll } from '../../reducers/roleSlice';
+import { deleteRole, fetchAll } from '../../reducers/roleSlice';
+import { Modal } from '../Modal';
 
 export const RoleList = () => {
   const dispatch = useAppDispatch();
@@ -12,13 +13,10 @@ export const RoleList = () => {
   useEffect(() => {
     dispatch(fetchAll());
   }, [dispatch]);
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (error) {
-  //   return <div>Error: {error}</div>;
-  // }
+  const [showModal, setShowModal] = useState(false);
+  const handleDeleteRole = async (role_id: string) => {
+    await dispatch(deleteRole(role_id));
+  };
   return (
     <div>
       <p className="py-10 text-center font-bold text-slate-500">
@@ -52,7 +50,9 @@ export const RoleList = () => {
                   />
                 </div>
               </th>
-              <th scope="col" className="px-6 py-3 w-1/3 text-center"></th>
+              <th scope="col" className="px-6 py-3 w-1/3 text-center">
+                <FontAwesomeIcon icon={faPen} />
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -68,6 +68,26 @@ export const RoleList = () => {
                     >
                       Cập nhật
                     </Link>
+                    <span
+                      className="font-bold hover:underline cursor-pointer text-red-700"
+                      onClick={() => {
+                        setShowModal(true);
+                      }}
+                    >
+                      Xóa
+                    </span>
+                    {showModal && (
+                      <Modal
+                        name={`${role?.role_name}`}
+                        onConfirm={() => {
+                          handleDeleteRole(role.role_id);
+                          setShowModal(false);
+                        }}
+                        onCancel={() => {
+                          setShowModal(false);
+                        }}
+                      />
+                    )}
                   </td>
                 </tr>
               );

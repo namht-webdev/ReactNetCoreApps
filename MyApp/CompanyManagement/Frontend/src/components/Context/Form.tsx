@@ -158,7 +158,9 @@ export const Form = ({
       >
         <fieldset>
           {children}
-          <PrimaryButton type={type} title={submitCaption} />
+          <div className="flex justify-between w-1/4 lg:w-1/6">
+            <PrimaryButton type={type} title={submitCaption} />
+          </div>
           {submitted && submitError && (
             <p className="text-red-500 pt-3">{failureMessage}</p>
           )}

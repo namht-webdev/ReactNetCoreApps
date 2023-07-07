@@ -19,7 +19,7 @@ public class RoleRepository : IRoleRepository
     {
         var roleExists = await _dbcontext.role.FindAsync(roleId);
         if (roleExists == null) return false;
-        _dbcontext.Remove(roleId);
+        _dbcontext.Remove(roleExists);
         var result = await _dbcontext.SaveChangesAsync();
         return result == 1;
     }

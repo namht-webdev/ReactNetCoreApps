@@ -1,6 +1,8 @@
 // import { useEffect } from 'react';
 // import axios from 'axios';
 // import { DEFAULT_API_URL } from '../../api/api';
+import { faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 // import { appThemes } from '../../utils/Theme';
@@ -11,7 +13,7 @@ const Navbar = () => {
   //     console.log(res);
   //   });
   // }, []);
-  const [toggleBtn, setToggleBtn] = useState(false);
+  const [toggleBtn, setToggleBtn] = useState(true);
   // const theme: Theme = 'dark';
   // const setTheme = useMemo(
   //   () => (theme === 'dark' ? appThemes.darkTheme : appThemes.lightTheme),
@@ -24,9 +26,9 @@ const Navbar = () => {
           <span className="text-black">logo</span>
           <button
             onClick={() => setToggleBtn(!toggleBtn)}
-            className="float-right px-3 inline sm:hidden text-black"
+            className="float-right px-3 inline sm:hidden text-black text-xl"
           >
-            btn
+            <FontAwesomeIcon icon={toggleBtn ? faBars : faTimes} />
           </button>
         </div>
         <ul

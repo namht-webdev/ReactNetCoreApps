@@ -65,17 +65,17 @@ public class RoleController : ControllerBase
         }
     }
 
-    [HttpDelete]
-    public async Task<IActionResult> DeleteRole(string roleId)
+    [HttpDelete("{roleId}")]
+    public async Task<IActionResult> DeleteRole([FromRoute] string roleId)
     {
         try
         {
             var result = await _role.DeleteRole(roleId);
-            return result ? Ok(new { success = true, message = $"The role {roleId} is deleted" }) : BadRequest(new { success = false, message = $"The role {roleId} does not exist" });
+            return result ? Ok(new { success = true, message = $"The role {roleId} is deleted", data = roleId }) : BadRequest(new { success = false, message = $"The role {roleId} does not exist" });
         }
         catch (System.Exception)
         {
-            return Problem(detail: "Something went wrong!");
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Something went wrong!" });
         }
     }
 }

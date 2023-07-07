@@ -83,6 +83,22 @@ export const getOne = createAsyncThunk<DataResponse, string>(
   },
 );
 
+export const deleteRole = createAsyncThunk<DataResponse, string>(
+  'role/deleteRole',
+  async (role_id: string): Promise<DataResponse> => {
+    try {
+      const response = await axios.delete<DataResponse>(
+        `${DEFAULT_API_URL}/role/${role_id}`,
+      );
+      return response.data;
+    } catch (error) {
+      if (error instanceof Error && error.message.includes('400'))
+        return { success: false, message: 'Role này chưa có trong hệ thống' };
+      return { success: false, message: 'Something went wrong' };
+    }
+  },
+);
+
 export const roleSlice = createSlice({
   name: 'role',
   initialState,
@@ -113,6 +129,15 @@ export const roleSlice = createSlice({
       .addCase(addNew.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.error.message || 'Failed to add role to database';
+      })
+      .addCase(deleteRole.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteRole.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.roles = state.roles.filter(
+          (role) => role.role_id !== action.payload.data,
+        );
       });
   },
 });
