@@ -1,7 +1,14 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import roleSlice from './roleSlice';
+import dataSlice from './dataSlice';
 // import { ObjectState, objectSlice } from './Slices';
+
+export interface ApiRequest {
+  route: string;
+  title: string;
+  id?: string;
+  data?: any;
+}
 
 export interface DataResponse {
   success: boolean;
@@ -9,8 +16,18 @@ export interface DataResponse {
   data?: any;
 }
 
+export const existData: DataResponse = {
+  success: false,
+  message: 'This ### is already exist',
+};
+
+export const serverError: DataResponse = {
+  success: false,
+  message: 'Something went wrong',
+};
+
 export const rootReducer = combineReducers({
-  role: roleSlice,
+  data: dataSlice,
 });
 const store = configureStore({
   reducer: rootReducer,

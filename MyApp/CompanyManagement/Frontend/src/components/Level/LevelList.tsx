@@ -1,42 +1,45 @@
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPen,
   faPlusCircle,
   faSort,
   faSpinner,
 } from '@fortawesome/free-solid-svg-icons';
-import { useEffect, useMemo, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   ApiRequest,
   RootState,
   useAppDispatch,
   useAppSelector,
 } from '../../reducers';
-import { deleteOne, fetchAll } from '../../reducers/dataSlice';
 import { Modal } from '../Modal';
+import { deleteOne, fetchAll } from '../../reducers/dataSlice';
 
-export const RoleList = () => {
+const LevelList = () => {
   const dispatch = useAppDispatch();
   const { data, isLoading } = useAppSelector((state: RootState) => state.data);
-  const req: ApiRequest = useMemo(() => {
-    return {
-      title: 'role',
-      route: 'role',
-    };
-  }, []);
   useEffect(() => {
+    const req: ApiRequest = {
+      route: 'level',
+      title: 'level',
+    };
     dispatch(fetchAll(req));
-  }, [dispatch, req]);
+  }, [dispatch]);
+
   const [showModal, setShowModal] = useState(false);
-  const handleDeleteRole = async (role_id: string) => {
-    req.id = role_id;
+  const handleDeleteRole = async (level_id: string) => {
+    const req: ApiRequest = {
+      title: 'level',
+      route: 'level',
+      id: level_id,
+    };
     await dispatch(deleteOne(req));
   };
   return (
     <div>
       <p className="py-10 text-center font-bold text-slate-500">
-        DANH SÁCH VAI TRÒ
+        DANH SÁCH CẤP ĐỘ
       </p>
       <div className="px-36">
         <Link className="text-green-600 text-2xl" to="create">
@@ -49,7 +52,7 @@ export const RoleList = () => {
             <tr>
               <th scope="col" className="px-6 py-3 w-1/3">
                 <div className="flex items-center">
-                  Mã vai trò
+                  Mã cấp độ
                   <FontAwesomeIcon
                     className="px-2 hover:cursor-pointer active:opacity-50"
                     icon={faSort}
@@ -59,7 +62,7 @@ export const RoleList = () => {
 
               <th scope="col" className="px-6 py-3 w-1/3">
                 <div className="flex items-center">
-                  Tên vai trò
+                  Tên cấp độ
                   <FontAwesomeIcon
                     className="px-2 hover:cursor-pointer active:opacity-50"
                     icon={faSort}
@@ -79,14 +82,14 @@ export const RoleList = () => {
                 </td>
               </tr>
             )}
-            {data.map((role, index) => {
+            {data?.map((level, index) => {
               return (
                 <tr key={index} className="bg-white dark:bg-gray-800">
-                  <td className="px-6 py-4">{role.role_id}</td>
-                  <td className="px-6 py-4">{role.role_name}</td>
+                  <td className="px-6 py-4">{level.level_id}</td>
+                  <td className="px-6 py-4">{level.level_name}</td>
                   <td className="px-6 py-4 text-center flex justify-around">
                     <Link
-                      to={`${role.role_id}`}
+                      to={`${level.level_id}`}
                       className="font-medium text-yellow-600 hover:underline"
                     >
                       Cập nhật
@@ -101,10 +104,10 @@ export const RoleList = () => {
                     </span>
                     {showModal && (
                       <Modal
-                        title="vai trò"
-                        name={`${role?.role_name}`}
+                        title="cấp độ"
+                        name={`${level?.level_name}`}
                         onConfirm={() => {
-                          handleDeleteRole(role.role_id);
+                          handleDeleteRole(level.level_id);
                           setShowModal(false);
                         }}
                         onCancel={() => {
@@ -122,3 +125,5 @@ export const RoleList = () => {
     </div>
   );
 };
+
+export default LevelList;

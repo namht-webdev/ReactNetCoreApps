@@ -8,6 +8,9 @@ import { Create } from './components/User/Create';
 import { RoleList } from './components/Role/RoleList';
 import { CreateRole } from './components/Role/CreateRole';
 import { UpdateRole } from './components/Role/UpdateRole';
+import LevelList from './components/Level/LevelList';
+import { CreateLevel } from './components/Level/CreateLevel';
+import { UpdateLevel } from './components/Level/UpdateLevel';
 
 function App() {
   return (
@@ -24,6 +27,10 @@ function App() {
           <Route path="role" element={<RoleList />}></Route>
           <Route path="role/:role_id" element={<UpdateRole />} />
           <Route path="role/create" element={<CreateRole />}></Route>
+
+          <Route path="level" element={<LevelList />}></Route>
+          <Route path="level/:level_id" element={<UpdateLevel />} />
+          <Route path="level/create" element={<CreateLevel />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>

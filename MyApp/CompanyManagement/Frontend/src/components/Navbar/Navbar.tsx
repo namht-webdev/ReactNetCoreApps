@@ -46,7 +46,7 @@ const Navbar = () => {
             <Link to="role">Role</Link>
           </li>
           <li>
-            <Link to="user">Department</Link>
+            <Link to="level">Level</Link>
           </li>
           <li>
             <Link to="user">Schedule</Link>
