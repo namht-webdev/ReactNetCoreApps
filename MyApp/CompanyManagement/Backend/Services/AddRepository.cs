@@ -5,6 +5,8 @@ public static class IServiceCollectionExtend
     {
         return service.AddScoped<IUserRepository, UserRepository>()
                         .AddScoped<IRoleRepository, RoleRepository>()
-                        .AddScoped<ILevelRepository, LevelRepository>();
+                        .AddScoped<ILevelRepository, LevelRepository>()
+                        .AddScoped<IDepartmentRepository, DepartmentRepository>()
+                        .AddScoped<IRequirementRepository, RequirementRepository>();
     }
 }

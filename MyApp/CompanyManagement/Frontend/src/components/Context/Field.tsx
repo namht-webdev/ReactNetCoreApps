@@ -7,20 +7,20 @@ interface Option {
 }
 interface Props {
   name: string;
+  defaultValue?: string;
   label?: string;
   isDisabled?: boolean;
-  type?: 'Text' | 'TextArea' | 'Password' | 'Select';
+  type?: 'Text' | 'TextArea' | 'Password' | 'Select' | 'DateTime';
   optionData?: Option[] | null;
-  defaltOPtion?: string;
 }
 
 export const Field = ({
   name,
+  defaultValue,
   label,
   isDisabled,
   type = 'Text',
   optionData,
-  defaltOPtion,
 }: Props) => {
   const { setValue, touched, validate, setTouched } = useContext(FormContext);
   const handleChange = (
@@ -41,16 +41,46 @@ export const Field = ({
     <FormContext.Consumer>
       {({ values, errors }) => (
         <div className="relative z-0 w-full mb-6 group">
+          {label && type === 'TextArea' && (
+            <label
+              htmlFor={name}
+              className="text-sm text-gray-500 dark:text-gray-400 -z-10 focus:text-blue-600 peer-focus:dark:text-blue-500"
+            >
+              {label}
+            </label>
+          )}
           {(type === 'Text' || type === 'Password') && (
             <input
               type={type.toLowerCase()}
               id={name}
               name={name}
               className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-              value={values[name] === undefined ? '' : values[name]}
+              value={
+                defaultValue
+                  ? defaultValue
+                  : values[name] === undefined
+                  ? ''
+                  : values[name]
+              }
               onChange={handleChange}
               onBlur={handleBlur}
               placeholder=" "
+              disabled={isDisabled}
+            />
+          )}
+          {type === 'DateTime' && (
+            <input
+              type={type.toLowerCase()}
+              id={name}
+              name={name}
+              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              value={
+                values[name] === undefined
+                  ? new Date().toLocaleDateString()
+                  : values[name]
+              }
+              onChange={handleChange}
+              onBlur={handleBlur}
               disabled={isDisabled}
             />
           )}
@@ -58,7 +88,7 @@ export const Field = ({
             <textarea
               id={name}
               name={name}
-              className="field h-[100px]"
+              className="h-[100px] box-border mb-[5px] py-2 px-[10px] border-solid border-[1px] rounded-[3px] bg-white w-full dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               value={values[name] === undefined ? '' : values[name]}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -72,7 +102,7 @@ export const Field = ({
               onChange={handleChange}
               onBlur={handleBlur}
             >
-              <option selected>{defaltOPtion}</option>
+              <option>{label}</option>
               {optionData?.map((data, idx) => (
                 <option key={idx} value={data.value}>
                   {data.name}
@@ -80,7 +110,7 @@ export const Field = ({
               ))}
             </select>
           )}
-          {label && (
+          {label && type !== 'TextArea' && type !== 'Select' && (
             <label
               htmlFor={name}
               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"

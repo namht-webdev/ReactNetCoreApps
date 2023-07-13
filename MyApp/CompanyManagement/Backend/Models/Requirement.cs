@@ -1,8 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-using Microsoft.EntityFrameworkCore;
-
 namespace CompanyManagement.Models;
 
 public class Requirement
@@ -18,5 +16,5 @@ public class Requirement
     public User? reciever { get; set; }
     [Column(TypeName = "smalldatetime")]
     public DateTime date { get; set; }
-    public string require_message { get; set; }
+    public string request_message { get; set; }
 }

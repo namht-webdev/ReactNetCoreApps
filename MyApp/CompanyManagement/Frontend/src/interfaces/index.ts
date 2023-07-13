@@ -26,3 +26,17 @@ export interface Student {
   role_id: string;
   is_deleted: boolean;
 }
+
+export interface Department {
+  department_id: string;
+  department_name: string;
+  floor: number;
+}
+
+export interface Requirement {
+  requirement_id: string;
+  from_user: string;
+  to_user: string;
+  date: Date;
+  request_message: string;
+}

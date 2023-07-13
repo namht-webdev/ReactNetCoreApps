@@ -49,6 +49,12 @@ const Navbar = () => {
             <Link to="level">Level</Link>
           </li>
           <li>
+            <Link to="department">Department</Link>
+          </li>
+          <li>
+            <Link to="requirement">Requirement</Link>
+          </li>
+          <li>
             <Link to="user">Schedule</Link>
           </li>
           <li className="p-3 sm:absolute sm:right-0">

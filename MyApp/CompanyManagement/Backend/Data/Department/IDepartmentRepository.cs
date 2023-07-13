@@ -1,8 +1,9 @@
 using CompanyManagement.Models;
 public interface IDepartmentRepository
 {
-    Task<bool> CreateDepartment(Department department);
-    Task<IEnumerable<Department>> GetDepartment();
-    Task<Department> UpdateDepartment(string departmentId, Department department);
-    Task<bool> DeleteDepartment(string roldId);
+    Task<bool> Create(Department department);
+    Task<IEnumerable<Department>> GetAll();
+    Task<Department> GetOne(string departmentId);
+    Task<Department> Update(string departmentId, Department department);
+    Task<bool> Delete(string departmentId);
 }

@@ -6,7 +6,7 @@ public class DepartmentRepository : IDepartmentRepository
 {
     private readonly CompanyManagementDbContext _dbcontext;
     public DepartmentRepository(CompanyManagementDbContext dbContext) => _dbcontext = dbContext;
-    public async Task<bool> CreateDepartment(Department department)
+    public async Task<bool> Create(Department department)
     {
         var departmentExists = await _dbcontext.department.FindAsync(department.department_id);
         if (departmentExists != null) return false;
@@ -15,7 +15,7 @@ public class DepartmentRepository : IDepartmentRepository
         return result == 1;
     }
 
-    public async Task<bool> DeleteDepartment(string roldId)
+    public async Task<bool> Delete(string roldId)
     {
         var departmentExists = await _dbcontext.department.FindAsync(roldId);
         if (departmentExists == null) return false;
@@ -24,15 +24,15 @@ public class DepartmentRepository : IDepartmentRepository
         return result == 1;
     }
 
-    public async Task<IEnumerable<Department>> GetDepartment()
+    public async Task<IEnumerable<Department>> GetAll()
     {
         var departments = await _dbcontext.department.ToListAsync();
         return departments == null ? Enumerable.Empty<Department>() : departments;
     }
 
-    public async Task<Department> UpdateDepartment(string roldId, Department department)
+    public async Task<Department> Update(string departmentId, Department department)
     {
-        var departmentExists = await _dbcontext.department.FindAsync(roldId);
+        var departmentExists = await _dbcontext.department.FindAsync(departmentId);
         if (departmentExists != null)
         {
             departmentExists.department_name = department.department_name;
@@ -41,4 +41,10 @@ public class DepartmentRepository : IDepartmentRepository
         }
         return departmentExists;
     }
+    public async Task<Department> GetOne(string departmentId)
+    {
+        var departmentExists = await _dbcontext.department.FindAsync(departmentId);
+        return departmentExists;
+    }
+
 }

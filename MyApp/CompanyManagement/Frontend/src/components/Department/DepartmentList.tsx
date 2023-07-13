@@ -16,26 +16,26 @@ import {
 import { deleteOne, fetchAll } from '../../reducers/dataSlice';
 import { Modal } from '../Modal';
 
-export const RoleList = () => {
+export const DepartmentList = () => {
   const dispatch = useAppDispatch();
   const { data, isLoading } = useAppSelector((state: RootState) => state.data);
   const req: ApiRequest = useMemo(() => {
     return {
-      title: 'role',
-      route: 'role',
+      title: 'department',
+      route: 'department',
     };
   }, []);
   useEffect(() => {
-    const doGetRole = async (): Promise<void> => {
+    const doGetDepartment = async (): Promise<void> => {
       await dispatch(fetchAll(req));
     };
-    doGetRole();
+    doGetDepartment();
   }, [dispatch, req]);
   const [showModal, setShowModal] = useState(false);
-  const handleDeleteRole = async (role_id: string) => {
+  const handleDeleteDepartment = async (department_id: string) => {
     const deleteReq: ApiRequest = {
       ...req,
-      id: role_id,
+      id: department_id,
     };
     await dispatch(deleteOne(deleteReq));
     setShowModal(false);
@@ -43,7 +43,7 @@ export const RoleList = () => {
   return (
     <div>
       <p className="py-10 text-center font-bold text-slate-500">
-        DANH SÁCH VAI TRÒ
+        DANH SÁCH PHÒNG BAN
       </p>
       <div className="px-36">
         <Link className="text-green-600 text-2xl" to="create">
@@ -54,9 +54,9 @@ export const RoleList = () => {
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-6 py-3 w-1/3">
+              <th scope="col" className="px-6 py-3 w-1/4">
                 <div className="flex items-center">
-                  Mã vai trò
+                  Mã phòng ban
                   <FontAwesomeIcon
                     className="px-2 hover:cursor-pointer active:opacity-50"
                     icon={faSort}
@@ -64,16 +64,25 @@ export const RoleList = () => {
                 </div>
               </th>
 
-              <th scope="col" className="px-6 py-3 w-1/3">
+              <th scope="col" className="px-6 py-3 w-1/4">
                 <div className="flex items-center">
-                  Tên vai trò
+                  Tên phòng ban
                   <FontAwesomeIcon
                     className="px-2 hover:cursor-pointer active:opacity-50"
                     icon={faSort}
                   />
                 </div>
               </th>
-              <th scope="col" className="px-6 py-3 w-1/3 text-center">
+              <th scope="col" className="px-6 py-3 w-1/4">
+                <div className="flex items-center">
+                  Tầng
+                  <FontAwesomeIcon
+                    className="px-2 hover:cursor-pointer active:opacity-50"
+                    icon={faSort}
+                  />
+                </div>
+              </th>
+              <th scope="col" className="px-6 py-3 w-1/4 text-center">
                 <FontAwesomeIcon icon={faPen} />
               </th>
             </tr>
@@ -86,14 +95,15 @@ export const RoleList = () => {
                 </td>
               </tr>
             )}
-            {data.map((role, index) => {
+            {data.map((department, index) => {
               return (
                 <tr key={index} className="bg-white dark:bg-gray-800">
-                  <td className="px-6 py-4">{role.role_id}</td>
-                  <td className="px-6 py-4">{role.role_name}</td>
-                  <td className="px-6 py-4 text-center flex justify-around">
+                  <td className="px-6 py-4">{department.department_id}</td>
+                  <td className="px-6 py-4">{department.department_name}</td>
+                  <td className="px-6 py-4">{department.floor}</td>
+                  <td className="px-6 py-4 text-center grid md:grid-cols-2 md:gap-1">
                     <Link
-                      to={`${role.role_id}`}
+                      to={`${department.department_id}`}
                       className="font-medium text-yellow-600 hover:underline"
                     >
                       Cập nhật
@@ -108,10 +118,10 @@ export const RoleList = () => {
                     </span>
                     {showModal && (
                       <Modal
-                        title="vai trò"
-                        name={`${role?.role_name}`}
+                        title="phòng ban"
+                        name={`${department?.department_name}`}
                         onConfirm={() => {
-                          handleDeleteRole(role.role_id);
+                          handleDeleteDepartment(department.department_id);
                         }}
                         onCancel={() => {
                           setShowModal(false);

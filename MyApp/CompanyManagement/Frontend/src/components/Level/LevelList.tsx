@@ -5,7 +5,7 @@ import {
   faSpinner,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ApiRequest,
@@ -19,13 +19,15 @@ import { deleteOne, fetchAll } from '../../reducers/dataSlice';
 const LevelList = () => {
   const dispatch = useAppDispatch();
   const { data, isLoading } = useAppSelector((state: RootState) => state.data);
-  useEffect(() => {
-    const req: ApiRequest = {
+  const req: ApiRequest = useMemo(() => {
+    return {
       route: 'level',
       title: 'level',
     };
+  }, []);
+  useEffect(() => {
     dispatch(fetchAll(req));
-  }, [dispatch]);
+  }, [dispatch, req]);
 
   const [showModal, setShowModal] = useState(false);
   const handleDeleteRole = async (level_id: string) => {

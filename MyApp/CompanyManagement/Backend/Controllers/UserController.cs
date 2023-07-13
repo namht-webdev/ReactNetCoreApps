@@ -10,43 +10,43 @@ public class UserController : ControllerBase
     private readonly IUserRepository _userRepository;
     public UserController(IUserRepository userRepository) => _userRepository = userRepository;
     [HttpPost]
-    public async Task<ActionResult> CreateUser(User user)
+    public async Task<ActionResult> Add(User user)
     {
         try
         {
-            bool success = await _userRepository.CreateUser(user);
-            return success ? Ok(new { success = success, user = user }) : BadRequest(new { success = false, message = "This user already exists!" });
+            bool success = await _userRepository.Add(user);
+            return success ? Ok(new { success = success, message = $"Đã thêm mới người dùng {user.user_id}", data = user }) : BadRequest(new { success = false, message = $"Người dùng {user.user_id} đã tồn tại" });
         }
         catch (System.Exception)
         {
-            return BadRequest(new { success = false, message = "An error occur while processing! Please try again after a second", statusCode = 400 });
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 400 });
         }
     }
 
     [HttpGet]
-    public async Task<ActionResult> GetAllUser()
+    public async Task<ActionResult> GetAll()
     {
         try
         {
-            var userList = await _userRepository.GetAllUser();
+            var userList = await _userRepository.GetAll();
             return Ok(userList);
         }
         catch (System.Exception)
         {
-            return Problem(detail: "Internal Server Error", statusCode: StatusCodes.Status500InternalServerError);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 400 });
         }
     }
     [HttpGet("{userId}")]
-    public async Task<ActionResult> GetUser(string userId)
+    public async Task<ActionResult> GetOne(string userId)
     {
         try
         {
-            var user = await _userRepository.GetUser(userId);
+            var user = await _userRepository.GetOne(userId);
             return user == null ? NotFound(new { success = false, message = "This user is not exists!" }) : Ok(user);
         }
         catch (System.Exception)
         {
-            return Problem(detail: "Internal Server Error", statusCode: StatusCodes.Status500InternalServerError);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 400 });
         }
     }
 
@@ -54,7 +54,7 @@ public class UserController : ControllerBase
     public async Task<ActionResult> ChangePassword(string userId, string oldPassword, string newPassword)
     {
         var result = await _userRepository.ChangePassword(userId, oldPassword, newPassword);
-        return result ? Ok(new { success = true, message = "Your password has been changed" }) : BadRequest(new { success = false, message = "Your old password is not correct" });
+        return result ? Ok(new { success = true, message = "Thay đổi mật khảu thành công" }) : BadRequest(new { success = false, message = "mật khẩu cũ không khớp" });
     }
 
     [HttpDelete("delete")]
@@ -62,12 +62,12 @@ public class UserController : ControllerBase
     {
         try
         {
-            var result = isSoftDelete ? await _userRepository.UserSoftDelete(userId) : await _userRepository.UserHardDelete(userId);
-            return result ? Ok(new { success = true, message = "User has been deleted!" }) : BadRequest(new { success = false, message = "This user has been deleted before!" });
+            var result = isSoftDelete ? await _userRepository.SoftDelete(userId) : await _userRepository.HardDelete(userId);
+            return result ? Ok(new { success = true, message = "User has been deleted!" }) : BadRequest(new { success = false, message = $"Người dùng {userId} không còn khả dụng" });
         }
         catch (System.Exception)
         {
-            return Problem(detail: "Internal Server Error", statusCode: StatusCodes.Status500InternalServerError);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 400 });
         }
     }
 
@@ -77,12 +77,12 @@ public class UserController : ControllerBase
     {
         try
         {
-            var userUpdated = await _userRepository.UpdateUser(userId, user);
-            return userUpdated != null ? Ok(userUpdated) : BadRequest(new { success = false, message = "Seems that user has been deleted!" });
+            var userUpdated = await _userRepository.Update(userId, user);
+            return userUpdated != null ? Ok(userUpdated) : BadRequest(new { success = false, message = $"Người dùng {userId} không còn khả dụng" });
         }
         catch (System.Exception)
         {
-            return Problem(detail: "Something went wrong!");
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 400 });
         }
     }
 }

@@ -6,7 +6,7 @@ public class LevelRepository : ILevelRepository
 {
     private readonly CompanyManagementDbContext _dbContext;
     public LevelRepository(CompanyManagementDbContext dbContext) => _dbContext = dbContext;
-    public async Task<bool> Create(Level level)
+    public async Task<bool> Add(Level level)
     {
         var levelExists = await _dbContext.level.FindAsync(level.level_id);
         if (levelExists != null) return false;

@@ -11,6 +11,12 @@ import { UpdateRole } from './components/Role/UpdateRole';
 import LevelList from './components/Level/LevelList';
 import { CreateLevel } from './components/Level/CreateLevel';
 import { UpdateLevel } from './components/Level/UpdateLevel';
+import { DepartmentList } from './components/Department/DepartmentList';
+import { UpdateDepartment } from './components/Department/UpdateDepartment';
+import { CreateDepartment } from './components/Department/CreateDepartment';
+import { CreateRequirement } from './components/Requirement/CreateRequirement';
+import { RequirementList } from './components/Requirement/RequirementList';
+import { UpdateRequirement } from './components/Requirement/UpdateRequirement';
 
 function App() {
   return (
@@ -31,6 +37,26 @@ function App() {
           <Route path="level" element={<LevelList />}></Route>
           <Route path="level/:level_id" element={<UpdateLevel />} />
           <Route path="level/create" element={<CreateLevel />}></Route>
+
+          <Route path="department" element={<DepartmentList />}></Route>
+          <Route
+            path="department/:department_id"
+            element={<UpdateDepartment />}
+          />
+          <Route
+            path="department/create"
+            element={<CreateDepartment />}
+          ></Route>
+
+          <Route path="requirement" element={<RequirementList />}></Route>
+          <Route
+            path="requirement/:requirement_id"
+            element={<UpdateRequirement />}
+          />
+          <Route
+            path="requirement/create"
+            element={<CreateRequirement />}
+          ></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>

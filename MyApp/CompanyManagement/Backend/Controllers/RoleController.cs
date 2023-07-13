@@ -3,7 +3,7 @@ using CompanyManagement.Models;
 using CompanyManagement.Data;
 
 [ApiController]
-[Route("/api/role")]
+[Route("/api/[controller]")]
 public class RoleController : ControllerBase
 {
     private readonly IRoleRepository _role;
@@ -11,71 +11,71 @@ public class RoleController : ControllerBase
     public RoleController(IRoleRepository role) => _role = role;
 
     [HttpPost]
-    public async Task<IActionResult> CreateRole(Role role)
+    public async Task<IActionResult> Add(Role role)
     {
         try
         {
-            var result = await _role.CreateRole(role);
-            return result == true ? Ok(new { success = true, message = "Thành công", data = role }) : BadRequest(new { success = false, message = "This role is already exists." });
+            var result = await _role.Add(role);
+            return result == true ? Ok(new { success = true, message = $"Đã thêm mới vai trò {role.role_id}", data = role }) : BadRequest(new { success = false, message = $"Vai trò {role.role_id} đã tồn tại" });
         }
         catch (System.Exception)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Something went wrong!" });
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống" });
         }
     }
     [HttpGet]
-    public async Task<IActionResult> GetRole()
+    public async Task<IActionResult> GetAll()
     {
         try
         {
-            var result = await _role.GetRole();
-            return Ok(new { success = true, message = "Get roles successed", data = result });
+            var result = await _role.GetAll();
+            return Ok(new { success = true, message = "Danh sách vai trò nhân viên", data = result });
         }
         catch (System.Exception)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Something went wrong!" });
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống" });
         }
     }
 
     [HttpGet("{roleId?}")]
-    public async Task<IActionResult> GetOneRole(string roleId)
+    public async Task<IActionResult> GetOne(string roleId)
     {
         try
         {
-            var result = await _role.GetOneRole(roleId);
-            return result != null ? Ok(new { success = true, message = "Get role successfully", data = result }) : BadRequest(new { success = false, message = "Role này chưa có trong hệ thống" });
+            var result = await _role.GetOne(roleId);
+            return result != null ? Ok(new { success = true, message = $"Thông tin vai trò {roleId}", data = result }) : BadRequest(new { success = false, message = $"Vai trò {roleId} không còn khả dụng" });
         }
         catch (System.Exception)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Something went wrong!" });
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống" });
         }
     }
 
     [HttpPut("{roleId?}")]
-    public async Task<IActionResult> UpdateRole([FromRoute] string roleId, [FromBody] Role role)
+    public async Task<IActionResult> Update([FromRoute] string roleId, [FromBody] Role role)
     {
         try
         {
-            var result = await _role.UpdateRole(roleId, role);
-            return result != null ? Ok(new { success = true, message = "Role has been updated successfully", data = result }) : BadRequest(new { success = false, message = "Role này đã bị sửa hoặc xóa" });
+            var result = await _role.Update(roleId, role);
+            return result != null ? Ok(new { success = true, message = $"Cập nhật vai trò {roleId} thành công", data = result }) : BadRequest(new { success = false, message = "Vai trò {roleId} không còn khả dụng" });
         }
         catch (System.Exception)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Something went wrong!" });
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống" });
         }
     }
 
     [HttpDelete("{roleId}")]
-    public async Task<IActionResult> DeleteRole([FromRoute] string roleId)
+    public async Task<IActionResult> Delete([FromRoute] string roleId)
     {
         try
         {
-            var result = await _role.DeleteRole(roleId);
-            return result ? Ok(new { success = true, message = $"The role {roleId} is deleted", data = roleId }) : BadRequest(new { success = false, message = $"The role {roleId} does not exist" });
+            var result = await _role.Delete(roleId);
+            return result ? Ok(new { success = true, message = $"Đã xóa vai trò {roleId}", data = roleId }) : BadRequest(new { success = false, message = $"Vai trò {roleId} không còn khả dụng" });
         }
         catch (System.Exception)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Something went wrong!" });
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống" });
         }
     }
 }

@@ -8,7 +8,7 @@ public class UserRepository : IUserRepository
     private readonly CompanyManagementDbContext _dbContext;
 
     public UserRepository(CompanyManagementDbContext dbContext) => _dbContext = dbContext;
-    public async Task<bool> CreateUser(User user)
+    public async Task<bool> Add(User user)
     {
         var userExists = await _dbContext.user.FindAsync(user.user_id);
         if (userExists != null) return false;
@@ -18,7 +18,7 @@ public class UserRepository : IUserRepository
         return result == 1;
     }
 
-    public async Task<bool> UserSoftDelete(string userId)
+    public async Task<bool> SoftDelete(string userId)
     {
         var userExists = await _dbContext.user.FindAsync(userId);
         if (userExists == null) return false;
@@ -27,7 +27,7 @@ public class UserRepository : IUserRepository
         return result == 1;
     }
 
-    public async Task<bool> UserHardDelete(string userId)
+    public async Task<bool> HardDelete(string userId)
     {
         var userExists = await _dbContext.user.FindAsync(userId);
         if (userExists == null) return false;
@@ -36,13 +36,13 @@ public class UserRepository : IUserRepository
         return result == 1;
     }
 
-    public async Task<IEnumerable<User>> GetAllUser()
+    public async Task<IEnumerable<User>> GetAll()
     {
         var users = await _dbContext.user.ToListAsync();
         return users;
     }
 
-    public async Task<User> GetUser(string userId)
+    public async Task<User> GetOne(string userId)
     {
         var user = await _dbContext.user.FindAsync(userId);
         return user;
@@ -60,7 +60,7 @@ public class UserRepository : IUserRepository
         return users;
     }
 
-    public async Task<User> UpdateUser(string userId, User user)
+    public async Task<User> Update(string userId, User user)
     {
         var userExists = await _dbContext.user.FindAsync(userId);
         if (userExists != null)
