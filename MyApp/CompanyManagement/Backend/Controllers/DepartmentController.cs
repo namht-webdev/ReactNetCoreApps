@@ -15,7 +15,7 @@ public class DepartmentController : ControllerBase
     {
         try
         {
-            var result = await _department.Create(department);
+            var result = await _department.Add(department);
             return result == true ? Ok(new { success = true, message = $"Đã thêm mới phòng {department.department_id}", data = department }) : BadRequest(new { success = false, message = $"Phòng ban {department.department_id} đã tồn tại." });
         }
         catch (System.Exception)

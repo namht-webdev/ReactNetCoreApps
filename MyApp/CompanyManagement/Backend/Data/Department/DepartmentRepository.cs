@@ -6,7 +6,7 @@ public class DepartmentRepository : IDepartmentRepository
 {
     private readonly CompanyManagementDbContext _dbcontext;
     public DepartmentRepository(CompanyManagementDbContext dbContext) => _dbcontext = dbContext;
-    public async Task<bool> Create(Department department)
+    public async Task<bool> Add(Department department)
     {
         var departmentExists = await _dbcontext.department.FindAsync(department.department_id);
         if (departmentExists != null) return false;
@@ -15,11 +15,11 @@ public class DepartmentRepository : IDepartmentRepository
         return result == 1;
     }
 
-    public async Task<bool> Delete(string roldId)
+    public async Task<bool> Delete(string departmentId)
     {
-        var departmentExists = await _dbcontext.department.FindAsync(roldId);
+        var departmentExists = await _dbcontext.department.FindAsync(departmentId);
         if (departmentExists == null) return false;
-        _dbcontext.Remove(roldId);
+        _dbcontext.Remove(departmentId);
         var result = await _dbcontext.SaveChangesAsync();
         return result == 1;
     }

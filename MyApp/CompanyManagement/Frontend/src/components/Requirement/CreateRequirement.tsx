@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Values, required } from '../Context/Form';
+import { Form, Values, minLength, required } from '../Context/Form';
 import { Field } from '../Context/Field';
 import { ApiRequest, DataResponse, useAppDispatch } from '../../reducers';
 import { addNew } from '../../reducers/dataSlice';
@@ -27,7 +27,11 @@ export const CreateRequirement = () => {
         submitCaption="Thêm"
         onSubmit={handleSubmit}
         validationRules={{
-          requirement_id: [{ validator: required }],
+          to_user: [{ validator: required }],
+          message: [
+            { validator: required },
+            { validator: minLength, args: 10 },
+          ],
         }}
         failureMessage={messageReturn}
         successMessage={messageReturn}

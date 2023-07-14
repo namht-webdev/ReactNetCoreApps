@@ -43,7 +43,7 @@ public class RequirementController : ControllerBase
         try
         {
             var result = await _requirement.GetOne(requirementId);
-            return result != null ? Ok(new { success = true, message = $"Thông tin yêu cầu {requirementId}", data = result }) : BadRequest(new { success = false, message = $"yêu cầu {requirementId} không còn khả dụng" });
+            return result != null ? Ok(new { success = true, message = $"Thông tin yêu cầu {requirementId}", data = result }) : BadRequest(new { success = false, message = $"Yêu cầu {requirementId} không còn khả dụng" });
         }
         catch (System.Exception)
         {
@@ -57,7 +57,7 @@ public class RequirementController : ControllerBase
         try
         {
             var result = await _requirement.Update(requirementId, requirement);
-            return result != null ? Ok(new { success = true, message = $"Cập nhật yêu cầu {requirementId} thành công", data = result }) : BadRequest(new { success = false, message = "yêu cầu {requirementId} không còn khả dụng" });
+            return result != null ? Ok(new { success = true, message = $"Cập nhật yêu cầu {requirementId} thành công", data = result }) : BadRequest(new { success = false, message = $"Yêu cầu {requirementId} không còn khả dụng" });
         }
         catch (System.Exception)
         {

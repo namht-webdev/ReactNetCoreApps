@@ -55,7 +55,7 @@ const Navbar = () => {
             <Link to="requirement">Requirement</Link>
           </li>
           <li>
-            <Link to="user">Schedule</Link>
+            <Link to="schedule">Schedule</Link>
           </li>
           <li className="p-3 sm:absolute sm:right-0">
             <Link to="user">Login</Link>

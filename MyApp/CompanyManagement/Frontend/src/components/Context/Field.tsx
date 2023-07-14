@@ -1,4 +1,4 @@
-import { useContext, ChangeEvent } from 'react';
+import { useContext, ChangeEvent, useEffect } from 'react';
 import { FormContext } from './Form';
 
 interface Option {
@@ -37,6 +37,10 @@ export const Field = ({
     if (setTouched) setTouched(name);
     if (validate) validate(name);
   };
+  // useEffect(() => {
+  //   if (defaultValue && setValue) setValue(name, defaultValue);
+  // });
+
   return (
     <FormContext.Consumer>
       {({ values, errors }) => (

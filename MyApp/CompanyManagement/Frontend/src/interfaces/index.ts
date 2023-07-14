@@ -40,3 +40,12 @@ export interface Requirement {
   date: Date;
   request_message: string;
 }
+
+export interface Schedule {
+  schedule_id: string;
+  user_id: string;
+  date: Date;
+  note: string;
+  time_start: string;
+  time_end: string;
+}

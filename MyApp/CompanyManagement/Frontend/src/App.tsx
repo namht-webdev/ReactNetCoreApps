@@ -17,6 +17,9 @@ import { CreateDepartment } from './components/Department/CreateDepartment';
 import { CreateRequirement } from './components/Requirement/CreateRequirement';
 import { RequirementList } from './components/Requirement/RequirementList';
 import { UpdateRequirement } from './components/Requirement/UpdateRequirement';
+import { ScheduleList } from './components/Schedule/ScheduleList';
+import { UpdateSchedule } from './components/Schedule/UpdateSchedule';
+import { CreateSchedule } from './components/Schedule/CreateSchedule';
 
 function App() {
   return (
@@ -57,6 +60,11 @@ function App() {
             path="requirement/create"
             element={<CreateRequirement />}
           ></Route>
+          <Route path="*" element={<NotFound />}></Route>
+
+          <Route path="schedule" element={<ScheduleList />}></Route>
+          <Route path="schedule/:schedule_id" element={<UpdateSchedule />} />
+          <Route path="schedule/create" element={<CreateSchedule />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>
