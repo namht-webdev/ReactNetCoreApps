@@ -36,7 +36,7 @@ export const CreateSchedule = () => {
           <Field
             name="schedule_id"
             label="Mã lịch trình"
-            defaultValue={'LT'.concat(Date.now().toString())}
+            defaultValue="uuid"
             isDisabled
           ></Field>
         </div>

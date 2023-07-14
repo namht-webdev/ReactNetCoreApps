@@ -9,8 +9,8 @@ public class FingerPrinting
     public User? user { get; set; }
     [Column(TypeName = "smalldatetime")]
     public DateTime date { get; set; }
-    [Column(TypeName = "smalldatetime")]
+    [Column(TypeName = "datetime")]
     public DateTime comein_time { get; set; }
-    [Column(TypeName = "smalldatetime")]
+    [Column(TypeName = "datetime")]
     public DateTime comeout_time { get; set; }
 }

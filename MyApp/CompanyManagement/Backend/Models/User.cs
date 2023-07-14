@@ -9,7 +9,7 @@ public class User
     public string user_id { get; set; }
     public string full_name { get; set; }
     public string password_hash { get; set; }
-    [Column(TypeName = "smalldatetime")]
+    [Column(TypeName = "datetime")]
     public DateTime birth_date { get; set; }
     public string gender { get; set; }
     public string address_id { get; set; }
@@ -18,9 +18,9 @@ public class User
     public string phone_number { get; set; }
     public string email { get; set; }
     public string avatar { get; set; }
-    [Column(TypeName = "smalldatetime")]
+    [Column(TypeName = "datetime")]
     public DateTime date_start { get; set; }
-    [Column(TypeName = "smalldatetime")]
+    [Column(TypeName = "datetime")]
     public DateTime date_end { get; set; }
     public double salary { get; set; }
     public string department_id { get; set; }

@@ -51,7 +51,7 @@ export const UpdateLevel = () => {
             level_id: [{ validator: required }],
             level_name: [{ validator: required }],
           }}
-          initialValue={level ? level : {}}
+          initialValues={level ? level : {}}
           failureMessage={messageReturn}
           successMessage={messageReturn}
         >

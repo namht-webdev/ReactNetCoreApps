@@ -51,7 +51,7 @@ export const UpdateSchedule = () => {
             Schedule_name: [{ validator: required }],
             floor: [{ validator: required }, { validator: mustBeNumber }],
           }}
-          initialValue={schedule ? schedule : {}}
+          initialValues={schedule ? schedule : {}}
           failureMessage={messageReturn}
           successMessage={messageReturn}
         >

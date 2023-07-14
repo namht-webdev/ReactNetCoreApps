@@ -51,7 +51,7 @@ export const UpdateRole = () => {
             role_id: [{ validator: required }],
             role_name: [{ validator: required }],
           }}
-          initialValue={role ? role : {}}
+          initialValues={role ? role : {}}
           failureMessage={messageReturn}
           successMessage={messageReturn}
         >

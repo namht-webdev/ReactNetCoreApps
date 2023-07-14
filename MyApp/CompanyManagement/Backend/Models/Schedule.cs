@@ -12,7 +12,7 @@ public class Schedule
     public string user_id { get; set; }
     [ForeignKey("user_id")]
     public User? user { get; set; }
-    [Column(TypeName = "smalldatetime")]
+    [Column(TypeName = "datetime")]
     public DateTime date { get; set; }
     public string note { get; set; }
     public string time_start { get; set; }

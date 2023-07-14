@@ -49,7 +49,7 @@ export const UpdateRequirement = () => {
           validationRules={{
             requirement_id: [{ validator: required }],
           }}
-          initialValue={requirement ? requirement : {}}
+          initialValues={requirement ? requirement : {}}
           failureMessage={messageReturn}
           successMessage={messageReturn}
         >

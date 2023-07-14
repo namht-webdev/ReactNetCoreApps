@@ -4,6 +4,7 @@ using CompanyManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(CompanyManagementDbContext))]
-    partial class CompanyManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230714091009_update_datetime_type")]
+    partial class update_datetime_type
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -120,10 +123,10 @@ namespace Backend.Migrations
                         .HasColumnType("smalldatetime");
 
                     b.Property<DateTime>("comein_time")
-                        .HasColumnType("datetime");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<DateTime>("comeout_time")
-                        .HasColumnType("datetime");
+                        .HasColumnType("smalldatetime");
 
                     b.HasKey("user_id", "date");
 
@@ -172,7 +175,7 @@ namespace Backend.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("date")
-                        .HasColumnType("datetime");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<string>("from_user")
                         .IsRequired()
@@ -214,7 +217,7 @@ namespace Backend.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("date")
-                        .HasColumnType("datetime");
+                        .HasColumnType("smalldatetime");
 
                     b.Property<string>("note")
                         .IsRequired()

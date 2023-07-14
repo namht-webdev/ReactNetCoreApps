@@ -3,9 +3,16 @@ import { Form, Values, minLength, required } from '../Context/Form';
 import { Field } from '../Context/Field';
 import { ApiRequest, DataResponse, useAppDispatch } from '../../reducers';
 import { addNew } from '../../reducers/dataSlice';
+import { v4 as uuidv4 } from 'uuid';
 
 export const CreateRequirement = () => {
   const dispatch = useAppDispatch();
+  const initialValues = {
+    requirement_id: uuidv4(),
+    from_user: 'namht',
+    to_user: 'namht',
+    date: new Date().toISOString(),
+  };
   const [messageReturn, setMessage] = useState('');
   const handleSubmit = async (requirement: Values) => {
     const req: ApiRequest = {
@@ -27,34 +34,27 @@ export const CreateRequirement = () => {
         submitCaption="Thêm"
         onSubmit={handleSubmit}
         validationRules={{
+          requirement_id: [{ validator: required }],
+          from_user: [{ validator: required }],
           to_user: [{ validator: required }],
-          message: [
+          request_message: [
             { validator: required },
             { validator: minLength, args: 10 },
           ],
         }}
         failureMessage={messageReturn}
         successMessage={messageReturn}
+        initialValues={initialValues}
       >
         <div className="grid md:grid-cols-2 md:gap-6">
-          <Field
-            name="requirement_id"
-            label="Mã yêu cầu"
-            isDisabled
-            defaultValue={'YC'.concat(Date.now().toString())}
-          ></Field>
+          <Field name="requirement_id" label="Mã yêu cầu" isDisabled></Field>
           <Field name="date" label="Ngày" type="DateTime" isDisabled></Field>
         </div>
         <div className="grid md:grid-cols-2 md:gap-6">
-          <Field
-            name="from_user"
-            label="Từ người dùng"
-            isDisabled
-            defaultValue={'namht'}
-          ></Field>
-          <Field name="to_user" label="Chọn người dùng" type="Select"></Field>
+          <Field name="from_user" label="Từ người dùng" isDisabled></Field>
+          <Field name="to_user" label="Đến người dùng"></Field>
         </div>
-        <Field name="message" label="Nội dung" type="TextArea"></Field>
+        <Field name="request_message" label="Nội dung" type="TextArea"></Field>
       </Form>
     </div>
   );

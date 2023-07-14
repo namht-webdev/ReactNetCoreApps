@@ -51,7 +51,7 @@ export const UpdateDepartment = () => {
             department_name: [{ validator: required }],
             floor: [{ validator: required }, { validator: mustBeNumber }],
           }}
-          initialValue={department ? department : {}}
+          initialValues={department ? department : {}}
           failureMessage={messageReturn}
           successMessage={messageReturn}
         >

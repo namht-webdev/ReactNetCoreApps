@@ -59,7 +59,7 @@ interface Props {
   submitCaption?: string;
   children?: React.ReactNode;
   type?: 'submit';
-  initialValue?: Values;
+  initialValues?: Values;
   validationRules?: ValidationProp;
   onSubmit: (value: Values) => Promise<SubmitResult>;
   submitResult?: SubmitResult;
@@ -71,7 +71,7 @@ export const Form = ({
   submitCaption,
   children,
   type = 'submit',
-  initialValue,
+  initialValues,
   validationRules,
   onSubmit,
   successMessage = 'Successed',
@@ -135,8 +135,8 @@ export const Form = ({
   };
 
   useEffect(() => {
-    setValues(initialValue ? initialValue : {});
-  }, [initialValue]);
+    setValues(initialValues ? initialValues : {});
+  }, [initialValues]);
 
   return (
     <FormContext.Provider
