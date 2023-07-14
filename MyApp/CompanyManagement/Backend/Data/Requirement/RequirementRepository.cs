@@ -8,7 +8,7 @@ public class RequirementRepository : IRequirementRepository
     public RequirementRepository(CompanyManagementDbContext dbContext) => _dbcontext = dbContext;
     public async Task<bool> Add(Requirement requirement)
     {
-        var requirementExists = await _dbcontext.role.FindAsync(requirement.requirement_id);
+        var requirementExists = await _dbcontext.requirement.FindAsync(requirement.requirement_id);
         if (requirementExists != null) return false;
         await _dbcontext.requirement.AddAsync(requirement);
         var result = await _dbcontext.SaveChangesAsync();
@@ -17,9 +17,9 @@ public class RequirementRepository : IRequirementRepository
 
     public async Task<bool> Delete(string requirementId)
     {
-        var roleExists = await _dbcontext.role.FindAsync(requirementId);
-        if (roleExists == null) return false;
-        _dbcontext.Remove(roleExists);
+        var requirementExists = await _dbcontext.requirement.FindAsync(requirementId);
+        if (requirementExists == null) return false;
+        _dbcontext.Remove(requirementExists);
         var result = await _dbcontext.SaveChangesAsync();
         return result == 1;
     }
@@ -29,9 +29,9 @@ public class RequirementRepository : IRequirementRepository
         var requirements = await _dbcontext.requirement.ToListAsync();
         return requirements == null ? Enumerable.Empty<Requirement>() : requirements;
     }
-    public async Task<Requirement> GetOne(string roleId)
+    public async Task<Requirement> GetOne(string requirementId)
     {
-        var requirement = await _dbcontext.requirement.FindAsync(roleId);
+        var requirement = await _dbcontext.requirement.FindAsync(requirementId);
         return requirement;
     }
 

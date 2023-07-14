@@ -135,6 +135,10 @@ export const dataSlice = createSlice({
         state.data = state.data.filter(
           (data) => data.id !== action.payload.data,
         );
+      })
+      .addCase(deleteOne.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || 'Failed to add data to database';
       });
   },
 });

@@ -11,7 +11,7 @@ export const CreateRequirement = () => {
     requirement_id: uuidv4(),
     from_user: 'namht',
     to_user: 'namht',
-    date: new Date().toISOString(),
+    date: new Date().toISOString().split('T')[0],
   };
   const [messageReturn, setMessage] = useState('');
   const handleSubmit = async (requirement: Values) => {
