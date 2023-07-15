@@ -1,4 +1,4 @@
-import { useContext, ChangeEvent, useEffect, useState } from 'react';
+import { useContext, ChangeEvent } from 'react';
 import { FormContext } from './Form';
 
 interface Option {

@@ -60,7 +60,6 @@ function App() {
             path="requirement/create"
             element={<CreateRequirement />}
           ></Route>
-          <Route path="*" element={<NotFound />}></Route>
 
           <Route path="schedule" element={<ScheduleList />}></Route>
           <Route path="schedule/:schedule_id" element={<UpdateSchedule />} />

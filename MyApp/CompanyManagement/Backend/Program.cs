@@ -13,7 +13,6 @@ builder.Services.AddCors(corsoptions =>
     corsoptions.AddPolicy(name: CompanyManagementCors, policy =>
     {
         policy.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowAnyMethod();
-        policy.WithOrigins("http://localhost:4321").AllowAnyHeader().AllowAnyMethod();
     });
 });
 builder.Services.AddDbContext<CompanyManagementDbContext>(options =>

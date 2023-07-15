@@ -99,7 +99,12 @@ export const deleteOne = createAsyncThunk<DataResponse, ApiRequest>(
 export const dataSlice = createSlice({
   name: 'data',
   initialState,
-  reducers: {},
+  reducers: {
+    // deleteOneItem: (state, action: PayloadAction<ApiRequest>) => {
+    //   state.isLoading = false;
+    //   state.data = state.data.filter((data) => data.id !== action.payload.id);
+    // },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchAll.pending, (state) => {
@@ -132,8 +137,9 @@ export const dataSlice = createSlice({
       })
       .addCase(deleteOne.fulfilled, (state, action) => {
         state.isLoading = false;
+        const deletedId = `${action.meta.arg.route}_id`;
         state.data = state.data.filter(
-          (data) => data.id !== action.payload.data,
+          (data) => data[deletedId] !== action.payload.data,
         );
       })
       .addCase(deleteOne.rejected, (state, action) => {
@@ -144,3 +150,4 @@ export const dataSlice = createSlice({
 });
 
 export default dataSlice.reducer;
+// export const { deleteOneItem } = dataSlice.actions;

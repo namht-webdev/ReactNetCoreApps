@@ -3,15 +3,15 @@ import { Form, Values, minLength, required } from '../Context/Form';
 import { Field } from '../Context/Field';
 import { ApiRequest, DataResponse, useAppDispatch } from '../../reducers';
 import { addNew } from '../../reducers/dataSlice';
-import { v4 as uuidv4 } from 'uuid';
+import { dateShowFm } from '../../utils/convertDateTime';
 
 export const CreateRequirement = () => {
   const dispatch = useAppDispatch();
   const initialValues = {
-    requirement_id: uuidv4(),
+    requirement_id: 'YC'.concat(Date.now().toString()),
     from_user: 'namht',
     to_user: 'namht',
-    date: new Date().toISOString().split('T')[0],
+    date: dateShowFm(new Date().toISOString()),
   };
   const [messageReturn, setMessage] = useState('');
   const handleSubmit = async (requirement: Values) => {

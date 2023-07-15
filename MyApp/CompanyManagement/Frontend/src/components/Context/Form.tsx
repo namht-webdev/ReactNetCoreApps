@@ -1,6 +1,7 @@
 import React, { useState, createContext, FormEvent, useEffect } from 'react';
 import { PrimaryButton } from '../PrimaryButton';
 import { useNavigate } from 'react-router-dom';
+import { dateSaveFm } from '../../utils/convertDateTime';
 export interface Values {
   [key: string]: any;
 }
@@ -82,6 +83,8 @@ export const Form = ({
   const [touched, setTouched] = useState<Touched>({});
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState(false);
+  const datePattern = /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/;
+
   const validate = (fieldName: string): string[] => {
     if (!validationRules) {
       return [];
@@ -107,9 +110,17 @@ export const Form = ({
   const navigate = useNavigate();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const valuesWithDate = values;
+    initialValues &&
+      Object.keys(initialValues).forEach((key) => {
+        if (values[key].match(datePattern)) {
+          valuesWithDate[key] = dateSaveFm(values[key]);
+        }
+      });
+
     if (validateForm()) {
       setSubmitError(false);
-      const result = await onSubmit(values);
+      const result = await onSubmit(valuesWithDate);
       setErrors(result.errors || {});
       setSubmitError(!result.success);
       setSubmitted(true);

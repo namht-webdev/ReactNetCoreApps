@@ -15,6 +15,7 @@ import {
 } from '../../reducers';
 import { deleteOne, fetchAll } from '../../reducers/dataSlice';
 import { Modal } from '../Modal';
+import { dateShowFm } from '../../utils/convertDateTime';
 
 export const RequirementList = () => {
   const dispatch = useAppDispatch();
@@ -120,7 +121,9 @@ export const RequirementList = () => {
                   <td className="px-6 py-4">{requirement.requirement_id}</td>
                   <td className="px-6 py-4">{requirement.from_user}</td>
                   <td className="px-6 py-4">{requirement.to_user}</td>
-                  <td className="px-6 py-4">{requirement.date}</td>
+                  <td className="px-6 py-4">
+                    {dateShowFm(requirement.date.toString())}
+                  </td>
                   <td className="px-6 py-4">{requirement.message}</td>
                   <td className="px-6 py-4 text-center grid md:grid-cols-2 md:gap-1">
                     <Link
@@ -140,7 +143,7 @@ export const RequirementList = () => {
                     {showModal && (
                       <Modal
                         title="phòng ban"
-                        name={`${requirement?.requirement_id}`}
+                        name={`${requirement.requirement_id}`}
                         onConfirm={() => {
                           handleDeleteRequirement(requirement.requirement_id);
                         }}

@@ -19,7 +19,7 @@ public class DepartmentRepository : IDepartmentRepository
     {
         var departmentExists = await _dbcontext.department.FindAsync(departmentId);
         if (departmentExists == null) return false;
-        _dbcontext.Remove(departmentId);
+        _dbcontext.Remove(departmentExists);
         var result = await _dbcontext.SaveChangesAsync();
         return result == 1;
     }
