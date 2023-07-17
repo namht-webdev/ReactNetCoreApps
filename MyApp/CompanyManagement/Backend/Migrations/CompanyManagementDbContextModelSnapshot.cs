@@ -96,10 +96,6 @@ namespace Backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("district_name2")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("province_id")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -149,15 +145,7 @@ namespace Backend.Migrations
                     b.Property<string>("province_id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("postal_code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("province_name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("province_name2")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -325,10 +313,6 @@ namespace Backend.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ward_name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ward_name2")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

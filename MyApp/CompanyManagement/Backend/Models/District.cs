@@ -8,7 +8,6 @@ public class District
     [Key]
     public string district_id { get; set; }
     public string district_name { get; set; }
-    public string district_name2 { get; set; }
     public string province_id { get; set; }
     [ForeignKey("province_id")]
     public Province? province { get; set; }

@@ -1,7 +1,7 @@
 import { useContext, ChangeEvent } from 'react';
 import { FormContext } from './Form';
 
-interface Option {
+export interface Option {
   name: string;
   value: string;
 }
@@ -10,7 +10,7 @@ interface Props {
   defaultValue?: string;
   label?: string;
   isDisabled?: boolean;
-  type?: 'Text' | 'TextArea' | 'Password' | 'Select' | 'DateTime';
+  type?: 'Text' | 'TextArea' | 'Password' | 'Select' | 'Date';
   optionData?: Option[] | null;
 }
 
@@ -69,7 +69,7 @@ export const Field = ({
               disabled={isDisabled}
             />
           )}
-          {type === 'DateTime' && (
+          {type === 'Date' && (
             <input
               type={type.toLowerCase()}
               id={name}
