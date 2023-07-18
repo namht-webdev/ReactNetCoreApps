@@ -48,7 +48,7 @@ export const CreateRequirement = () => {
       >
         <div className="grid md:grid-cols-2 md:gap-6">
           <Field name="requirement_id" label="Mã yêu cầu" isDisabled></Field>
-          <Field name="date" label="Ngày" type="Date" isDisabled></Field>
+          <Field name="date" label="Ngày" isDisabled></Field>
         </div>
         <div className="grid md:grid-cols-2 md:gap-6">
           <Field name="from_user" label="Từ người dùng" isDisabled></Field>

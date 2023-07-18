@@ -113,11 +113,10 @@ export const Form = ({
     const valuesWithDate = values;
     initialValues &&
       Object.keys(initialValues).forEach((key) => {
-        if (values[key].match(datePattern)) {
+        if (values[key].toString().match(datePattern)) {
           valuesWithDate[key] = dateSaveFm(values[key]);
         }
       });
-
     if (validateForm()) {
       setSubmitError(false);
       const result = await onSubmit(valuesWithDate);

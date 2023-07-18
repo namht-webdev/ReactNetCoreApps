@@ -49,3 +49,39 @@ export interface Schedule {
   time_start: string;
   time_end: string;
 }
+
+export interface User {
+  user_id: string;
+  full_name: string;
+  password_hash: string;
+  birth_date: Date;
+  gender: string;
+  address_id: string;
+  phone_number: string;
+  email: string;
+  avatar: string;
+  date_start: Date;
+  date_end: Date;
+  salary: number;
+  department_id: string;
+  level_id: string;
+  role_id: string;
+  is_deleted: boolean;
+}
+
+export interface Province {
+  province_id: string;
+  province_name: string;
+}
+
+export interface District {
+  province_id: string;
+  district_id: string;
+  district_name: string;
+}
+
+export interface Ward {
+  district_id: string;
+  ward_id: string;
+  ward_name: string;
+}

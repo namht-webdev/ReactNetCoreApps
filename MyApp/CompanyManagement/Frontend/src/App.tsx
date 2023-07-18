@@ -2,9 +2,8 @@ import { Routes, Route } from 'react-router-dom';
 // import Student from './components/Student/Student';
 import Navbar from './components/Navbar/Navbar';
 import HomePage from './components/Home/HomePage';
-import UserList from './components/User/UserList';
+import { UserList } from './components/User/UserList';
 import NotFound from './NotFound';
-import { Create } from './components/User/Create';
 import { RoleList } from './components/Role/RoleList';
 import { CreateRole } from './components/Role/CreateRole';
 import { UpdateRole } from './components/Role/UpdateRole';
@@ -20,6 +19,8 @@ import { UpdateRequirement } from './components/Requirement/UpdateRequirement';
 import { ScheduleList } from './components/Schedule/ScheduleList';
 import { UpdateSchedule } from './components/Schedule/UpdateSchedule';
 import { CreateSchedule } from './components/Schedule/CreateSchedule';
+import { CreateUser } from './components/User/CreateUser';
+import { UpdateUser } from './components/User/UpdateUser';
 
 function App() {
   return (
@@ -32,7 +33,9 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />}></Route>
           <Route path="user" element={<UserList />}></Route>
-          <Route path="user/create" element={<Create />}></Route>
+          <Route path="user/create" element={<CreateUser />}></Route>
+          <Route path="user/:user_id" element={<UpdateUser />}></Route>
+
           <Route path="role" element={<RoleList />}></Route>
           <Route path="role/:role_id" element={<UpdateRole />} />
           <Route path="role/create" element={<CreateRole />}></Route>

@@ -29,7 +29,7 @@ public class UserController : ControllerBase
         try
         {
             var userList = await _userRepository.GetAll();
-            return Ok(userList);
+            return Ok(new { success = true, message = "Danh sách người dùng", data = userList });
         }
         catch (System.Exception)
         {

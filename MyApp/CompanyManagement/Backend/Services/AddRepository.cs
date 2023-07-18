@@ -8,6 +8,7 @@ public static class IServiceCollectionExtend
                         .AddScoped<ILevelRepository, LevelRepository>()
                         .AddScoped<IDepartmentRepository, DepartmentRepository>()
                         .AddScoped<IRequirementRepository, RequirementRepository>()
-                        .AddScoped<IScheduleRepository, ScheduleRepository>();
+                        .AddScoped<IScheduleRepository, ScheduleRepository>()
+                        .AddScoped<ILocationRepository, LocationRepository>();
     }
 }

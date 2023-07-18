@@ -15,6 +15,7 @@ import {
 } from '../../reducers';
 import { deleteOne, fetchAll } from '../../reducers/dataSlice';
 import { Modal } from '../Modal';
+import { dateShowFm } from '../../utils/convertDateTime';
 
 export const ScheduleList = () => {
   const dispatch = useAppDispatch();
@@ -117,7 +118,9 @@ export const ScheduleList = () => {
               return (
                 <tr key={index} className="bg-white dark:bg-gray-800">
                   <td className="px-6 py-4">{schedule.schedule_id}</td>
-                  <td className="px-6 py-4">{schedule.date}</td>
+                  <td className="px-6 py-4">
+                    {dateShowFm(schedule.date.toString())}
+                  </td>
                   <td className="px-6 py-4">{schedule.time_start}</td>
                   <td className="px-6 py-4">{schedule.time_end}</td>
                   <td className="px-6 py-4">{schedule.note}</td>
@@ -138,7 +141,7 @@ export const ScheduleList = () => {
                     </span>
                     {showModal && (
                       <Modal
-                        title="phòng ban"
+                        title="lịch trình"
                         name={`${schedule?.schedule_id}`}
                         onConfirm={() => {
                           handleDeleteSchedule(schedule.schedule_id);

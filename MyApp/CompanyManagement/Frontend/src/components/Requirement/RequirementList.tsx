@@ -122,7 +122,7 @@ export const RequirementList = () => {
                   <td className="px-6 py-4">{requirement.from_user}</td>
                   <td className="px-6 py-4">{requirement.to_user}</td>
                   <td className="px-6 py-4">
-                    {dateShowFm(requirement.date.toString())}
+                    {dateShowFm(requirement.date?.toString())}
                   </td>
                   <td className="px-6 py-4">{requirement.message}</td>
                   <td className="px-6 py-4 text-center grid md:grid-cols-2 md:gap-1">

@@ -8,8 +8,8 @@ public class ScheduleRepository : IScheduleRepository
     public ScheduleRepository(CompanyManagementDbContext dbContext) => _dbcontext = dbContext;
     public async Task<bool> Add(Schedule schedule)
     {
-        var ScheduleExists = await _dbcontext.schedule.FindAsync(schedule.schedule_id);
-        if (ScheduleExists != null) return false;
+        var scheduleExists = await _dbcontext.schedule.FindAsync(schedule.schedule_id);
+        if (scheduleExists != null) return false;
         await _dbcontext.schedule.AddAsync(schedule);
         var result = await _dbcontext.SaveChangesAsync();
         return result == 1;
@@ -17,9 +17,9 @@ public class ScheduleRepository : IScheduleRepository
 
     public async Task<bool> Delete(string scheduleId)
     {
-        var ScheduleExists = await _dbcontext.schedule.FindAsync(scheduleId);
-        if (ScheduleExists == null) return false;
-        _dbcontext.Remove(scheduleId);
+        var scheduleExists = await _dbcontext.schedule.FindAsync(scheduleId);
+        if (scheduleExists == null) return false;
+        _dbcontext.Remove(scheduleExists);
         var result = await _dbcontext.SaveChangesAsync();
         return result == 1;
     }
@@ -32,16 +32,16 @@ public class ScheduleRepository : IScheduleRepository
 
     public async Task<Schedule> Update(string scheduleId, Schedule schedule)
     {
-        var ScheduleExists = await _dbcontext.schedule.FindAsync(scheduleId);
-        if (ScheduleExists != null)
+        var scheduleExists = await _dbcontext.schedule.FindAsync(scheduleId);
+        if (scheduleExists != null)
         {
-            ScheduleExists.date = schedule.date;
-            ScheduleExists.note = schedule.note;
-            ScheduleExists.time_start = schedule.time_start;
-            ScheduleExists.time_end = schedule.time_end;
+            scheduleExists.date = schedule.date;
+            scheduleExists.note = schedule.note;
+            scheduleExists.time_start = schedule.time_start;
+            scheduleExists.time_end = schedule.time_end;
             await _dbcontext.SaveChangesAsync();
         }
-        return ScheduleExists;
+        return scheduleExists;
     }
     public async Task<Schedule> GetOne(string ScheduleId)
     {
