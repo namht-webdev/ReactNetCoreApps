@@ -1,7 +1,7 @@
 import React, { useState, createContext, FormEvent, useEffect } from 'react';
 import { PrimaryButton } from '../PrimaryButton';
 import { useNavigate } from 'react-router-dom';
-import { dateSaveFm } from '../../utils/convertDateTime';
+import { dateFmFromServer, dateSaveFm } from '../../utils/convertDateTime';
 export interface Values {
   [key: string]: any;
 }
@@ -96,7 +96,7 @@ export const Form = ({
   const [touched, setTouched] = useState<Touched>({});
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState(false);
-  const datePattern = /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/;
+  const dateSavePattern = /^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/;
 
   const validate = (fieldName: string): string[] => {
     if (!validationRules) {
@@ -126,7 +126,7 @@ export const Form = ({
     const valuesWithDate = values;
     initialValues &&
       Object.keys(initialValues).forEach((key) => {
-        if (values[key].toString().match(datePattern)) {
+        if (values[key].toString().match(dateSavePattern)) {
           valuesWithDate[key] = dateSaveFm(values[key]);
         }
       });
@@ -158,8 +158,18 @@ export const Form = ({
   };
 
   useEffect(() => {
-    setValues(initialValues ? initialValues : {});
-  }, [initialValues]);
+    const dateShowPattern = /^([0-9]{4})-([0-9]{2})-([0-9]{2})$/;
+    const valuesWithDate = initialValues;
+    valuesWithDate &&
+      Object.keys(initialValues).forEach((key) => {
+        if (
+          dateFmFromServer(initialValues[key].toString()).match(dateShowPattern)
+        ) {
+          valuesWithDate[key] = dateFmFromServer(initialValues[key].toString());
+        }
+      });
+    setValues(valuesWithDate ? valuesWithDate : {});
+  }, [initialValues, values]);
 
   return (
     <FormContext.Provider

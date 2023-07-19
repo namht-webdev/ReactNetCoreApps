@@ -42,7 +42,7 @@ public class UserController : ControllerBase
         try
         {
             var user = await _userRepository.GetOne(userId);
-            return user == null ? NotFound(new { success = false, message = "This user is not exists!" }) : Ok(user);
+            return user == null ? NotFound(new { success = false, message = "This user is not exists!" }) : Ok(new { success = true, message = $"Thông tin người dùng {userId}", data = user });
         }
         catch (System.Exception)
         {
@@ -71,9 +71,8 @@ public class UserController : ControllerBase
         }
     }
 
-    [HttpPut("update")]
-
-    public async Task<IActionResult> UpdateUser([FromQuery] string userId, [FromBody] User user)
+    [HttpPut("{userId}")]
+    public async Task<IActionResult> UpdateUser([FromRoute] string userId, [FromBody] User user)
     {
         try
         {

@@ -22,6 +22,8 @@ export const UpdateRole = () => {
       };
       const response = await dispatch(getOne(req!));
       const { success, data } = response.payload as DataResponse;
+      console.log(success);
+
       success === true ? setRole(data) : navigate(`/notfound`);
     };
     doGetRole();
@@ -37,6 +39,7 @@ export const UpdateRole = () => {
     };
     const response = await dispatch(update(req));
     const { success, message } = response.payload as DataResponse;
+
     setMessage(message);
     alert(message);
     return { success, redirectUrl: '/role' };

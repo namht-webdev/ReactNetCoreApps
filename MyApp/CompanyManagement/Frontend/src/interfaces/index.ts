@@ -56,7 +56,8 @@ export interface User {
   password_hash: string;
   birth_date: Date;
   gender: string;
-  address_id: string;
+  ward_id: string;
+  street: string;
   phone_number: string;
   email: string;
   avatar: string;
