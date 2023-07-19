@@ -50,7 +50,7 @@ public class UserController : ControllerBase
         }
     }
 
-    [HttpPost("changepassword")]
+    [HttpPatch("changepassword")]
     public async Task<ActionResult> ChangePassword(string userId, string oldPassword, string newPassword)
     {
         var result = await _userRepository.ChangePassword(userId, oldPassword, newPassword);

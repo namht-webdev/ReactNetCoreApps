@@ -15,6 +15,7 @@ import {
 } from '../../reducers';
 import { deleteOne, fetchAll } from '../../reducers/dataSlice';
 import { Modal } from '../Modal';
+import { Role } from '../../interfaces';
 
 export const RoleList = () => {
   const dispatch = useAppDispatch();
@@ -32,6 +33,7 @@ export const RoleList = () => {
     doGetRole();
   }, [dispatch, req]);
   const [showModal, setShowModal] = useState(false);
+  const [roleDelete, setRoleDelete] = useState<Role>();
   const handleDeleteRole = async (role_id: string) => {
     const deleteReq: ApiRequest = {
       ...req,
@@ -102,6 +104,10 @@ export const RoleList = () => {
                       className="font-bold hover:underline cursor-pointer text-red-700"
                       onClick={() => {
                         setShowModal(true);
+                        setRoleDelete({
+                          role_id: role.role_id,
+                          role_name: role.role_name,
+                        });
                       }}
                     >
                       Xóa
@@ -109,9 +115,9 @@ export const RoleList = () => {
                     {showModal && (
                       <Modal
                         title="vai trò"
-                        name={`${role?.role_name}`}
+                        name={`${roleDelete?.role_name}`}
                         onConfirm={() => {
-                          handleDeleteRole(role.role_id);
+                          handleDeleteRole(roleDelete!.role_id);
                         }}
                         onCancel={() => {
                           setShowModal(false);

@@ -15,6 +15,7 @@ import {
 } from '../../reducers';
 import { deleteOne, fetchAll } from '../../reducers/dataSlice';
 import { Modal } from '../Modal';
+import { Department } from '../../interfaces';
 
 export const DepartmentList = () => {
   const dispatch = useAppDispatch();
@@ -32,6 +33,7 @@ export const DepartmentList = () => {
     doGetDepartment();
   }, [dispatch, req]);
   const [showModal, setShowModal] = useState(false);
+  const [departmentDelete, setDepartmentDelete] = useState<Department>();
   const handleDeleteDepartment = async (department_id: string) => {
     const deleteReq: ApiRequest = {
       ...req,
@@ -112,6 +114,11 @@ export const DepartmentList = () => {
                       className="font-bold hover:underline cursor-pointer text-red-700"
                       onClick={() => {
                         setShowModal(true);
+                        setDepartmentDelete({
+                          department_id: department.department_id,
+                          department_name: department.department_name,
+                          floor: department.floor,
+                        });
                       }}
                     >
                       Xóa
@@ -119,9 +126,11 @@ export const DepartmentList = () => {
                     {showModal && (
                       <Modal
                         title="phòng ban"
-                        name={`${department?.department_name}`}
+                        name={`${departmentDelete?.department_name}`}
                         onConfirm={() => {
-                          handleDeleteDepartment(department.department_id);
+                          handleDeleteDepartment(
+                            departmentDelete!.department_id,
+                          );
                         }}
                         onCancel={() => {
                           setShowModal(false);

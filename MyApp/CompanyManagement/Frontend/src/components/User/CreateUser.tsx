@@ -1,29 +1,28 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Form, FormContext, Values, required } from '../Context/Form';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Form, Values, mustBeEmail, required } from '../Context/Form';
 import { Field, Option } from '../Context/Field';
 import { ApiRequest, DataResponse, useAppDispatch } from '../../reducers';
 import { addNew } from '../../reducers/dataSlice';
 import { sex } from '../../utils/utilsData';
 import axios from 'axios';
 import { DEFAULT_API_URL } from '../../api/api';
-import { Department, District, Level, Province, Role } from '../../interfaces';
+import { Department, Level, Role } from '../../interfaces';
+import { Location } from '../Location';
 export const CreateUser = () => {
   const dispatch = useAppDispatch();
   const [messageReturn, setMessage] = useState('');
   const [roles, setRoles] = useState<Option[] | []>([]);
   const [departments, setDepartments] = useState<Option[] | []>([]);
   const [levels, setLevels] = useState<Option[] | []>([]);
-  const [provinces, setProvinces] = useState<Option[] | []>([]);
-  const [districts, setDistricts] = useState<Option[] | []>([]);
-  const [provinceId, setProvinceId] = useState<string>('');
-  const address_id = 'Addr'.concat(Date.now().toString());
-  let initialValues = {
-    birth_date: new Date().toISOString().split('T')[0],
-    date_start: new Date().toISOString().split('T')[0],
-    date_end: new Date().toISOString().split('T')[0],
-    is_deleted: false,
-    province_id: '',
-  };
+
+  const initialValues = useMemo(() => {
+    return {
+      birth_date: new Date().toISOString().split('T')[0],
+      date_start: new Date().toISOString().split('T')[0],
+      date_end: new Date().toISOString().split('T')[0],
+      is_deleted: false,
+    };
+  }, []);
   const handleSubmit = async (user: Values) => {
     const req: ApiRequest = {
       route: 'user',
@@ -37,85 +36,42 @@ export const CreateUser = () => {
   };
 
   useEffect(() => {
-    const doGetRole = async () => {
-      const response = (await axios.get(`${DEFAULT_API_URL}/role`))
+    const doGetCompanyInfo = async () => {
+      const rolesResponse = (await axios.get(`${DEFAULT_API_URL}/role`))
         .data as DataResponse;
-      const roleList = response.data as Role[];
-      const roleOptions: Option[] = [];
-      roleList.forEach((role) => {
-        roleOptions.push({ name: role.role_name, value: role.role_id });
+      const departmentsResponse = (
+        await axios.get(`${DEFAULT_API_URL}/department`)
+      ).data as DataResponse;
+      const levelsResponse = (await axios.get(`${DEFAULT_API_URL}/level`))
+        .data as DataResponse;
+      const roleList = rolesResponse.data as Role[];
+      const departmentList = departmentsResponse.data as Department[];
+      const levelList = levelsResponse.data as Level[];
+      const roleOptions: Option[] = roleList.map((role) => {
+        return {
+          name: role.role_name,
+          value: role.role_id,
+        };
       });
-      setRoles(roleOptions);
-    };
-    const doGetDepartment = async () => {
-      const response = (await axios.get(`${DEFAULT_API_URL}/department`))
-        .data as DataResponse;
-      const departmentList = response.data as Department[];
-      const departmentOptions: Option[] = [];
-      departmentList.forEach((department) => {
-        departmentOptions.push({
+      const departmentOptions: Option[] = departmentList.map((department) => {
+        return {
           name: department.department_name,
           value: department.department_id,
-        });
+        };
       });
-      setDepartments(departmentOptions);
-    };
-    const doGetLevel = async () => {
-      const response = (await axios.get(`${DEFAULT_API_URL}/level`))
-        .data as DataResponse;
-      const levelList = response.data as Level[];
-      const levelOptions: Option[] = [];
-      levelList.forEach((level) => {
-        levelOptions.push({
+      const levelOptions: Option[] = levelList.map((level) => {
+        return {
           name: level.level_name,
           value: level.level_id,
-        });
+        };
       });
+      setRoles(roleOptions);
+      setDepartments(departmentOptions);
       setLevels(levelOptions);
     };
-    const doGetProvince = async () => {
-      const response = (await axios.get(`${DEFAULT_API_URL}/location/province`))
-        .data as DataResponse;
-      const provinceList = response.data as Province[];
-      const provinceOptions: Option[] = provinceList.map((province) => {
-        return { name: province.province_name, value: province.province_id };
-      });
-      setProvinces(provinceOptions);
-    };
-    doGetProvince();
-    doGetRole();
-    doGetDepartment();
-    doGetLevel();
+
+    doGetCompanyInfo();
   }, []);
-
-  // useEffect(() => {
-  //   const doGetDistrict = async () => {
-  //     const response = (
-  //       await axios.get(`${DEFAULT_API_URL}/location/district/${provinceId}`)
-  //     ).data as DataResponse;
-  //     const districtList = response.data as District[];
-  //     const districtOptions: Option[] = [];
-  //     districtList.forEach((district) => {
-  //       districtOptions.push({
-  //         name: district.district_name,
-  //         value: district.district_id,
-  //       });
-  //     });
-  //     setDistricts(districtOptions);
-  //   };
-  //   if (provinceId) doGetDistrict();
-  // }, [provinceId]);
-
-  const handleChangeProvince = async (provinceId: string) => {
-    const response = (
-      await axios.get(`${DEFAULT_API_URL}/location/district/${provinceId}`)
-    ).data as DataResponse;
-    const districtList = response.data as District[];
-    const districtOptions: Option[] = districtList.map((district) => {
-      return { name: district.district_name, value: district.district_id };
-    });
-    setDistricts(districtOptions);
-  };
   return (
     <div>
       <p className="py-10 text-center font-bold text-slate-500">
@@ -127,6 +83,8 @@ export const CreateUser = () => {
         validationRules={{
           user_id: [{ validator: required }],
           full_name: [{ validator: required }],
+          email: [{ validator: required }, { validator: mustBeEmail }],
+          phone_number: [{ validator: required }],
         }}
         failureMessage={messageReturn}
         successMessage={messageReturn}
@@ -176,17 +134,7 @@ export const CreateUser = () => {
           <Field name="date_start" label="Ngày chính thức" type="Date"></Field>
           <Field name="date_end" label="Ngày nghỉ" type="Date"></Field>
         </div>
-        <div className="grid md:grid-cols-4 md:gap-4">
-          <Field
-            name="province_id"
-            label="Tỉnh/thành phố"
-            type="Select"
-            optionData={provinces}
-          ></Field>
-          <Field name="district_id" label="Quận/huyện" type="Select"></Field>
-          <Field name="ward_id" label="Phường/xã" type="Select"></Field>
-          <Field name="street" label="Số nhà"></Field>
-        </div>
+        <Location />
         <Field name="is_deleted" type="Hidden" isDisabled></Field>
       </Form>
     </div>

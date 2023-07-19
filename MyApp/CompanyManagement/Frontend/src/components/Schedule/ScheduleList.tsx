@@ -33,6 +33,7 @@ export const ScheduleList = () => {
     doGetSchedule();
   }, [dispatch, req]);
   const [showModal, setShowModal] = useState(false);
+  const [scheduleDelete, setScheduleDelete] = useState<string>('');
   const handleDeleteSchedule = async (schedule_id: string) => {
     const deleteReq: ApiRequest = {
       ...req,
@@ -135,6 +136,7 @@ export const ScheduleList = () => {
                       className="font-bold hover:underline cursor-pointer text-red-700"
                       onClick={() => {
                         setShowModal(true);
+                        setScheduleDelete(schedule.schedule_id);
                       }}
                     >
                       Xóa
@@ -142,9 +144,9 @@ export const ScheduleList = () => {
                     {showModal && (
                       <Modal
                         title="lịch trình"
-                        name={`${schedule?.schedule_id}`}
+                        name={`${scheduleDelete}`}
                         onConfirm={() => {
-                          handleDeleteSchedule(schedule.schedule_id);
+                          handleDeleteSchedule(scheduleDelete);
                         }}
                         onCancel={() => {
                           setShowModal(false);

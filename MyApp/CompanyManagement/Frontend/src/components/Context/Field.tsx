@@ -7,7 +7,6 @@ export interface Option {
 }
 interface Props {
   name: string;
-  defaultValue?: string;
   label?: string;
   isDisabled?: boolean;
   type?: 'Text' | 'TextArea' | 'Password' | 'Select' | 'Date' | 'Hidden';
@@ -16,7 +15,6 @@ interface Props {
 
 export const Field = ({
   name,
-  defaultValue,
   label,
   isDisabled,
   type = 'Text',
@@ -60,13 +58,7 @@ export const Field = ({
                   ? ''
                   : 'block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
               }
-              value={
-                defaultValue
-                  ? defaultValue
-                  : values[name] === undefined
-                  ? ''
-                  : values[name]
-              }
+              value={values[name] === undefined ? '' : values[name]}
               onChange={handleChange}
               onBlur={handleBlur}
               placeholder=" "

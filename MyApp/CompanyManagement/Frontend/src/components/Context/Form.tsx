@@ -26,15 +26,28 @@ type Validator = (value: any, args: any) => string;
 
 export const required: Validator = (value: any): string =>
   value === undefined || value === null || value === ''
-    ? 'This must be populated'
+    ? 'Trường này không được để trống'
     : '';
 
 export const minLength: Validator = (value: any, length: number): string =>
   value && value.length < length
-    ? `This must be at least ${length} characters`
+    ? `Trường này phải nhập tối thiểu ${length} ký tự`
     : '';
-export const mustBeNumber: Validator = (value: any, length: number): string =>
-  value && !value.toString().match(/^\d+$/) ? `This must be a number` : '';
+
+export const mustBeNumber: Validator = (value: any): string =>
+  value && !value.toString().match(/^\d+$/) ? `Trường này phải là số` : '';
+
+export const mustBeEmail: Validator = (value: any): string =>
+  value && !value.toString().match(/^[a-z0-9._]+@gmail\.[a-z]{2,}$/)
+    ? `Mail không đúng định dạng`
+    : '';
+export const mustPhoneNumber: Validator = (value: any): string =>
+  value &&
+  (value.length !== 10 ||
+    !value.toString().match(/(0[3|5|7|8|9])+([0-9]{8})\b/g))
+    ? `Không đúng định dạng sđt Việt Nam(10 chữ số)`
+    : '';
+
 interface Validation {
   validator: Validator;
   args?: any;

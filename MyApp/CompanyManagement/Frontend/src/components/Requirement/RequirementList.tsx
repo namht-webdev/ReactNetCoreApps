@@ -33,6 +33,7 @@ export const RequirementList = () => {
     doGetRequirement();
   }, [dispatch, req]);
   const [showModal, setShowModal] = useState(false);
+  const [requirementDelete, setRequirementDelete] = useState<string>('');
   const handleDeleteRequirement = async (requirement_id: string) => {
     const deleteReq: ApiRequest = {
       ...req,
@@ -136,16 +137,17 @@ export const RequirementList = () => {
                       className="font-bold hover:underline cursor-pointer text-red-700"
                       onClick={() => {
                         setShowModal(true);
+                        setRequirementDelete(requirement.requirement_id);
                       }}
                     >
                       Xóa
                     </span>
                     {showModal && (
                       <Modal
-                        title="phòng ban"
-                        name={`${requirement.requirement_id}`}
+                        title="Yêu cầu"
+                        name={`${requirementDelete}`}
                         onConfirm={() => {
-                          handleDeleteRequirement(requirement.requirement_id);
+                          handleDeleteRequirement(requirementDelete);
                         }}
                         onCancel={() => {
                           setShowModal(false);

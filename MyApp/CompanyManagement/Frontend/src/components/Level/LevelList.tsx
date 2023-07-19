@@ -15,6 +15,7 @@ import {
 } from '../../reducers';
 import { Modal } from '../Modal';
 import { deleteOne, fetchAll } from '../../reducers/dataSlice';
+import { Level } from '../../interfaces';
 
 const LevelList = () => {
   const dispatch = useAppDispatch();
@@ -30,13 +31,15 @@ const LevelList = () => {
   }, [dispatch, req]);
 
   const [showModal, setShowModal] = useState(false);
-  const handleDeleteRole = async (level_id: string) => {
+  const [levelDelete, setLevelDelete] = useState<Level>();
+  const handleDeletelevel = async (level_id: string) => {
     const req: ApiRequest = {
       title: 'level',
       route: 'level',
       id: level_id,
     };
     await dispatch(deleteOne(req));
+    setShowModal(false);
   };
   return (
     <div>
@@ -100,6 +103,10 @@ const LevelList = () => {
                       className="font-bold hover:underline cursor-pointer text-red-700"
                       onClick={() => {
                         setShowModal(true);
+                        setLevelDelete({
+                          level_id: level.level_id,
+                          level_name: level.level_name,
+                        });
                       }}
                     >
                       Xóa
@@ -107,10 +114,9 @@ const LevelList = () => {
                     {showModal && (
                       <Modal
                         title="cấp độ"
-                        name={`${level?.level_name}`}
+                        name={`${levelDelete?.level_name}`}
                         onConfirm={() => {
-                          handleDeleteRole(level.level_id);
-                          setShowModal(false);
+                          handleDeletelevel(levelDelete!.level_id);
                         }}
                         onCancel={() => {
                           setShowModal(false);

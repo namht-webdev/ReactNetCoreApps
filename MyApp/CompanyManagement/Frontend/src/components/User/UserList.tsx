@@ -32,6 +32,7 @@ export const UserList = () => {
     doGetUser();
   }, [dispatch, req]);
   const [showModal, setShowModal] = useState(false);
+  const [userDelete, setUserDelete] = useState({ id: '', name: '' });
   const handleDeleteUser = async (user_id: string) => {
     const deleteReq: ApiRequest = {
       ...req,
@@ -152,6 +153,10 @@ export const UserList = () => {
                       className="font-bold hover:underline cursor-pointer text-red-700"
                       onClick={() => {
                         setShowModal(true);
+                        setUserDelete({
+                          id: user.user_id,
+                          name: user.full_name,
+                        });
                       }}
                     >
                       Xóa
@@ -159,9 +164,9 @@ export const UserList = () => {
                     {showModal && (
                       <Modal
                         title="người dùng"
-                        name={`${user?.full_name}`}
+                        name={`${userDelete.name}`}
                         onConfirm={() => {
-                          handleDeleteUser(user.user_id);
+                          handleDeleteUser(userDelete.id);
                         }}
                         onCancel={() => {
                           setShowModal(false);
