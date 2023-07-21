@@ -126,7 +126,7 @@ export const Form = ({
     const valuesWithDate = values;
     initialValues &&
       Object.keys(initialValues).forEach((key) => {
-        if (values[key].toString().match(dateSavePattern)) {
+        if (values[key] && values[key].toString().match(dateSavePattern)) {
           valuesWithDate[key] = dateSaveFm(values[key]);
         }
       });
@@ -136,6 +136,8 @@ export const Form = ({
       setErrors(result.errors || {});
       setSubmitError(!result.success);
       setSubmitted(true);
+      if (!result.success && 'avatar' in values) {
+      }
       if (result.success && result.redirectUrl) {
         navigate(result.redirectUrl);
       }
@@ -163,13 +165,17 @@ export const Form = ({
     valuesWithDate &&
       Object.keys(initialValues).forEach((key) => {
         if (
+          initialValues[key] &&
           dateFmFromServer(initialValues[key].toString()).match(dateShowPattern)
         ) {
           valuesWithDate[key] = dateFmFromServer(initialValues[key].toString());
         }
+        if (initialValues[key] === null) {
+          valuesWithDate[key] = '';
+        }
       });
     setValues(valuesWithDate ? valuesWithDate : {});
-  }, [initialValues, values]);
+  }, [initialValues]);
 
   return (
     <FormContext.Provider

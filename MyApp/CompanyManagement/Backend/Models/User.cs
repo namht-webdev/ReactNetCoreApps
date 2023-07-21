@@ -29,8 +29,9 @@ public class User
     [EmailAddress]
     [StringLength(256)]
     public string email { get; set; }
-    [Url]
-    public string avatar { get; set; }
+    [StringLength(256)]
+    [Unicode(false)]
+    public string? avatar { get; set; }
     [Column(TypeName = "datetime")]
     public DateTime date_start { get; set; }
     [Column(TypeName = "datetime")]

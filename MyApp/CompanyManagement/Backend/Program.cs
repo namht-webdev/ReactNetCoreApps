@@ -1,4 +1,5 @@
 using CompanyManagement.Data;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 var CompanyManagementCors = "_CompanyManagementCors";
@@ -21,7 +22,15 @@ builder.Services.AddDbContext<CompanyManagementDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CompanyManagementDbContext"));
 });
 builder.Services.AddRepository();
+builder.Services.Configure<IISServerOptions>(options =>
+{
+    options.MaxRequestBodySize = int.MaxValue;
+});
 
+builder.Services.Configure<FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = int.MaxValue;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -120,7 +120,7 @@ export const ScheduleList = () => {
                 <tr key={index} className="bg-white dark:bg-gray-800">
                   <td className="px-6 py-4">{schedule.schedule_id}</td>
                   <td className="px-6 py-4">
-                    {dateShowFm(schedule.date.toString())}
+                    {schedule.date ? dateShowFm(schedule.date.toString()) : ''}
                   </td>
                   <td className="px-6 py-4">{schedule.time_start}</td>
                   <td className="px-6 py-4">{schedule.time_end}</td>

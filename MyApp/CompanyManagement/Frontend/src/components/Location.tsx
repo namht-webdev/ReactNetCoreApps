@@ -3,19 +3,20 @@ import { Field, Option } from './Context/Field';
 import axios from 'axios';
 import { DEFAULT_API_URL } from '../api/api';
 import { DataResponse } from '../reducers';
-import { District, Province, Ward } from '../interfaces';
+import { District, Location as ILocaiton, Province, Ward } from '../interfaces';
 
-export const Location = () => {
+export const Location = ({ ward_id }: { ward_id?: string | null }) => {
   const [provinces, setProvinces] = useState<Option[] | []>([]);
   const [districts, setDistricts] = useState<Option[] | []>([]);
   const [wards, setWards] = useState<Option[] | []>([]);
+  const [province, setProvince] = useState<string>('');
   const [district, setDistrict] = useState<string>('');
 
   const handleChangeLocation = async (
     e: ChangeEvent<HTMLSelectElement>,
     isChangeProvince: boolean,
   ) => {
-    const value = e.currentTarget.value.toString();
+    const value = e.currentTarget.value;
     if (!value) {
       setDistricts([]);
       setWards([]);
@@ -44,7 +45,7 @@ export const Location = () => {
     }
   };
   useEffect(() => {
-    const doGetProvince = async () => {
+    const doGetProvince = async (provinceId?: string) => {
       const response = (await axios.get(`${DEFAULT_API_URL}/location/province`))
         .data as DataResponse;
       const provinceList = response.data as Province[];
@@ -52,9 +53,41 @@ export const Location = () => {
         return { name: province.province_name, value: province.province_id };
       });
       setProvinces(provinceOptions);
+      if (provinceId) setProvince(provinceId);
     };
-    doGetProvince();
-  }, []);
+    const doGetDistrict = async (provinceId: string, districtId: string) => {
+      const response = (
+        await axios.get(`${DEFAULT_API_URL}/location/district/${provinceId}`)
+      ).data as DataResponse;
+      const districtList = response.data as District[];
+      const districtOptions: Option[] = districtList.map((district) => {
+        return { name: district.district_name, value: district.district_id };
+      });
+      setDistricts(districtOptions);
+      setDistrict(districtId);
+    };
+    const doGetWard = async (districtId: string) => {
+      const response = (
+        await axios.get(`${DEFAULT_API_URL}/location/ward/${districtId}`)
+      ).data as DataResponse;
+      const wardList = response.data as Ward[];
+      const wardOptions: Option[] = wardList.map((ward) => {
+        return { name: ward.ward_name, value: ward.ward_id };
+      });
+      setWards(wardOptions);
+    };
+    const doGetLocation = async () => {
+      const response = (
+        await axios.get(`${DEFAULT_API_URL}/location/ward?wardId=${ward_id}`)
+      ).data as DataResponse;
+      const location = response.data as ILocaiton;
+
+      doGetProvince(location.province_id);
+      doGetDistrict(location.province_id, location.district_id);
+      doGetWard(location.district_id);
+    };
+    ward_id ? doGetLocation() : doGetProvince();
+  }, [ward_id]);
   return (
     <div className="grid md:grid-cols-4 md:gap-4">
       <div className="relative z-0 w-full mb-6 group">
@@ -62,6 +95,7 @@ export const Location = () => {
           id="province_id"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           onChange={(e) => handleChangeLocation(e, true)}
+          value={province ? province : ''}
         >
           <option value={''}>Tỉnh/thành phố</option>
           {provinces?.map((province, idx) => (
@@ -76,7 +110,7 @@ export const Location = () => {
           id="district_id"
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           onChange={(e) => handleChangeLocation(e, false)}
-          value={district}
+          value={district ? district : ''}
         >
           <option value={''}>Quận/huyện</option>
           {districts?.map((district, idx) => (

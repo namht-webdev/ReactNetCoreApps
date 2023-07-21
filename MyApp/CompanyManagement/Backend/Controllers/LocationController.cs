@@ -46,4 +46,18 @@ public class LocationController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống" });
         }
     }
+    [HttpGet("ward")]
+    public async Task<IActionResult> GetLocation([FromQuery] string wardId)
+    {
+        try
+        {
+            var result = await _location.GetLocation(wardId);
+            return Ok(new { success = true, message = "Thông tin địa chỉ", data = result });
+        }
+        catch (System.Exception)
+        {
+
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống" });
+        }
+    }
 }

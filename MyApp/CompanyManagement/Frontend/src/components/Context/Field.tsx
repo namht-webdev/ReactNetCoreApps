@@ -1,4 +1,4 @@
-import { useContext, ChangeEvent } from 'react';
+import { useContext, ChangeEvent, useState } from 'react';
 import { FormContext } from './Form';
 
 export interface Option {
@@ -9,7 +9,14 @@ interface Props {
   name: string;
   label?: string;
   isDisabled?: boolean;
-  type?: 'Text' | 'TextArea' | 'Password' | 'Select' | 'Date' | 'Hidden';
+  type?:
+    | 'Text'
+    | 'TextArea'
+    | 'Password'
+    | 'Select'
+    | 'Date'
+    | 'Hidden'
+    | 'File';
   optionData?: Option[] | null;
 }
 
@@ -35,7 +42,20 @@ export const Field = ({
     if (setTouched) setTouched(name);
     if (validate) validate(name);
   };
+  const [selectedImage, setSelectedImage] = useState<
+    string | ArrayBuffer | null
+  >(null);
 
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setSelectedImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
   return (
     <FormContext.Consumer>
       {({ values, errors }) => (
@@ -63,6 +83,7 @@ export const Field = ({
               onBlur={handleBlur}
               placeholder=" "
               disabled={isDisabled}
+              autoComplete="false"
             />
           )}
           {type === 'Date' && (
@@ -99,7 +120,7 @@ export const Field = ({
               onChange={handleChange}
               onBlur={handleBlur}
             >
-              <option>{label}</option>
+              <option value="">{label}</option>
               {optionData?.map((data, idx) => (
                 <option key={idx} value={data.value}>
                   {data.name}
@@ -107,14 +128,17 @@ export const Field = ({
               ))}
             </select>
           )}
-          {label && type !== 'TextArea' && type !== 'Select' && (
-            <label
-              htmlFor={name}
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              {label}
-            </label>
-          )}
+          {label &&
+            type !== 'TextArea' &&
+            type !== 'Select' &&
+            type !== 'File' && (
+              <label
+                htmlFor={name}
+                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              >
+                {label}
+              </label>
+            )}
 
           {errors[name] &&
             errors[name].length > 0 &&

@@ -56,13 +56,13 @@ export interface User {
   password_hash: string;
   birth_date: Date;
   gender: string;
-  ward_id: string;
+  ward_id?: string;
   street: string;
   phone_number: string;
   email: string;
-  avatar: string;
+  avatar?: string;
   date_start: Date;
-  date_end: Date;
+  date_end?: Date;
   salary: number;
   department_id: string;
   level_id: string;
@@ -85,4 +85,10 @@ export interface Ward {
   district_id: string;
   ward_id: string;
   ward_name: string;
+}
+
+export interface Location {
+  ward_id: string;
+  district_id: string;
+  province_id: string;
 }

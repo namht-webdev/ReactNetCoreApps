@@ -256,8 +256,9 @@ namespace Backend.Migrations
                         .HasColumnType("varchar(32)");
 
                     b.Property<string>("avatar")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(256)");
 
                     b.Property<DateTime>("birth_date")
                         .HasColumnType("datetime");

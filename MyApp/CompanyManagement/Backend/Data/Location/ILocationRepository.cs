@@ -8,4 +8,5 @@ public interface ILocationRepository
     // Task<Province> GetFullLocation(string provinceId);
     Task<IEnumerable<District>> GetDistrict(string provinceId);
     Task<IEnumerable<Ward>> GetWard(string districtId);
+    Task<Location> GetLocation(string ward_id);
 }

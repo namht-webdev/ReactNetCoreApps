@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using CompanyManagement.Models;
 using CompanyManagement.Data;
+using System.IO;
 
 
 [ApiController]
@@ -8,7 +9,13 @@ using CompanyManagement.Data;
 public class UserController : ControllerBase
 {
     private readonly IUserRepository _userRepository;
-    public UserController(IUserRepository userRepository) => _userRepository = userRepository;
+    private readonly IHostEnvironment _env;
+
+    public UserController(IUserRepository userRepository, IHostEnvironment env)
+    {
+        _userRepository = userRepository;
+        _env = env;
+    }
     [HttpPost]
     public async Task<ActionResult> Add(User user)
     {
@@ -19,7 +26,7 @@ public class UserController : ControllerBase
         }
         catch (System.Exception)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 400 });
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
         }
     }
 
@@ -33,7 +40,7 @@ public class UserController : ControllerBase
         }
         catch (System.Exception)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 400 });
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
         }
     }
     [HttpGet("{userId}")]
@@ -46,7 +53,7 @@ public class UserController : ControllerBase
         }
         catch (System.Exception)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 400 });
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
         }
     }
 
@@ -67,7 +74,7 @@ public class UserController : ControllerBase
         }
         catch (System.Exception)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 400 });
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
         }
     }
 
@@ -77,11 +84,45 @@ public class UserController : ControllerBase
         try
         {
             var userUpdated = await _userRepository.Update(userId, user);
-            return userUpdated != null ? Ok(userUpdated) : BadRequest(new { success = false, message = $"Người dùng {userId} không còn khả dụng" });
+            return userUpdated != null ? Ok(new { success = true, message = $"Cập nhật thông tin người dùng {userId} thành công", data = userUpdated }) : BadRequest(new { success = false, message = $"Người dùng {userId} không còn khả dụng" });
         }
         catch (System.Exception)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 400 });
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
         }
+    }
+
+    [HttpPost("fileUpload")]
+    public async Task<IActionResult> UploadFile(string userId, [FromForm] IFormFile fileUpload)
+    {
+        try
+        {
+            if (fileUpload != null && fileUpload.Length > 0)
+            {
+                DateTime currentTime = DateTime.UtcNow;
+
+                // Calculate the number of milliseconds since the Unix epoch (January 1, 1970, 00:00:00 UTC)
+                long millisecondsSinceUnixEpoch = (long)(currentTime - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
+                // Create a unique file name to avoid potential conflicts
+                var fileName = Path.GetFileName(string.Concat(millisecondsSinceUnixEpoch.ToString(), "_", fileUpload.FileName));
+
+                var filePath = Path.Combine(_env.ContentRootPath, string.Concat(@"..\", @"Frontend"), @"public\uploads", fileName);
+                // Save the file to the server
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await fileUpload.CopyToAsync(stream);
+                }
+
+                // Optionally, you can perform additional processing here, e.g., database entry, etc.
+
+                return Ok(new { success = true });
+            }
+        }
+        catch (System.Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
+        }
+
+        return Ok("No file or empty file provided.");
     }
 }

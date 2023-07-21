@@ -33,6 +33,7 @@ export const CreateSchedule = () => {
         onSubmit={handleSubmit}
         validationRules={{
           schedule_id: [{ validator: required }],
+          date: [{ validator: required }],
         }}
         failureMessage={messageReturn}
         successMessage={messageReturn}

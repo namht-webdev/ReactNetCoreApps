@@ -33,5 +33,13 @@ public class LocationRepository : ILocationRepository
         var result = await _dbContext.ward.Where(ward => ward.district_id == districtId).ToListAsync();
         return result;
     }
+
+    public async Task<Location> GetLocation(string ward_id)
+    {
+        var distrct_id = await _dbContext.ward.Where(ward => ward.ward_id == ward_id).Select(getWard => getWard.district_id).FirstOrDefaultAsync();
+        var province_id = await _dbContext.district.Where(district => district.district_id == distrct_id).Select(getDistrict => getDistrict.province_id).FirstOrDefaultAsync();
+        var location = new Location() { ward_id = ward_id, district_id = distrct_id, province_id = province_id };
+        return location;
+    }
 }
 
