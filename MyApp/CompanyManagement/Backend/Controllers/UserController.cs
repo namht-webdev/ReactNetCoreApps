@@ -106,7 +106,7 @@ public class UserController : ControllerBase
                 // Create a unique file name to avoid potential conflicts
                 var fileName = Path.GetFileName(string.Concat(millisecondsSinceUnixEpoch.ToString(), "_", fileUpload.FileName));
 
-                var filePath = Path.Combine(_env.ContentRootPath, string.Concat(@"..\", @"Frontend"), @"public\uploads", fileName);
+                var filePath = Path.Combine(_env.ContentRootPath, string.Concat(@"..\", @"Frontend"), @"public\uploads", fileName, ".png");
                 // Save the file to the server
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
