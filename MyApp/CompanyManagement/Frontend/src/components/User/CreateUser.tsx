@@ -9,16 +9,13 @@ import { ChangeEvent, useMemo, useState } from 'react';
 import { DEFAULT_API_URL } from '../../api/api';
 import axios from 'axios';
 
-interface FileUploadData {
-  fileUpload: File;
-}
-
 export const CreateUser = () => {
   const dispatch = useAppDispatch();
   const [messageReturn, setMessage] = useState('');
   const [selectedImage, setSelectedImage] = useState<
     string | ArrayBuffer | File | null
   >(null);
+  const [imageUpload, setImageUpload] = useState<File | null>(null);
   const initialValues = useMemo(() => {
     return {
       birth_date: new Date().toISOString().split('T')[0],
@@ -34,18 +31,20 @@ export const CreateUser = () => {
       title: 'user',
       data: user,
     };
+    if (imageUpload) {
+      try {
+        const formData = new FormData();
+        formData.append('fileUpload', imageUpload);
+        const resUpload = await axios.post<{ success: boolean }>(
+          `${DEFAULT_API_URL}/user/upload`,
+          formData,
+        );
+        if (!resUpload.data.success) setMessage('File lỗi');
+        return { success: false };
+      } catch (error) {}
+    }
     const response = await dispatch(addNew(req));
     const { success, message } = response.payload as DataResponse;
-    if (selectedImage) {
-      const formData = new FormData();
-      formData.append('fileUpload', new Blob([selectedImage]));
-      const resUpload = await axios.post<{ success: boolean }>(
-        `${DEFAULT_API_URL}/user/fileUpload?userId=namht`,
-        formData,
-      );
-      if (!resUpload.data.success) setMessage('File lỗi');
-      return { success: false };
-    }
     setMessage(message);
     return { success };
   };
@@ -56,8 +55,15 @@ export const CreateUser = () => {
       const reader = new FileReader();
       reader.onload = () => {
         setSelectedImage(reader.result);
+        setImageUpload(file);
       };
       reader.readAsDataURL(file);
+      const formData = new FormData();
+      formData.append('fileUpload', file);
+      axios.post<{ success: boolean }>(
+        `${DEFAULT_API_URL}/user/upload`,
+        formData,
+      );
     }
   };
   return (
@@ -69,14 +75,14 @@ export const CreateUser = () => {
         <div className="text-center">
           <input
             type="file"
-            accept="image/*"
+            accept=".jpg, .png"
             onChange={handleImageChange}
             className="hidden"
-            id="avatar"
-            name="avatar"
+            name="fileUpload"
+            id="fileUpload"
           />
           <label
-            htmlFor="avatar"
+            htmlFor="fileUpload"
             className="cursor-pointer p-0 inline-block w-auto"
           >
             {selectedImage ? (
