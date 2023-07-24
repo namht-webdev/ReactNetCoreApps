@@ -23,7 +23,6 @@ export const Location = ({ ward_id }: { ward_id?: string | null }) => {
       return;
     }
     const route = isChangeProvince ? 'district' : 'ward';
-    if (isChangeProvince) setDistrict('');
     const response = (
       await axios.get(`${DEFAULT_API_URL}/location/${route}/${value}`)
     ).data as DataResponse;
@@ -34,6 +33,8 @@ export const Location = ({ ward_id }: { ward_id?: string | null }) => {
           return { name: district.district_name, value: district.district_id };
         },
       );
+      setDistrict('');
+      setProvince(value);
       setDistricts(districtOptions);
       setWards([]);
     } else {

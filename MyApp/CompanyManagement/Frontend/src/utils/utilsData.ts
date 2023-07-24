@@ -1153,7 +1153,7 @@ export const timeLine = [
   },
 ];
 
-export const sex = [
+export const gender = [
   { name: 'Nam', value: '0' },
   { name: 'Nữ', value: '1' },
 ];

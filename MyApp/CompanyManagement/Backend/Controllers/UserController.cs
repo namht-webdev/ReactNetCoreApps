@@ -93,7 +93,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("upload")]
-    public async Task<IActionResult> UploadFile([FromForm] IFormFile fileUpload)
+    public async Task<IActionResult> UploadFile([FromQuery] string userId, [FromForm] IFormFile fileUpload)
     {
         try
         {
@@ -107,14 +107,14 @@ public class UserController : ControllerBase
                 var fileName = Path.GetFileName(string.Concat(millisecondsSinceUnixEpoch.ToString(), "_", fileUpload.FileName));
 
                 //var filePath = Path.Combine(_env.ContentRootPath, string.Concat(@"..\", @"Frontend"), @"public\uploads", fileName);.
-                var filePath = Path.Combine(_env.ContentRootPath, "uploads", fileName);
+                var filePath = Path.Combine(_env.ContentRootPath, string.Concat(@"..\"), "Frontend", @"public\uploads", fileName);
                 // Save the file to the server
+                var result = await _userRepository.UpdateAvatar(userId, fileName);
+                if (!result) return BadRequest(new { success = false });
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await fileUpload.CopyToAsync(stream);
                 }
-
-                // Optionally, you can perform additional processing here, e.g., database entry, etc.
 
                 return Ok(new { success = true });
             }

@@ -73,6 +73,14 @@ public class UserRepository : IUserRepository
         }
         return userExists;
     }
+    public async Task<bool> UpdateAvatar(string userId, string imageName)
+    {
+        var userExists = await _dbContext.user.FindAsync(userId);
+        if (userExists == null) return false;
+        userExists.avatar = imageName;
+        var result = await _dbContext.SaveChangesAsync();
+        return result == 1;
+    }
 
     public async Task<bool> ChangePassword(string userId, string oldPassword, string newPassword)
     {

@@ -2,7 +2,7 @@ import { Form, Values, mustBeEmail, required } from '../Context/Form';
 import { Field } from '../Context/Field';
 import { ApiRequest, DataResponse, useAppDispatch } from '../../reducers';
 import { addNew } from '../../reducers/dataSlice';
-import { sex } from '../../utils/utilsData';
+import { gender } from '../../utils/utilsData';
 import { Location } from '../Location';
 import { CompanyInfo } from '../CompanyInfo';
 import { ChangeEvent, useMemo, useState } from 'react';
@@ -13,7 +13,7 @@ export const CreateUser = () => {
   const dispatch = useAppDispatch();
   const [messageReturn, setMessage] = useState('');
   const [selectedImage, setSelectedImage] = useState<
-    string | ArrayBuffer | File | null
+    string | ArrayBuffer | null
   >(null);
   const [imageUpload, setImageUpload] = useState<File | null>(null);
   const initialValues = useMemo(() => {
@@ -36,7 +36,7 @@ export const CreateUser = () => {
         const formData = new FormData();
         formData.append('fileUpload', imageUpload);
         const resUpload = await axios.post<{ success: boolean }>(
-          `${DEFAULT_API_URL}/user/upload`,
+          `${DEFAULT_API_URL}/user/upload?userId=namht`,
           formData,
         );
         if (!resUpload.data.success) setMessage('File lỗi');
@@ -140,7 +140,7 @@ export const CreateUser = () => {
             name="gender"
             label="Giới tính"
             type="Select"
-            optionData={sex}
+            optionData={gender}
           ></Field>
         </div>
         <CompanyInfo />
