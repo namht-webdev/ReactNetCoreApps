@@ -5,17 +5,11 @@ import { addNew } from '../../reducers/dataSlice';
 import { gender } from '../../utils/utilsData';
 import { Location } from '../Location';
 import { CompanyInfo } from '../CompanyInfo';
-import { ChangeEvent, useMemo, useState } from 'react';
-import { DEFAULT_API_URL } from '../../api/api';
-import axios from 'axios';
+import { useMemo, useState } from 'react';
 
 export const CreateUser = () => {
   const dispatch = useAppDispatch();
   const [messageReturn, setMessage] = useState('');
-  const [selectedImage, setSelectedImage] = useState<
-    string | ArrayBuffer | null
-  >(null);
-  const [imageUpload, setImageUpload] = useState<File | null>(null);
   const initialValues = useMemo(() => {
     return {
       birth_date: new Date().toISOString().split('T')[0],
@@ -31,74 +25,17 @@ export const CreateUser = () => {
       title: 'user',
       data: user,
     };
-    if (imageUpload) {
-      try {
-        const formData = new FormData();
-        formData.append('fileUpload', imageUpload);
-        const resUpload = await axios.post<{ success: boolean }>(
-          `${DEFAULT_API_URL}/user/upload?userId=namht`,
-          formData,
-        );
-        if (!resUpload.data.success) setMessage('File lỗi');
-        return { success: false };
-      } catch (error) {}
-    }
+
     const response = await dispatch(addNew(req));
     const { success, message } = response.payload as DataResponse;
     setMessage(message);
     return { success };
-  };
-
-  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setSelectedImage(reader.result);
-        setImageUpload(file);
-      };
-      reader.readAsDataURL(file);
-      const formData = new FormData();
-      formData.append('fileUpload', file);
-      axios.post<{ success: boolean }>(
-        `${DEFAULT_API_URL}/user/upload`,
-        formData,
-      );
-    }
   };
   return (
     <div>
       <p className="py-10 text-center font-bold text-slate-500">
         THÊM MỚI NGƯỜI DÙNG
       </p>
-      <div className="px-10 text-lg">
-        <div className="text-center">
-          <input
-            type="file"
-            accept=".jpg, .png"
-            onChange={handleImageChange}
-            className="hidden"
-            name="fileUpload"
-            id="fileUpload"
-          />
-          <label
-            htmlFor="fileUpload"
-            className="cursor-pointer p-0 inline-block w-auto"
-          >
-            {selectedImage ? (
-              <img
-                src={selectedImage as string}
-                alt="Selected"
-                className="sm:w-40 object-cover sm:h-40 w-28 h-28"
-              />
-            ) : (
-              <div className="sm:w-32 sm:h-32 w-16 h-16 border border-gray-300 flex items-center justify-center">
-                <span className="text-gray-400 text-lg">Chọn hình ảnh</span>
-              </div>
-            )}
-          </label>
-        </div>
-      </div>
       <Form
         submitCaption="Thêm"
         onSubmit={handleSubmit}

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { ChangeEvent, Fragment, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ApiRequest, DataResponse, useAppDispatch } from '../../reducers';
 import { User } from '../../interfaces';
@@ -10,7 +10,8 @@ import { CompanyInfo } from '../CompanyInfo';
 import { Location } from '../Location';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { UploadAvatar } from './UploadAvatar';
+import axios from 'axios';
+import { DEFAULT_API_URL } from '../../api/api';
 export const UpdateUser = () => {
   const { user_id } = useParams();
   const dispatch = useAppDispatch();
@@ -46,10 +47,39 @@ export const UpdateUser = () => {
     };
     const response = await dispatch(update(req));
     const { success, message } = response.payload as DataResponse;
+    if (imageUpload) {
+      try {
+        const formData = new FormData();
+        formData.append('fileUpload', imageUpload);
+        await axios.post<{ success: boolean }>(
+          `${DEFAULT_API_URL}/user/upload?userId=${user_id}`,
+          formData,
+        );
+        setImageUpload(null);
+      } catch (error) {
+        alert('Có lỗi xảy ra trong quá trình thực hiện');
+      }
+    }
     setMessage(message);
     alert(message);
     return { success, redirectUrl: '/user' };
   };
+  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setSelectedImage(reader.result);
+        setImageUpload(file);
+      };
+      reader.readAsDataURL(file);
+    }
+    event.target.value = '';
+  };
+  const [selectedImage, setSelectedImage] = useState<
+    ArrayBuffer | null | string
+  >(null);
+  const [imageUpload, setImageUpload] = useState<File | null>(null);
   return (
     <div>
       <div className="pt-24">
@@ -59,9 +89,34 @@ export const UpdateUser = () => {
           </div>
         ) : (
           <Fragment>
-            <UploadAvatar
-              src={`/uploads/${user?.avatar ? user.avatar : 'avatar.jpg'}`}
-            />
+            <div className="px-10 text-lg pb-10">
+              <div className="text-center">
+                <input
+                  type="file"
+                  accept=".jpg, .png"
+                  onChange={handleImageChange}
+                  className="hidden"
+                  name="fileUpload"
+                  id="fileUpload"
+                />
+                <label
+                  htmlFor="fileUpload"
+                  className="cursor-pointer p-0 inline-block w-auto"
+                >
+                  <img
+                    src={
+                      imageUpload !== null
+                        ? (selectedImage as string)
+                        : `/uploads/${
+                            user?.avatar ? user.avatar : 'avatar.jpg'
+                          }`
+                    }
+                    alt="Selected"
+                    className="sm:w-40 object-cover sm:h-40 w-28 h-28 rounded-full"
+                  />
+                </label>
+              </div>
+            </div>
             <Form
               submitCaption="Cập nhật"
               onSubmit={handleSubmit}

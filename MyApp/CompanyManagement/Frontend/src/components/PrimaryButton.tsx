@@ -1,7 +1,6 @@
-import React, { MouseEventHandler } from 'react';
 interface Props {
   title: React.ReactNode;
-  onClick?: MouseEventHandler;
+  onClick?: () => void;
   type?: 'submit' | 'reset' | 'button' | undefined;
 }
 
