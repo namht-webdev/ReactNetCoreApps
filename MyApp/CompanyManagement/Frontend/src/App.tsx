@@ -1,6 +1,5 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 // import Student from './components/Student/Student';
-import Navbar from './components/Navbar/Navbar';
 import HomePage from './components/Home/HomePage';
 import { UserList } from './components/User/UserList';
 import NotFound from './NotFound';
@@ -21,16 +20,25 @@ import { UpdateSchedule } from './components/Schedule/UpdateSchedule';
 import { CreateSchedule } from './components/Schedule/CreateSchedule';
 import { CreateUser } from './components/User/CreateUser';
 import { UpdateUser } from './components/User/UpdateUser';
+import { useAuth } from './components/Context/Authorization';
+import { useEffect } from 'react';
+import { Login } from './components/UserStatus/Login';
+import PrivateRoute from './components/UserStatus/PrivateRoute';
 
 function App() {
+  const { userLogin } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userLogin) {
+      navigate('/login');
+    }
+  }, [userLogin]);
   return (
-    // <Routes>
-    //   <Route path="student/:studentId" element={<Student />}></Route>
-    // </Routes>
-    <div>
-      <Navbar></Navbar>
-      <div className="pt-12">
-        <Routes>
+    <div className="h-full">
+      <Routes>
+        <Route path="login" element={<Login />}></Route>
+        <Route element={<PrivateRoute />}>
           <Route path="/" element={<HomePage />}></Route>
           <Route path="user" element={<UserList />}></Route>
           <Route path="user/create" element={<CreateUser />}></Route>
@@ -67,9 +75,9 @@ function App() {
           <Route path="schedule" element={<ScheduleList />}></Route>
           <Route path="schedule/:schedule_id" element={<UpdateSchedule />} />
           <Route path="schedule/create" element={<CreateSchedule />}></Route>
-          <Route path="*" element={<NotFound />}></Route>
-        </Routes>
-      </div>
+        </Route>
+        <Route path="*" element={<NotFound />}></Route>
+      </Routes>
     </div>
   );
 }

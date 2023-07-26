@@ -42,8 +42,8 @@ export const UserList = () => {
     setShowModal(false);
   };
   return (
-    <div>
-      <p className="py-10 text-center font-bold text-slate-500">
+    <div className="h-full">
+      <p className="pt-10 text-center font-bold text-slate-500">
         DANH SÁCH NGƯỜI DÙNG
       </p>
       <div className="px-36">
@@ -51,7 +51,7 @@ export const UserList = () => {
           <FontAwesomeIcon icon={faPlusCircle} />
         </Link>
       </div>
-      <div className="relative overflow-x-auto py-8 lg:px-32 px-6">
+      <div className="relative overflow-x-auto py-8 lg:px-32 px-6 h-full xl:h-auto">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>

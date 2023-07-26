@@ -198,7 +198,7 @@ export const Form = ({
       >
         <fieldset>
           {children}
-          <div className="flex justify-between w-1/4 lg:w-1/6">
+          <div className="flex justify-between">
             <PrimaryButton type={type} title={submitCaption} />
           </div>
           {submitted && submitError && (

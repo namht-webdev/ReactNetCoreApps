@@ -139,7 +139,11 @@ export const UpdateUser = () => {
               <div className="grid md:grid-cols-3 md:gap-6">
                 <Field name="user_id" label="Mã người dùng"></Field>
                 <Field name="full_name" label="Tên người dùng"></Field>
-                <Field name="password_hash" label="Mật khẩu đăng nhập"></Field>
+                <Field
+                  name="password_hash"
+                  label="Mật khẩu đăng nhập"
+                  type="Password"
+                ></Field>
               </div>
               <div className="grid md:grid-cols-3 md:gap-6">
                 <Field name="email" label="Địa chỉ email"></Field>
