@@ -3,6 +3,7 @@ using CompanyManagement.Models;
 namespace CompanyManagement.Data;
 public interface IUserRepository
 {
+    Task<User> Login(string email, string password);
     Task<bool> Add(User user);
     Task<User> GetOne(string userId);
     Task<IEnumerable<User>> GetAll();

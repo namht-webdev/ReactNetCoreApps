@@ -169,12 +169,11 @@
 ## Cấu trúc thư mục dự án
 
 - src
-  - actions: Chứa các tệp tin định nghĩa các action và creator function.
+  - actions: Chứa các tệp tin định nghĩa các action/slice và creator function.
   - reducers: Chứa các tệp tin định nghĩa các reducer.
   - constants: Chứa các tệp tin định nghĩa các hằng số (constants) được sử dụng trong Redux.
   - store: Chứa tệp tin cấu hình và khởi tạo Redux store.
   - middlewares: Chứa các tệp tin định nghĩa middleware được sử dụng trong Redux (ví dụ: redux-thunk, redux-saga).
-  - selectors: Chứa các tệp tin định nghĩa các selector để lựa chọn dữ liệu từ Redux store.
   - components: Chứa các thành phần React được sử dụng để hiển thị dữ liệu từ Redux store và gửi các action.
   - containers: Chứa các thành phần React được kết hợp với Redux (connect) để truy cập và điều khiển dữ liệu trong Redux store.
   - utils: Chứa các tệp tin tiện ích được sử dụng trong Redux (ví dụ: hàm trợ giúp, kết nối API).

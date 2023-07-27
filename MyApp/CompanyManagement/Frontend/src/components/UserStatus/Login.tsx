@@ -9,20 +9,39 @@ import {
 } from '../Context/Form';
 import { AuthContext } from '../Context/Authorization';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { User } from '../../interfaces';
+import { DEFAULT_API_URL } from '../../api/api';
+
+interface UserLoginResponse {
+  data?: User;
+  success: boolean;
+  message: string;
+  token?: string;
+}
 
 export const Login = () => {
   const { userLogin, setUserLogin } = useContext(AuthContext);
   const navigate = useNavigate();
+
   const handleLogin = async (values: Values) => {
+    console.log(values);
+    const response = await axios.post<UserLoginResponse>(
+      `${DEFAULT_API_URL}/user/login`,
+      values,
+    );
+    console.log(response);
     if (setUserLogin) {
       setUserLogin(true);
-      localStorage.setItem('login', '123465');
+      localStorage.setItem('login', '123456');
       navigate('/');
     }
     return { success: true };
   };
   useEffect(() => {
-    if (userLogin) navigate('/');
+    if (userLogin) {
+      navigate('/');
+    }
   }, [userLogin]);
 
   return (
@@ -31,7 +50,7 @@ export const Login = () => {
         <div className="p-5">
           <Form
             validationRules={{
-              user_id: [{ validator: required }, { validator: mustBeEmail }],
+              email: [{ validator: required }, { validator: mustBeEmail }],
               password: [
                 { validator: required },
                 { validator: minLength, args: 8 },
@@ -40,7 +59,7 @@ export const Login = () => {
             onSubmit={handleLogin}
             submitCaption="Đăng nhập"
           >
-            <Field name="user_id" label="Email"></Field>
+            <Field name="email" label="Email"></Field>
             <Field name="password" label="Mật khẩu" type="Password"></Field>
           </Form>
           <div className="w-2/3 text-right pt-10">

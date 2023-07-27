@@ -2,7 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using CompanyManagement.Models;
 using CompanyManagement.Data;
 using System.IO;
-
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -11,10 +15,13 @@ public class UserController : ControllerBase
     private readonly IUserRepository _userRepository;
     private readonly IHostEnvironment _env;
 
-    public UserController(IUserRepository userRepository, IHostEnvironment env)
+    private readonly IConfiguration _configuration;
+
+    public UserController(IUserRepository userRepository, IHostEnvironment env, IConfiguration configuration)
     {
         _userRepository = userRepository;
         _env = env;
+        _configuration = configuration;
     }
     [HttpPost]
     public async Task<ActionResult> Add(User user)
@@ -129,5 +136,48 @@ public class UserController : ControllerBase
         }
 
         return Ok("No file or empty file provided.");
+    }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Login(string email, string password)
+    {
+        try
+        {
+            var authUser = await _userRepository.Login(email, password);
+            if (authUser != null)
+            {
+                var claims = new[]
+            {
+                new Claim(ClaimTypes.Name, authUser.user_id),
+                new Claim(ClaimTypes.Role, authUser.role_id)
+                // You can add more claims as needed (e.g., roles, user id, etc.)
+                
+            };
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!)); // Use the same secret key as above
+                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                var tokenConfig = new JwtSecurityToken(
+                    issuer: _configuration["Jwt:Issuer"], // Use the same issuer as above
+                    audience: _configuration["Jwt:Audience"], // Use the same audience as above
+                    claims: claims,
+                    expires: DateTime.Now.AddDays(1), // Set the token expiration time
+                    signingCredentials: creds
+                );
+
+                var token = new JwtSecurityTokenHandler().WriteToken(tokenConfig);
+                var cookieOptions = new CookieOptions
+                {
+                    HttpOnly = true,
+                    Expires = DateTime.Now.AddDays(1) // Đặt thời hạn cho cookie
+                };
+                Response.Cookies.Append("token", token, cookieOptions);
+                return Ok(new { success = true, message = "Đăng nhập thành công", user = authUser, token = token });
+            }
+            return BadRequest(new { success = false, message = "Email hoặc mật khẩu không đúng" });
+        }
+        catch (System.Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
+        }
+
     }
 }

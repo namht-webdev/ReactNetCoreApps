@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { User } from '../../interfaces';
 
 interface AuthContextProps {
@@ -8,7 +8,11 @@ interface AuthContextProps {
   setUserLogin?: (isLogin: boolean) => void;
 }
 
-const isLoggin = localStorage.getItem('login') === '123456' ? true : false;
+const isLoggin = document.cookie
+  .split(';')
+  .find((cookie) => cookie.trim().startsWith('token='))
+  ? true
+  : false;
 export const AuthContext = createContext<AuthContextProps>({
   authUser: null,
   setAuthUser: (authUser: User | null) => {},
@@ -17,7 +21,7 @@ export const AuthContext = createContext<AuthContextProps>({
 });
 
 interface AuthorizationProps {
-  children?: JSX.Element | JSX.Element[];
+  children?: JSX.Element;
 }
 export const Authorization = ({ children }: AuthorizationProps) => {
   const [authUser, setAuthUser] = useState<User | null>(null);

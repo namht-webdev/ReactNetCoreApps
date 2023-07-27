@@ -8,10 +8,20 @@ public class UserRepository : IUserRepository
     private readonly CompanyManagementDbContext _dbContext;
 
     public UserRepository(CompanyManagementDbContext dbContext) => _dbContext = dbContext;
+
+    public async Task<User> Login(string email, string password)
+    {
+        var userContainEmail = await _dbContext.user.FirstOrDefaultAsync(user => user.email == email);
+        if (userContainEmail == null) return userContainEmail;
+        var auth = VerifyPassword(userContainEmail.user_id, password, userContainEmail.password_hash);
+        if (auth) return userContainEmail;
+        return null;
+    }
     public async Task<bool> Add(User user)
     {
         var userExists = await _dbContext.user.FindAsync(user.user_id);
-        if (userExists != null) return false;
+        var userContainEmail = await _dbContext.user.FirstOrDefaultAsync(u => u.email == user.email);
+        if (userExists != null || userContainEmail != null) return false;
         user.password_hash = HashPassword(user.user_id, user.password_hash);
         await _dbContext.user.AddAsync(user);
         var result = await _dbContext.SaveChangesAsync();
@@ -67,6 +77,7 @@ public class UserRepository : IUserRepository
         {
             _dbContext.user.Remove(userExists);
             await _dbContext.SaveChangesAsync();
+            user.password_hash = HashPassword(user.user_id, user.password_hash);
             await _dbContext.AddAsync(user);
             await _dbContext.SaveChangesAsync();
             return user;
@@ -107,4 +118,6 @@ public class UserRepository : IUserRepository
         var result = passwordHasher.VerifyHashedPassword(user, hashedPassword, password);
         return result == PasswordVerificationResult.Success;
     }
+
+
 }
