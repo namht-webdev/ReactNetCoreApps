@@ -19,7 +19,7 @@ const Navbar = () => {
   const handleLogout = () => {
     if (setUserLogin) {
       setUserLogin(false);
-      localStorage.removeItem('login');
+      sessionStorage.removeItem('access_token');
     }
   };
   return (

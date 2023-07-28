@@ -28,7 +28,6 @@ import PrivateRoute from './components/UserStatus/PrivateRoute';
 function App() {
   const { userLogin } = useAuth();
   const navigate = useNavigate();
-
   useEffect(() => {
     if (!userLogin) {
       navigate('/login');

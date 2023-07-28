@@ -8,11 +8,7 @@ interface AuthContextProps {
   setUserLogin?: (isLogin: boolean) => void;
 }
 
-const isLoggin = document.cookie
-  .split(';')
-  .find((cookie) => cookie.trim().startsWith('token='))
-  ? true
-  : false;
+const isLoggin = sessionStorage.getItem('access_token') ? true : false;
 export const AuthContext = createContext<AuthContextProps>({
   authUser: null,
   setAuthUser: (authUser: User | null) => {},

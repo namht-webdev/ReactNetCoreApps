@@ -50,6 +50,7 @@ public class UserController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
         }
     }
+    [Authorize]
     [HttpGet("{userId}")]
     public async Task<ActionResult> GetOne(string userId)
     {
@@ -138,46 +139,65 @@ public class UserController : ControllerBase
         return Ok("No file or empty file provided.");
     }
 
+
     [HttpPost("login")]
-    public async Task<IActionResult> Login(string email, string password)
+    public async Task<IActionResult> Login(UserLogin user)
     {
+
         try
         {
-            var authUser = await _userRepository.Login(email, password);
+            var authUser = await _userRepository.Login(user.email, user.password);
             if (authUser != null)
             {
-                var claims = new[]
-            {
-                new Claim(ClaimTypes.Name, authUser.user_id),
-                new Claim(ClaimTypes.Role, authUser.role_id)
-                // You can add more claims as needed (e.g., roles, user id, etc.)
-                
-            };
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!)); // Use the same secret key as above
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                var tokenConfig = new JwtSecurityToken(
-                    issuer: _configuration["Jwt:Issuer"], // Use the same issuer as above
-                    audience: _configuration["Jwt:Audience"], // Use the same audience as above
-                    claims: claims,
-                    expires: DateTime.Now.AddDays(1), // Set the token expiration time
-                    signingCredentials: creds
-                );
+                //     var claims = new[]
+                // {
+                //     new Claim(ClaimTypes.Name, authUser.user_id),
+                //     new Claim(ClaimTypes.Role, authUser.role_id)
+                //     // You can add more claims as needed (e.g., roles, user id, etc.)
+                // };
+                //     var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetValue<string>("Jwt:Key")!)); // Use the same secret key as above
+                //     var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                //     var tokenConfig = new JwtSecurityToken(
+                //         issuer: _configuration.GetValue<string>("Jwt:Issuer"), // Use the same issuer as above
+                //         audience: _configuration.GetValue<string>("Jwt:Audience"), // Use the same audience as above
+                //         claims: claims,
+                //         expires: DateTime.Now.AddDays(1), // Set the token expiration time
+                //         signingCredentials: creds
+                //     );
 
-                var token = new JwtSecurityTokenHandler().WriteToken(tokenConfig);
-                var cookieOptions = new CookieOptions
-                {
-                    HttpOnly = true,
-                    Expires = DateTime.Now.AddDays(1) // Đặt thời hạn cho cookie
-                };
-                Response.Cookies.Append("token", token, cookieOptions);
+                var token = await Generate(user);
+
                 return Ok(new { success = true, message = "Đăng nhập thành công", user = authUser, token = token });
             }
             return BadRequest(new { success = false, message = "Email hoặc mật khẩu không đúng" });
         }
-        catch (System.Exception e)
+        catch (System.Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
         }
 
+
+
+    }
+
+    private async Task<string> Generate(UserLogin user)
+    {
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+        var authUser = await _userRepository.Login(user.email, user.password);
+        var claims = new[]
+        {
+                new Claim(ClaimTypes.Name, authUser.user_id),
+                new Claim(ClaimTypes.Role, authUser.role_id)
+            };
+
+        var token = new JwtSecurityToken(_configuration["Jwt:Issuer"],
+          _configuration["Jwt:Audience"],
+          claims,
+          expires: DateTime.Now.AddMinutes(15),
+          signingCredentials: credentials);
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
     }
 }

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Field } from '../Context/Field';
 import {
   Form,
@@ -21,22 +21,32 @@ interface UserLoginResponse {
 }
 
 export const Login = () => {
-  const { userLogin, setUserLogin } = useContext(AuthContext);
+  const { userLogin, setUserLogin, setAuthUser } = useContext(AuthContext);
   const navigate = useNavigate();
-
+  const [failMessage, setFailMessage] = useState('');
   const handleLogin = async (values: Values) => {
-    console.log(values);
-    const response = await axios.post<UserLoginResponse>(
-      `${DEFAULT_API_URL}/user/login`,
-      values,
-    );
-    console.log(response);
-    if (setUserLogin) {
-      setUserLogin(true);
-      localStorage.setItem('login', '123456');
-      navigate('/');
+    try {
+      const response = await axios.post<UserLoginResponse>(
+        `${DEFAULT_API_URL}/user/login`,
+        values,
+      );
+
+      if (setUserLogin && setAuthUser && response.data.success) {
+        setUserLogin(true);
+        setAuthUser(response.data.data!);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${response.data
+          .token!}`;
+        sessionStorage.setItem('access_token', response.data.token!);
+        navigate('/');
+      } else {
+        setFailMessage(response.data.message);
+      }
+    } catch (error) {
+      if (error instanceof Error && error.message.includes('400')) {
+        setFailMessage('Email hoặc password không chính xác');
+      } else setFailMessage('Có lỗi xảy ra');
     }
-    return { success: true };
+    return { success: false };
   };
   useEffect(() => {
     if (userLogin) {
@@ -58,6 +68,7 @@ export const Login = () => {
             }}
             onSubmit={handleLogin}
             submitCaption="Đăng nhập"
+            failureMessage={failMessage}
           >
             <Field name="email" label="Email"></Field>
             <Field name="password" label="Mật khẩu" type="Password"></Field>
