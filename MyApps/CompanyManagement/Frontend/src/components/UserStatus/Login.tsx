@@ -27,7 +27,7 @@ export const Login = () => {
   const handleLogin = async (values: Values) => {
     try {
       const response = await axios.post<UserLoginResponse>(
-        `${DEFAULT_API_URL}/user/login`,
+        `${DEFAULT_API_URL}/login`,
         values,
       );
 

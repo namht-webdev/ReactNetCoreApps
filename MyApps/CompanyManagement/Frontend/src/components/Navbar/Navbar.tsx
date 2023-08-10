@@ -8,14 +8,14 @@ import {
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState, useContext } from 'react';
+import { useState, useContext, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../Context/Authorization';
 // import { appThemes } from '../../utils/Theme';
 // type Theme = 'light' | 'dark';
 const Navbar = () => {
   const [toggleBtn, setToggleBtn] = useState(true);
-  const { setUserLogin } = useContext(AuthContext);
+  const { setUserLogin, authUser } = useContext(AuthContext);
   const handleLogout = () => {
     if (setUserLogin) {
       setUserLogin(false);
@@ -43,18 +43,22 @@ const Navbar = () => {
           <li>
             <Link to="/">Home</Link>
           </li>
-          <li>
-            <Link to="user">User</Link>
-          </li>
-          <li>
-            <Link to="role">Role</Link>
-          </li>
-          <li>
-            <Link to="level">Level</Link>
-          </li>
-          <li>
-            <Link to="department">Department</Link>
-          </li>
+          {authUser?.role_id === 'admin' && (
+            <Fragment>
+              <li>
+                <Link to="user">User</Link>
+              </li>
+              <li>
+                <Link to="role">Role</Link>
+              </li>
+              <li>
+                <Link to="level">Level</Link>
+              </li>
+              <li>
+                <Link to="department">Department</Link>
+              </li>
+            </Fragment>
+          )}
           <li>
             <Link to="requirement">Requirement</Link>
           </li>
