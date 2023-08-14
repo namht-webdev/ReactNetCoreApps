@@ -1,0 +1,169 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "speak": "Weather forecast for Monday is high of 62 and low of 42 degrees with a 20% chance of rain. Winds will be 5 mph from the northeast.",
+  "body": [
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "width": "35",
+          "items": [
+            {
+              "type": "Image",
+              "url": "https://soa.ueh.edu.vn/wp-content/uploads/2021/10/cong-ty-phan-mem-fast.png",
+              "size": "stretch"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "width": "65",
+          "items": [
+            {
+              "type": "TextBlock",
+              "text": "$title",
+              "weight": "bolder",
+              "size": "large",
+              "color": "light"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+  "type": "Column",
+  "width": "30",
+  "items": [
+    {
+  "type": "TextBlock",
+  "horizontalAlignment": "center",
+  "wrap": false,
+  "text": ""S? DU D?U K?""
+}
+,{
+  "type": "TextBlock",
+  "horizontalAlignment": "center",
+  "wrap": false,
+  "text": ""PHAT SINH TRONG K?""
+}
+,{
+  "type": "TextBlock",
+  "horizontalAlignment": "center",
+  "wrap": false,
+  "text": ""S? DU CU?I K?""
+}
+,{
+  "type": "TextBlock",
+  "horizontalAlignment": "center",
+  "wrap": false,
+  "text": "null"
+}
+,{
+  "type": "TextBlock",
+  "horizontalAlignment": "center",
+  "wrap": false,
+  "text": ""Chi ti?n cho hóa don s? 66, ngày 01/09/2022.""
+}
+,{
+  "type": "TextBlock",
+  "horizontalAlignment": "center",
+  "wrap": false,
+  "text": ""Chi ti?n cho hóa don s? 76, ngày 24/10/2022.""
+}
+,
+  ]
+},{
+  "type": "Column",
+  "width": "30",
+  "items": [
+    {
+  "type": "TextBlock",
+  "horizontalAlignment": "center",
+  "wrap": false,
+  "text": "null"
+}
+,{
+  "type": "TextBlock",
+  "horizontalAlignment": "center",
+  "wrap": false,
+  "text": "null"
+}
+,{
+  "type": "TextBlock",
+  "horizontalAlignment": "center",
+  "wrap": false,
+  "text": "null"
+}
+,{
+  "type": "TextBlock",
+  "horizontalAlignment": "center",
+  "wrap": false,
+  "text": "null"
+}
+,{
+  "type": "TextBlock",
+  "horizontalAlignment": "center",
+  "wrap": false,
+  "text": "-300000.0"
+}
+,{
+  "type": "TextBlock",
+  "horizontalAlignment": "center",
+  "wrap": false,
+  "text": "-9300000.0"
+}
+,
+  ]
+},{
+  "type": "Column",
+  "width": "30",
+  "items": [
+    {
+  "type": "TextBlock",
+  "horizontalAlignment": "center",
+  "wrap": false,
+  "text": "null"
+}
+,{
+  "type": "TextBlock",
+  "horizontalAlignment": "center",
+  "wrap": false,
+  "text": "null"
+}
+,{
+  "type": "TextBlock",
+  "horizontalAlignment": "center",
+  "wrap": false,
+  "text": "null"
+}
+,{
+  "type": "TextBlock",
+  "horizontalAlignment": "center",
+  "wrap": false,
+  "text": "null"
+}
+,{
+  "type": "TextBlock",
+  "horizontalAlignment": "center",
+  "wrap": false,
+  "text": "0.0"
+}
+,{
+  "type": "TextBlock",
+  "horizontalAlignment": "center",
+  "wrap": false,
+  "text": "0.0"
+}
+,
+  ]
+},
+      ]
+    }
+  ]
+}
