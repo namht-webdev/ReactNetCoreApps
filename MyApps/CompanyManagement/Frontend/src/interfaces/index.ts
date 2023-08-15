@@ -93,9 +93,9 @@ export interface Location {
   province_id: string;
 }
 
-export interface UserLogined {
+export interface UserVM {
   user_id: string;
-  full_name: string;
+  user_name: string;
   avatar?: string;
   department_id: string;
   level_id: string;

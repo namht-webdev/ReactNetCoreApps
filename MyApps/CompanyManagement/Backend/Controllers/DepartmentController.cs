@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using CompanyManagement.Data;
 using CompanyManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 
 [ApiController]
 [Route("api/[controller]")]
-
+[Authorize(Roles = "admin")]
 public class DepartmentController : ControllerBase
 {
     private readonly IDepartmentRepository _department;

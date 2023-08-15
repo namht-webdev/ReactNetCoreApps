@@ -10,7 +10,7 @@ public class User
     [StringLength(32)]
     public string user_id { get; set; }
     [StringLength(256)]
-    public string full_name { get; set; }
+    public string user_name { get; set; }
     [StringLength(256)]
     public string password_hash { get; set; }
     [Column(TypeName = "datetime")]

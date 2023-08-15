@@ -10,11 +10,11 @@ import {
 import { AuthContext } from '../Context/Authorization';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { UserLogined } from '../../interfaces';
+import { UserVM } from '../../interfaces';
 import { DEFAULT_API_URL } from '../../api/api';
 
 interface UserLoginResponse {
-  user?: UserLogined;
+  user?: UserVM;
   success: boolean;
   message: string;
   token?: string;

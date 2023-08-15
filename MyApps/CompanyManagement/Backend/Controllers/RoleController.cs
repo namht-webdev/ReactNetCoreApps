@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using CompanyManagement.Models;
 using CompanyManagement.Data;
+using Microsoft.AspNetCore.Authorization;
 
 [ApiController]
 [Route("/api/[controller]")]
+[Authorize(Roles = "admin")]
 public class RoleController : ControllerBase
 {
     private readonly IRoleRepository _role;

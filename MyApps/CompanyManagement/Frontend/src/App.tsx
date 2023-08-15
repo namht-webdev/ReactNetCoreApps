@@ -24,6 +24,8 @@ import { useAuth } from './components/Context/Authorization';
 import { useEffect } from 'react';
 import { Login } from './components/UserStatus/Login';
 import PrivateRoute from './components/UserStatus/PrivateRoute';
+import CommondRoute from './components/UserStatus/CommonRoute';
+import { TableData } from './components/TableData';
 
 function App() {
   const { userLogin } = useAuth();
@@ -37,8 +39,23 @@ function App() {
     <div className="h-full">
       <Routes>
         <Route path="login" element={<Login />}></Route>
-        <Route element={<PrivateRoute />}>
+        <Route element={<CommondRoute />}>
           <Route path="/" element={<HomePage />}></Route>
+          <Route path="requirement" element={<RequirementList />}></Route>
+          <Route
+            path="requirement/:requirement_id"
+            element={<UpdateRequirement />}
+          />
+          <Route
+            path="requirement/create"
+            element={<CreateRequirement />}
+          ></Route>
+
+          <Route path="schedule" element={<ScheduleList />}></Route>
+          <Route path="schedule/:schedule_id" element={<UpdateSchedule />} />
+          <Route path="schedule/create" element={<CreateSchedule />}></Route>
+        </Route>
+        <Route element={<PrivateRoute />}>
           <Route path="user" element={<UserList />}></Route>
           <Route path="user/create" element={<CreateUser />}></Route>
           <Route path="user/:user_id" element={<UpdateUser />}></Route>
@@ -60,21 +77,8 @@ function App() {
             path="department/create"
             element={<CreateDepartment />}
           ></Route>
-
-          <Route path="requirement" element={<RequirementList />}></Route>
-          <Route
-            path="requirement/:requirement_id"
-            element={<UpdateRequirement />}
-          />
-          <Route
-            path="requirement/create"
-            element={<CreateRequirement />}
-          ></Route>
-
-          <Route path="schedule" element={<ScheduleList />}></Route>
-          <Route path="schedule/:schedule_id" element={<UpdateSchedule />} />
-          <Route path="schedule/create" element={<CreateSchedule />}></Route>
         </Route>
+
         <Route path="*" element={<NotFound />}></Route>
       </Routes>
     </div>

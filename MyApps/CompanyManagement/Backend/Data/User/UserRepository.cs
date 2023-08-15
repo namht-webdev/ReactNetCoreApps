@@ -46,10 +46,19 @@ public class UserRepository : IUserRepository
         return result == 1;
     }
 
-    public async Task<IEnumerable<User>> GetAll()
+    public async Task<IEnumerable<UserVM>> GetAll()
     {
         var users = await _dbContext.user.ToListAsync();
-        return users;
+        var usersVm = users.Select(u => new UserVM
+        {
+            user_id = u.user_id,
+            avatar = u.avatar,
+            department_id = u.department_id,
+            user_name = u.user_name,
+            level_id = u.level_id,
+            role_id = u.role_id
+        });
+        return usersVm;
     }
 
     public async Task<User> GetOne(string userId)

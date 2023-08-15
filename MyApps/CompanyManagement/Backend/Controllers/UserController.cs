@@ -1,15 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using CompanyManagement.Models;
 using CompanyManagement.Data;
-using System.IO;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 
 [ApiController]
 [Route("api/[controller]")]
+
 public class UserController : ControllerBase
 {
     private readonly IUserRepository _userRepository;
@@ -47,7 +43,6 @@ public class UserController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
         }
     }
-    [Authorize(Roles = "admin")]
     [HttpGet("{userId}")]
     public async Task<ActionResult> GetOne(string userId)
     {
@@ -69,13 +64,14 @@ public class UserController : ControllerBase
         return result ? Ok(new { success = true, message = "Thay đổi mật khảu thành công" }) : BadRequest(new { success = false, message = "mật khẩu cũ không khớp" });
     }
 
-    [HttpDelete("delete")]
-    public async Task<IActionResult> DeleteUser(string userId, bool isSoftDelete)
+    [HttpDelete("{userId}")]
+    public async Task<IActionResult> DeleteUser(string userId)
     {
+        bool isSoftDelete = false;
         try
         {
             var result = isSoftDelete ? await _userRepository.SoftDelete(userId) : await _userRepository.HardDelete(userId);
-            return result ? Ok(new { success = true, message = "User has been deleted!" }) : BadRequest(new { success = false, message = $"Người dùng {userId} không còn khả dụng" });
+            return result ? Ok(new { success = true, message = "User has been deleted!", data = userId }) : BadRequest(new { success = false, message = $"Người dùng {userId} không còn khả dụng" });
         }
         catch (System.Exception)
         {

@@ -65,6 +65,9 @@ const Navbar = () => {
           <li>
             <Link to="schedule">Schedule</Link>
           </li>
+          <li>
+            <Link to="table">Table</Link>
+          </li>
 
           <li className="p-3 lg:absolute lg:right-20">
             <Link to="">

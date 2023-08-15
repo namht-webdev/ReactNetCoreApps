@@ -3,11 +3,10 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../Context/Authorization';
 import Navbar from '../Navbar/Navbar';
 
-const PrivateRoute = () => {
-  const { userLogin, authUser } = useAuth();
+const CommondRoute = () => {
+  const { userLogin } = useAuth();
 
-  if (authUser?.role_id !== 'admin' || !userLogin)
-    return <Navigate to="/notfound" />;
+  if (!userLogin) return <Navigate to="/login" />;
 
   return (
     <div>
@@ -19,4 +18,4 @@ const PrivateRoute = () => {
   );
 };
 
-export default PrivateRoute;
+export default CommondRoute;

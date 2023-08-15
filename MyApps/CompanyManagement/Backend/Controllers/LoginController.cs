@@ -29,10 +29,10 @@ public class LoginController : ControllerBase
             var authUser = await _userRepository.Login(user.email, user.password);
             if (authUser != null)
             {
-                var userLogined = new UserLogined()
+                var userLogined = new UserVM()
                 {
                     user_id = authUser.user_id,
-                    full_name = authUser.full_name,
+                    user_name = authUser.user_name,
                     avatar = authUser.avatar == null ? "" : authUser.avatar,
                     department_id = authUser.department_id,
                     role_id = authUser.role_id,
@@ -50,7 +50,7 @@ public class LoginController : ControllerBase
 
     }
 
-    private string GenerateToken(UserLogined user)
+    private string GenerateToken(UserVM user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var tokenKey = Encoding.UTF8.GetBytes(_configuration["JWT:Key"]!);

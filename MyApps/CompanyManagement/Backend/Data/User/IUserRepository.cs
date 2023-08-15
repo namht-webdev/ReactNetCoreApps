@@ -6,7 +6,7 @@ public interface IUserRepository
     Task<User> Login(string email, string password);
     Task<bool> Add(User user);
     Task<User> GetOne(string userId);
-    Task<IEnumerable<User>> GetAll();
+    Task<IEnumerable<UserVM>> GetAll();
     Task<IEnumerable<User>> GetUsersWithRole(string roleId);
     Task<IEnumerable<User>> GetUsersInDepartment(string departmentId);
     Task<User> Update(string userId, User user);

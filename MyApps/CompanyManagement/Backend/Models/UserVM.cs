@@ -1,9 +1,9 @@
 namespace CompanyManagement.Models;
 
-public class UserLogined
+public class UserVM
 {
     public string user_id { get; set; }
-    public string full_name { get; set; }
+    public string user_name { get; set; }
     public string avatar { get; set; }
     public string department_id { get; set; }
     public string level_id { get; set; }

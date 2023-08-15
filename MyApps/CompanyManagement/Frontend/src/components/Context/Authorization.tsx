@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState } from 'react';
-import { UserLogined } from '../../interfaces';
+import { UserVM } from '../../interfaces';
 
 interface AuthContextProps {
-  authUser?: UserLogined | null;
-  setAuthUser?: (authUser: UserLogined) => void;
+  authUser?: UserVM | null;
+  setAuthUser?: (authUser: UserVM) => void;
   userLogin?: boolean;
   setUserLogin?: (isLogin: boolean) => void;
 }
@@ -15,8 +15,8 @@ const isLoggin =
     ? true
     : false;
 export const AuthContext = createContext<AuthContextProps>({
-  authUser: userLogined ? (JSON.parse(userLogined) as UserLogined) : null,
-  setAuthUser: (authUser: UserLogined | null) => {},
+  authUser: userLogined ? (JSON.parse(userLogined) as UserVM) : null,
+  setAuthUser: (authUser: UserVM | null) => {},
   userLogin: isLoggin,
   setUserLogin: (isLogin: boolean) => {},
 });
@@ -25,8 +25,8 @@ interface AuthorizationProps {
   children?: JSX.Element;
 }
 export const Authorization = ({ children }: AuthorizationProps) => {
-  const [authUser, setAuthUser] = useState<UserLogined | null>(
-    userLogined ? (JSON.parse(userLogined) as UserLogined) : null,
+  const [authUser, setAuthUser] = useState<UserVM | null>(
+    userLogined ? (JSON.parse(userLogined) as UserVM) : null,
   );
   const [userLogin, setUserLogin] = useState<boolean>(isLoggin);
 

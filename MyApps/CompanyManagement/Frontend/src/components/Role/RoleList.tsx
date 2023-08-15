@@ -16,32 +16,15 @@ import {
 import { deleteOne, fetchAll } from '../../reducers/dataSlice';
 import { Modal } from '../Modal';
 import { Role } from '../../interfaces';
+import { TableData } from '../TableData';
 
 export const RoleList = () => {
-  const dispatch = useAppDispatch();
-  const { data, isLoading } = useAppSelector((state: RootState) => state.data);
   const req: ApiRequest = useMemo(() => {
     return {
       title: 'role',
       route: 'role',
     };
   }, []);
-  useEffect(() => {
-    const doGetRole = async (): Promise<void> => {
-      await dispatch(fetchAll(req));
-    };
-    doGetRole();
-  }, [dispatch, req]);
-  const [showModal, setShowModal] = useState(false);
-  const [roleDelete, setRoleDelete] = useState<Role>();
-  const handleDeleteRole = async (role_id: string) => {
-    const deleteReq: ApiRequest = {
-      ...req,
-      id: role_id,
-    };
-    await dispatch(deleteOne(deleteReq));
-    setShowModal(false);
-  };
   return (
     <div>
       <p className="py-10 text-center font-bold text-slate-500">
@@ -52,7 +35,7 @@ export const RoleList = () => {
           <FontAwesomeIcon icon={faPlusCircle} />
         </Link>
       </div>
-      <div className="relative overflow-x-auto py-8 lg:px-32 px-6">
+      {/* <div className="relative overflow-x-auto py-8 lg:px-32 px-6">
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -130,7 +113,8 @@ export const RoleList = () => {
             })}
           </tbody>
         </table>
-      </div>
+      </div> */}
+      <TableData req={req} header={{}} />
     </div>
   );
 };
