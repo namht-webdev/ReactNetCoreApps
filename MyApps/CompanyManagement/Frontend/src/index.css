@@ -44,7 +44,7 @@ html, body, #root{
         @apply flex bg-[#232f3e] shadow-[0px_1px_2px_#232f3e];
     }
     .outer-wrapper {
-        @apply border rounded shadow-[0px_0px_3px_rgba(0,0,0,0.9)] max-w-fit max-h-fit m-auto border-solid border-[black] mt-20;
+        @apply border rounded shadow-[0px_0px_3px_rgba(0,0,0,0.9)] max-w-fit max-h-fit m-auto border-solid border-[black] mt-12;
     }
     .table-wrapper {
         @apply overflow-y-scroll overflow-x-scroll h-fit max-h-[66.4vh] mt-[22px] m-[15px] px-20 pb-5;

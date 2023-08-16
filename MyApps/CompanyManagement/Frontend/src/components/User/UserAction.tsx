@@ -1,8 +1,14 @@
-import React, { ChangeEvent, Fragment, useEffect, useState } from 'react';
+import React, {
+  ChangeEvent,
+  Fragment,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ApiRequest, DataResponse, useAppDispatch } from '../../reducers';
 import { User } from '../../interfaces';
-import { getOne, update } from '../../reducers/dataSlice';
+import { addNew, getOne, update } from '../../reducers/dataSlice';
 import { Form, Values, mustBeEmail, required } from '../Context/Form';
 import { Field } from '../Context/Field';
 import { gender } from '../../utils/utilsData';
@@ -12,21 +18,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { DEFAULT_API_URL } from '../../api/api';
-export const UpdateUser = () => {
+export const UserAction = () => {
   const { user_id } = useParams();
   const dispatch = useAppDispatch();
-  // const { isLoading } = useAppSelector((state: RootState) => state.user);
 
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const req: ApiRequest = useMemo(() => {
+    return {
+      title: 'user',
+      route: 'user',
+      id: user_id,
+    };
+  }, [user_id]);
   useEffect(() => {
     const doGetUser = async () => {
-      const req: ApiRequest = {
-        title: 'user',
-        route: 'user',
-        id: user_id,
-      };
       const response = await dispatch(getOne(req!));
       const { success, data } = response.payload as DataResponse;
       if (success) {
@@ -34,18 +41,18 @@ export const UpdateUser = () => {
         setIsLoading(false);
       } else navigate(`/notfound`);
     };
-    doGetUser();
-  }, [dispatch, user_id, navigate]);
+    if (user_id) doGetUser();
+  }, [dispatch, user_id, navigate, req]);
 
   const [messageReturn, setMessage] = useState('');
   const handleSubmit = async (user: Values) => {
-    const req: ApiRequest = {
-      title: 'user',
-      route: 'user',
-      id: user_id,
+    const actReq: ApiRequest = {
+      ...req,
       data: user,
     };
-    const response = await dispatch(update(req));
+    const response = user_id
+      ? await dispatch(update(actReq))
+      : await dispatch(addNew(actReq));
     const { success, message } = response.payload as DataResponse;
     if (imageUpload) {
       try {
@@ -83,7 +90,7 @@ export const UpdateUser = () => {
   return (
     <div>
       <div className="pt-24">
-        {isLoading ? (
+        {isLoading && user_id ? (
           <div className="pl-60">
             <FontAwesomeIcon icon={faSpinner} spin />
           </div>

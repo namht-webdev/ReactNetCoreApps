@@ -4,28 +4,21 @@ import HomePage from './components/Home/HomePage';
 import { UserList } from './components/User/UserList';
 import NotFound from './NotFound';
 import { RoleList } from './components/Role/RoleList';
-import { CreateRole } from './components/Role/CreateRole';
-import { UpdateRole } from './components/Role/UpdateRole';
 import LevelList from './components/Level/LevelList';
-import { CreateLevel } from './components/Level/CreateLevel';
-import { UpdateLevel } from './components/Level/UpdateLevel';
+import { LevelAction } from './components/Level/LevelAction';
 import { DepartmentList } from './components/Department/DepartmentList';
-import { UpdateDepartment } from './components/Department/UpdateDepartment';
-import { CreateDepartment } from './components/Department/CreateDepartment';
-import { CreateRequirement } from './components/Requirement/CreateRequirement';
+import { DepartmentAction } from './components/Department/DepartmentAction';
 import { RequirementList } from './components/Requirement/RequirementList';
-import { UpdateRequirement } from './components/Requirement/UpdateRequirement';
 import { ScheduleList } from './components/Schedule/ScheduleList';
-import { UpdateSchedule } from './components/Schedule/UpdateSchedule';
-import { CreateSchedule } from './components/Schedule/CreateSchedule';
-import { CreateUser } from './components/User/CreateUser';
-import { UpdateUser } from './components/User/UpdateUser';
+import { ScheduleAction } from './components/Schedule/ScheduleAction';
+import { UserAction } from './components/User/UserAction';
 import { useAuth } from './components/Context/Authorization';
 import { useEffect } from 'react';
 import { Login } from './components/UserStatus/Login';
 import PrivateRoute from './components/UserStatus/PrivateRoute';
 import CommondRoute from './components/UserStatus/CommonRoute';
-import { TableData } from './components/TableData';
+import { RequirementAction } from './components/Requirement/RequirementAction';
+import { RoleAction } from './components/Role/RoleAction';
 
 function App() {
   const { userLogin } = useAuth();
@@ -44,38 +37,38 @@ function App() {
           <Route path="requirement" element={<RequirementList />}></Route>
           <Route
             path="requirement/:requirement_id"
-            element={<UpdateRequirement />}
+            element={<RequirementAction />}
           />
           <Route
             path="requirement/create"
-            element={<CreateRequirement />}
+            element={<RequirementAction />}
           ></Route>
 
           <Route path="schedule" element={<ScheduleList />}></Route>
-          <Route path="schedule/:schedule_id" element={<UpdateSchedule />} />
-          <Route path="schedule/create" element={<CreateSchedule />}></Route>
+          <Route path="schedule/:schedule_id" element={<ScheduleAction />} />
+          <Route path="schedule/create" element={<ScheduleAction />}></Route>
         </Route>
         <Route element={<PrivateRoute />}>
           <Route path="user" element={<UserList />}></Route>
-          <Route path="user/create" element={<CreateUser />}></Route>
-          <Route path="user/:user_id" element={<UpdateUser />}></Route>
+          <Route path="user/create" element={<UserAction />}></Route>
+          <Route path="user/:user_id" element={<UserAction />}></Route>
 
           <Route path="role" element={<RoleList />}></Route>
-          <Route path="role/:role_id" element={<UpdateRole />} />
-          <Route path="role/create" element={<CreateRole />}></Route>
+          <Route path="role/:role_id" element={<RoleAction />} />
+          <Route path="role/create" element={<RoleAction />}></Route>
 
           <Route path="level" element={<LevelList />}></Route>
-          <Route path="level/:level_id" element={<UpdateLevel />} />
-          <Route path="level/create" element={<CreateLevel />}></Route>
+          <Route path="level/:level_id" element={<LevelAction />} />
+          <Route path="level/create" element={<LevelAction />}></Route>
 
           <Route path="department" element={<DepartmentList />}></Route>
           <Route
             path="department/:department_id"
-            element={<UpdateDepartment />}
+            element={<DepartmentAction />}
           />
           <Route
             path="department/create"
-            element={<CreateDepartment />}
+            element={<DepartmentAction />}
           ></Route>
         </Route>
 
