@@ -9,18 +9,20 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState, useContext, Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Context/Authorization';
 // import { appThemes } from '../../utils/Theme';
 // type Theme = 'light' | 'dark';
 const Navbar = () => {
   const [toggleBtn, setToggleBtn] = useState(true);
   const { setUserLogin, authUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleLogout = () => {
     if (setUserLogin) {
       setUserLogin(false);
       sessionStorage.removeItem('access_token');
       sessionStorage.removeItem('user');
+      navigate('/login');
     }
   };
   return (

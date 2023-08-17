@@ -34,8 +34,7 @@ export const Login = () => {
       if (setUserLogin && setAuthUser && response.data.success) {
         setUserLogin(true);
         setAuthUser(response.data.user!);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${response.data
-          .token!}`;
+
         sessionStorage.setItem('access_token', response.data.token!);
         sessionStorage.setItem('user', JSON.stringify(response.data.user!));
         navigate('/');

@@ -124,7 +124,7 @@ public class UserController : ControllerBase
                 return Ok(new { success = true });
             }
         }
-        catch (System.Exception)
+        catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
         }

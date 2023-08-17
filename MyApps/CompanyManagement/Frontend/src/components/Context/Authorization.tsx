@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { UserVM } from '../../interfaces';
+import axios from 'axios';
 
 interface AuthContextProps {
   authUser?: UserVM | null;
@@ -9,11 +10,9 @@ interface AuthContextProps {
 }
 
 const userLogined = sessionStorage.getItem('user');
-
-const isLoggin =
-  sessionStorage.getItem('access_token') && sessionStorage.getItem('user')
-    ? true
-    : false;
+const access_token = sessionStorage.getItem('access_token');
+axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+const isLoggin = userLogined && access_token ? true : false;
 export const AuthContext = createContext<AuthContextProps>({
   authUser: userLogined ? (JSON.parse(userLogined) as UserVM) : null,
   setAuthUser: (authUser: UserVM | null) => {},
