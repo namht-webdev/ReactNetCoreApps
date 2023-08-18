@@ -59,14 +59,14 @@ export const UserAction = () => {
       ? await dispatch(update(actReq))
       : await dispatch(addNew(actReq));
     const { success, message } = response.payload as DataResponse;
-    if (imageUpload) {
+    if (imageUpload && success) {
       try {
         const formData = new FormData();
         formData.append('fileUpload', imageUpload);
         await axios.post<{ success: boolean }>(
           `${DEFAULT_API_URL}/user/upload?userId=${
-            user_id ? user_id : user.user_id
-          }`,
+            user_id || user.user_id
+          }&isCreate=${user_id ? false : true}`,
           formData,
         );
         setImageUpload(null);
@@ -145,7 +145,7 @@ export const UserAction = () => {
             }}
             failureMessage={messageReturn}
             successMessage={messageReturn}
-            initialValues={user ? user : {}}
+            initialValues={user || null}
           >
             <div className="grid md:grid-cols-3 md:gap-6">
               <Field name="user_id" label="Mã người dùng"></Field>

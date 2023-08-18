@@ -94,7 +94,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("upload")]
-    public async Task<IActionResult> UploadFile([FromQuery] string userId, [FromForm] IFormFile fileUpload)
+    public async Task<IActionResult> UploadFile([FromQuery] string userId, [FromForm] IFormFile fileUpload, [FromQuery] bool isCreate)
     {
         try
         {
@@ -111,11 +111,11 @@ public class UserController : ControllerBase
                 var filePath = Path.Combine(_env.ContentRootPath, string.Concat(@"..\"), "Frontend", @"public\uploads", fileName);
                 // Save the file to the server
                 var user = await _userRepository.GetOne(userId);
-                var oldPath = Path.Combine(_env.ContentRootPath, string.Concat(@"..\"), "Frontend", @"public\uploads", user.avatar == null ? "" : user.avatar);
+                var oldPath = Path.Combine(_env.ContentRootPath, string.Concat(@"..\"), "Frontend", @"public\uploads", string.IsNullOrEmpty(user.avatar) == true ? "" : user.avatar);
 
                 var result = await _userRepository.UpdateAvatar(userId, fileName);
                 if (!result) return BadRequest(new { success = false });
-                System.IO.File.Delete(oldPath);
+                if (!isCreate) System.IO.File.Delete(oldPath);
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await fileUpload.CopyToAsync(stream);
@@ -124,8 +124,9 @@ public class UserController : ControllerBase
                 return Ok(new { success = true });
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Console.WriteLine(ex.Message);
             return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
         }
 

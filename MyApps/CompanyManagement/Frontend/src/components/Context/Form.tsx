@@ -73,7 +73,7 @@ interface Props {
   submitCaption?: string;
   children?: React.ReactNode;
   type?: 'submit';
-  initialValues?: Values;
+  initialValues?: Values | null;
   validationRules?: ValidationProp;
   onSubmit: (value: Values) => Promise<SubmitResult>;
   submitResult?: SubmitResult;
