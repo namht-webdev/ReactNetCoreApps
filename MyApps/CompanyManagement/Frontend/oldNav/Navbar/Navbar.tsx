@@ -22,8 +22,8 @@ const Navbar = () => {
       setUserLogin(false);
       sessionStorage.removeItem('access_token');
       sessionStorage.removeItem('user');
+      navigate('/login');
     }
-    navigate('/login');
   };
   return (
     <div>

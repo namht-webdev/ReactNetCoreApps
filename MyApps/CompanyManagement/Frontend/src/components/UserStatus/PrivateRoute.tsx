@@ -10,7 +10,7 @@ const PrivateRoute = () => {
     return <Navigate to="/notfound" />;
 
   return (
-    <div>
+    <div className="h-full">
       <Navbar></Navbar>
       <div className="h-full pt-12">
         <Outlet />

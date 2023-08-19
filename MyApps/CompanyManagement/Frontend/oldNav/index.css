@@ -5,16 +5,13 @@
 html, body, #root{
     height: 100%;
     width: 100%;
-    color: white;
 }
 
 body {
     background-image: url('../public/bg-img.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center center;
-    /* cursor: url('../public/paw.svg'), auto; */
-}
+  }
 
 @layer base{
     nav ul li{
@@ -38,7 +35,6 @@ body {
     table td {
         @apply text-left text-[15px] border pl-5 border-solid border-[rgb(177,177,177)];
     }
-    
 }
 
 @layer components{
@@ -59,13 +55,5 @@ body {
     .table-wrapper {
         @apply overflow-y-scroll overflow-x-scroll h-fit max-h-[66.4vh] mt-[22px] m-[15px] px-20 pb-5;
     }
-    .home-nav a{
-        @apply font-bold relative py-5 px-6 mx-4 uppercase text-xl transition-all duration-500 tracking-widest hover:delay-75 hover:before:w-full hover:before:h-full hover:after:w-full hover:after:h-full;    }
-        
-        .home-nav a:before{
-        @apply content-[''] absolute top-0 left-0 w-4 h-4 border-t-4 border-l-4 border-solid transition-all duration-500;
-    }
-    .home-nav a:after{
-        @apply content-[''] absolute bottom-0 right-0 w-4 h-4 border-b-4 border-r-4 border-solid transition-all duration-500;
-    }
 }
+

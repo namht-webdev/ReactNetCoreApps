@@ -16,7 +16,7 @@ import { useAuth } from './components/Context/Authorization';
 import { useEffect } from 'react';
 import { Login } from './components/UserStatus/Login';
 import PrivateRoute from './components/UserStatus/PrivateRoute';
-import CommondRoute from './components/UserStatus/CommonRoute';
+import CommonRoute from './components/UserStatus/CommonRoute';
 import { RequirementAction } from './components/Requirement/RequirementAction';
 import { RoleAction } from './components/Role/RoleAction';
 
@@ -32,7 +32,7 @@ function App() {
     <div className="h-full">
       <Routes>
         <Route path="login" element={<Login />}></Route>
-        <Route element={<CommondRoute />}>
+        <Route element={<CommonRoute />}>
           <Route path="/" element={<HomePage />}></Route>
           <Route path="requirement" element={<RequirementList />}></Route>
           <Route

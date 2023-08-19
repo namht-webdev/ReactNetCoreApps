@@ -1,15 +1,15 @@
 import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../Context/Authorization';
 import Navbar from '../Navbar/Navbar';
 
-const CommondRoute = () => {
+const CommonRoute = () => {
   const { userLogin } = useAuth();
-
+  const location = useLocation();
   if (!userLogin) return <Navigate to="/login" />;
-
+  console.log(location);
   return (
-    <div>
+    <div className="h-full">
       <Navbar></Navbar>
       <div className="h-full pt-12">
         <Outlet />
@@ -18,4 +18,4 @@ const CommondRoute = () => {
   );
 };
 
-export default CommondRoute;
+export default CommonRoute;

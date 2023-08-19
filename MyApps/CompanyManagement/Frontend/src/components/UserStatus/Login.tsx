@@ -34,7 +34,6 @@ export const Login = () => {
       if (setUserLogin && setAuthUser && response.data.success) {
         setUserLogin(true);
         setAuthUser(response.data.user!);
-
         sessionStorage.setItem('access_token', response.data.token!);
         sessionStorage.setItem('user', JSON.stringify(response.data.user!));
         navigate('/');
