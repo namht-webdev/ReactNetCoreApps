@@ -10,8 +10,8 @@ const CommonRoute = () => {
   console.log(location);
   return (
     <div className="h-full">
-      <Navbar></Navbar>
-      <div className="h-full pt-12">
+      {/* <Navbar></Navbar> */}
+      <div className="h-full">
         <Outlet />
       </div>
     </div>
