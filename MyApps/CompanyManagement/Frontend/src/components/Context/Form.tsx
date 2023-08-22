@@ -77,7 +77,6 @@ interface Props {
   validationRules?: ValidationProp;
   onSubmit: (value: Values) => Promise<SubmitResult>;
   submitResult?: SubmitResult;
-  successMessage?: string;
   failureMessage?: string;
 }
 
@@ -88,7 +87,6 @@ export const Form = ({
   initialValues,
   validationRules,
   onSubmit,
-  successMessage = 'Successed',
   failureMessage = 'Something went wrong',
 }: Props) => {
   const [values, setValues] = useState<Values>({});
@@ -203,9 +201,6 @@ export const Form = ({
           </div>
           {submitted && submitError && (
             <p className="text-red-500 pt-3">{failureMessage}</p>
-          )}
-          {submitted && !submitError && (
-            <p className="text-green-500 pt-3">{successMessage}</p>
           )}
         </fieldset>
       </form>

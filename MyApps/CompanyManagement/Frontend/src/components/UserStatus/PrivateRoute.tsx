@@ -5,16 +5,15 @@ import Navbar from '../Navbar/Navbar';
 
 const PrivateRoute = () => {
   const { userLogin, authUser } = useAuth();
-
   if (authUser?.role_id !== 'admin' || !userLogin)
     return <Navigate to="/notfound" />;
 
   return (
     <div className="h-full">
-      <Navbar></Navbar>
-      <div className="h-full pt-12">
+      <div className="h-full">
         <Outlet />
       </div>
+      <Navbar></Navbar>
     </div>
   );
 };

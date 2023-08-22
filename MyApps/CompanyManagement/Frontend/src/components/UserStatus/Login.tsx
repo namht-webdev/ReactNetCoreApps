@@ -55,6 +55,7 @@ export const Login = () => {
     if (userLogin) {
       navigate('/');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userLogin]);
 
   return (

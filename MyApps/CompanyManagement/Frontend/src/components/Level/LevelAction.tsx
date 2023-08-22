@@ -55,7 +55,6 @@ export const LevelAction = () => {
         }}
         initialValues={level ? level : {}}
         failureMessage={messageReturn}
-        successMessage={messageReturn}
       >
         <div className="grid md:grid-cols-2 md:gap-6">
           <Field

@@ -54,10 +54,10 @@ body {
         @apply flex bg-[#232f3e] shadow-[0px_1px_2px_#232f3e];
     }
     .outer-wrapper {
-        @apply border rounded shadow-[0px_0px_3px_rgba(0,0,0,0.9)] max-w-fit max-h-fit m-auto border-solid border-[black] mt-12;
+        @apply max-w-fit max-h-fit m-auto border-solid border-[black] mt-12;
     }
     .table-wrapper {
-        @apply overflow-y-scroll overflow-x-scroll h-fit max-h-[66.4vh] mt-[22px] m-[15px] px-20 pb-5;
+        @apply overflow-y-scroll overflow-x-scroll h-fit max-h-[66.4vh] mt-[22px] m-[15px];
     }
     .home-nav a{
         @apply flex items-center justify-center font-bold relative py-5 px-6 mx-4 uppercase text-xl transition-all duration-500 tracking-widest hover:delay-75 hover:before:w-full hover:before:h-full hover:after:w-full hover:after:h-full;    }

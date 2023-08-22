@@ -57,7 +57,6 @@ export const DepartmentAction = () => {
         }}
         initialValues={department ? department : {}}
         failureMessage={messageReturn}
-        successMessage={messageReturn}
       >
         <div className="grid md:grid-cols-3 md:gap-6">
           <Field

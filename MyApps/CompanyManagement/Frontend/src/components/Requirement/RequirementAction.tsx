@@ -64,7 +64,6 @@ export const RequirementAction = () => {
         }}
         initialValues={requirement ? requirement : initialValues}
         failureMessage={messageReturn}
-        successMessage={messageReturn}
       >
         <div className="grid md:grid-cols-2 md:gap-6">
           <Field name="requirement_id" label="Mã yêu cầu" isDisabled></Field>

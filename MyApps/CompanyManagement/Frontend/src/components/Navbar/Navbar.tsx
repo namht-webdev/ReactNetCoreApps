@@ -1,21 +1,21 @@
-// import { useEffect } from 'react';
-// import axios from 'axios';
-// import { DEFAULT_API_URL } from '../../api/api';
 import {
-  faBars,
-  faBell,
-  faRightFromBracket,
-  faTimes,
+  faLayerGroup,
+  faSignOut,
+  faUser,
+  faUsers,
+  faUserLock,
+  faEnvelope,
+  faCalendar,
+  faHome,
 } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState, useContext, Fragment } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { AuthContext } from '../Context/Authorization';
-// import { appThemes } from '../../utils/Theme';
-// type Theme = 'light' | 'dark';
-const Navbar = () => {
-  const [toggleBtn, setToggleBtn] = useState(true);
-  const { setUserLogin, authUser } = useContext(AuthContext);
+
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../Context/Authorization';
+import { NavItem } from '../Home/NavItem';
+import { Fragment } from 'react';
+
+const NavBar = ({ isHomePage }: { isHomePage?: boolean }) => {
+  const { setUserLogin, authUser } = useAuth();
   const navigate = useNavigate();
   const handleLogout = () => {
     if (setUserLogin) {
@@ -26,72 +26,45 @@ const Navbar = () => {
     navigate('/login');
   };
   return (
-    <div>
-      <nav className="bg-gray-500 text-slate-100 fixed flex items-center w-full z-50">
-        <div className="absolute top-0 p-3 lg:relative md:top-0 w-full lg:w-auto bg-gray-500 text-white ">
-          <span className="text-black">logo</span>
-          <button
-            onClick={() => setToggleBtn(!toggleBtn)}
-            className="float-right px-3 inline lg:hidden text-black text-xl"
-          >
-            <FontAwesomeIcon icon={toggleBtn ? faBars : faTimes} />
-          </button>
-        </div>
-        <ul
-          className={`${
-            toggleBtn ? 'h-0 overflow-hidden' : ''
-          }  lg:h-auto mt-2 lg:mt-0 flex font-bold flex-col lg:flex-row lg:items-center pt-10 lg:pt-0 w-full justify-center`}
+    <div
+      className={`flex items-center ${
+        isHomePage
+          ? ' h-screen'
+          : 'fixed w-full bottom-0 mx-auto justify-center'
+      }`}
+    >
+      <div className="max-w-full mx-auto p-10">
+        <div
+          className={`grid home-nav ${
+            isHomePage
+              ? ' gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-20 xl:gap-32'
+              : 'gap-10 sm:grid-cols-3 md:grid-cols-8 md:gap-10 xl:gap-12'
+          }`}
         >
-          <li>
-            <Link to="/">Home</Link>
-          </li>
+          {!isHomePage && (
+            <NavItem url="/" navIcon={faHome} title="trang chủ" />
+          )}
           {authUser?.role_id === 'admin' && (
             <Fragment>
-              <li>
-                <Link to="user">User</Link>
-              </li>
-              <li>
-                <Link to="role">Role</Link>
-              </li>
-              <li>
-                <Link to="level">Level</Link>
-              </li>
-              <li>
-                <Link to="department">Department</Link>
-              </li>
+              <NavItem url="/user" navIcon={faUser} title="người dùng" />
+              <NavItem url="/role" navIcon={faUserLock} title="vai trò" />
+              <NavItem url="/department" navIcon={faUsers} title="bộ phận" />
+              <NavItem url="/level" navIcon={faLayerGroup} title="chức vụ" />
             </Fragment>
           )}
-          <li>
-            <Link to="requirement">Requirement</Link>
-          </li>
-          <li>
-            <Link to="schedule">Schedule</Link>
-          </li>
-          <li>
-            <Link to="table">Table</Link>
-          </li>
-
-          <li className="p-3 lg:absolute lg:right-20">
-            <Link to="">
-              <FontAwesomeIcon
-                className="text-red-500 hover:text-white"
-                icon={faBell}
-              />
-              <span className="text-red-500 text-sm lg:absolute lg:top-2 right-1 top-[-12px] relative">
-                5
-              </span>
-            </Link>
-          </li>
-          <li className="p-3 lg:absolute lg:right-0">
-            <button onClick={handleLogout}>
-              <FontAwesomeIcon icon={faRightFromBracket} />
-            </button>
-          </li>
-        </ul>
-      </nav>
-      {/* <div className="footer"></div> */}
+          <NavItem url="/requirement" navIcon={faEnvelope} title="yêu cầu" />
+          <NavItem url="/schedule" navIcon={faCalendar} title="lịch làm việc" />
+          <NavItem
+            url="/login"
+            navIcon={faSignOut}
+            title="đăng xuất"
+            signOut={handleLogout}
+            isLogout={isHomePage}
+          />
+        </div>
+      </div>
     </div>
   );
 };
 
-export default Navbar;
+export default NavBar;

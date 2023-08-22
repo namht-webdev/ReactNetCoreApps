@@ -7,12 +7,11 @@ const CommonRoute = () => {
   const { userLogin } = useAuth();
   const location = useLocation();
   if (!userLogin) return <Navigate to="/login" />;
-  console.log(location);
   return (
     <div className="h-full">
-      {/* <Navbar></Navbar> */}
       <div className="h-full">
         <Outlet />
+        <Navbar isHomePage={location.pathname === '/'}></Navbar>
       </div>
     </div>
   );

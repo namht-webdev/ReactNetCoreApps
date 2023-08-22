@@ -52,7 +52,6 @@ export const CreateUser = () => {
           level_id: [{ validator: required }],
         }}
         failureMessage={messageReturn}
-        successMessage={messageReturn}
         initialValues={initialValues}
       >
         <Field name="avatar" type="File"></Field>

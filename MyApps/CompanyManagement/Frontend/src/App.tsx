@@ -2,7 +2,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 // import Student from './components/Student/Student';
 import HomePage from './components/Home/HomePage';
 import { UserList } from './components/User/UserList';
-import NotFound from './NotFound';
+import NotFound from './components/NotFound';
 import { RoleList } from './components/Role/RoleList';
 import LevelList from './components/Level/LevelList';
 import { LevelAction } from './components/Level/LevelAction';
@@ -27,6 +27,7 @@ function App() {
     if (!userLogin) {
       navigate('/login');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userLogin]);
   return (
     <div className="h-full">

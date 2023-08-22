@@ -36,7 +36,13 @@ export const TableData = ({ req, header }: TableDataProps) => {
     };
     doGetUser();
   }, [dispatch, req]);
-  if (isLoading) return <div className="">Loading ...</div>;
+  if (isLoading)
+    return (
+      <div className="w-full flex justify-center items-center">
+        Loading &nbsp; &nbsp; &nbsp;
+        <FontAwesomeIcon icon={faSpinner} spin />
+      </div>
+    );
   return (
     <div className="px-10">
       {data.length > 0 && (

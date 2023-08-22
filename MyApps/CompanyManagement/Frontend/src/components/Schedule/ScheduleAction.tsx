@@ -61,7 +61,6 @@ export const ScheduleAction = () => {
         }}
         initialValues={schedule ? schedule : initialValues}
         failureMessage={messageReturn}
-        successMessage={messageReturn}
       >
         <div className="grid md:grid-cols-2 md:gap-6">
           <Field name="schedule_id" label="Mã lịch trình" isDisabled></Field>

@@ -144,7 +144,6 @@ export const UserAction = () => {
               level_id: [{ validator: required }],
             }}
             failureMessage={messageReturn}
-            successMessage={messageReturn}
             initialValues={user || null}
           >
             <div className="grid md:grid-cols-3 md:gap-6">
