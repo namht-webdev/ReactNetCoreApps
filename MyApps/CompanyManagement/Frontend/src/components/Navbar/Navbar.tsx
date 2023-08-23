@@ -38,7 +38,11 @@ const NavBar = ({ isHomePage }: { isHomePage?: boolean }) => {
           className={`grid home-nav ${
             isHomePage
               ? ' gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-20 xl:gap-32'
-              : 'gap-10 sm:grid-cols-3 md:grid-cols-8 md:gap-10 xl:gap-12'
+              : `gap-10 sm:grid-cols-3 md:gap-10 xl:gap-12 ${
+                  authUser?.role_id === 'admin'
+                    ? ' md:grid-cols-8'
+                    : ' md:grid-cols-4'
+                }`
           }`}
         >
           {!isHomePage && (

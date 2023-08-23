@@ -12,9 +12,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserVM } from '../../interfaces';
 import { DEFAULT_API_URL } from '../../api/api';
-import { RootState, useAppSelector } from '../../reducers';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 interface UserLoginResponse {
   user?: UserVM;
@@ -25,11 +22,12 @@ interface UserLoginResponse {
 
 export const Login = () => {
   const { userLogin, setUserLogin, setAuthUser } = useContext(AuthContext);
-  const { isLoading } = useAppSelector((state: RootState) => state.data);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [failMessage, setFailMessage] = useState('');
   const handleLogin = async (values: Values) => {
     try {
+      setIsLoading(true);
       const response = await axios.post<UserLoginResponse>(
         `${DEFAULT_API_URL}/login`,
         values,
@@ -49,6 +47,7 @@ export const Login = () => {
         setFailMessage('Email hoặc password không chính xác');
       } else setFailMessage('Có lỗi xảy ra');
     }
+    setIsLoading(false);
     return { success: false };
   };
   useEffect(() => {
@@ -73,13 +72,13 @@ export const Login = () => {
             onSubmit={handleLogin}
             submitCaption="Đăng nhập"
             failureMessage={failMessage}
+            isLoading={isLoading}
           >
             <Field name="email" label="Email"></Field>
             <Field name="password" label="Mật khẩu" type="Password"></Field>
           </Form>
-          {isLoading && <FontAwesomeIcon icon={faSpinner} spin />}
+
           <div className="w-2/3 text-right pt-10">
-            {' '}
             <span className="text-blue-400 italic hover:text-blue-600 cursor-pointer text-sm">
               Quên mật khẩu?
             </span>

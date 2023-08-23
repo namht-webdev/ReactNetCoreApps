@@ -19,7 +19,6 @@ export const UserList = () => {
       role_id: 'Vai trò',
       department_id: 'Bộ phận',
       level_id: 'Chức vụ',
-      avatar: 'Ảnh',
     };
   }, []);
   return (

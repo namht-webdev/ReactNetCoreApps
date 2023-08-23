@@ -51,7 +51,7 @@ export const TableData = ({ req, header }: TableDataProps) => {
             <table>
               <thead>
                 <tr>
-                  {Object.keys(data[0]).map((key) => (
+                  {Object.keys(header).map((key) => (
                     <th key={key}>{header[key]}</th>
                   ))}
                   <th>Chỉnh sửa</th>
@@ -67,7 +67,7 @@ export const TableData = ({ req, header }: TableDataProps) => {
                 )}
                 {data.map((d: any) => (
                   <tr key={d[`${req.route}_id`]}>
-                    {Object.keys(d).map((k) => (
+                    {Object.keys(header).map((k) => (
                       <td key={k}>{d[k as keyof typeof d]}</td>
                     ))}
                     <td className="w-64">

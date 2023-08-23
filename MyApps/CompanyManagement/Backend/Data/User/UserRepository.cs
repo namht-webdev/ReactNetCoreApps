@@ -6,8 +6,13 @@ using CompanyManagement.Models;
 public class UserRepository : IUserRepository
 {
     private readonly CompanyManagementDbContext _dbContext;
+    private readonly IHostEnvironment _env;
 
-    public UserRepository(CompanyManagementDbContext dbContext) => _dbContext = dbContext;
+    public UserRepository(CompanyManagementDbContext dbContext, IHostEnvironment env)
+    {
+        _dbContext = dbContext;
+        _env = env;
+    }
 
     public async Task<User> Login(string email, string password)
     {
@@ -41,6 +46,10 @@ public class UserRepository : IUserRepository
     {
         var userExists = await _dbContext.user.FindAsync(userId);
         if (userExists == null) return false;
+
+        //var uAvt = userExists.avatar;
+        //var imgPath = Path.Combine(_env.ContentRootPath, string.Concat(@"..\..\"), "Frontend", @"public\uploads", string.IsNullOrEmpty(uAvt) == true ? "" : uAvt);
+        //if (!string.IsNullOrEmpty(uAvt)) File.Delete(imgPath);
         _dbContext.user.Remove(userExists);
         int result = await _dbContext.SaveChangesAsync();
         return result == 1;

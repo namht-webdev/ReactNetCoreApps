@@ -22,9 +22,9 @@ public class UserController : ControllerBase
         try
         {
             bool success = await _userRepository.Add(user);
-            return success ? Ok(new { success = success, message = $"Đã thêm mới người dùng {user.user_id}", data = user }) : BadRequest(new { success = false, message = $"Người dùng {user.user_id} đã tồn tại" });
+            return success ? Ok(new { success, message = $"Đã thêm mới người dùng {user.user_id}", data = user }) : BadRequest(new { success = false, message = $"Người dùng {user.user_id} đã tồn tại" });
         }
-        catch (System.Exception)
+        catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
         }
@@ -38,7 +38,7 @@ public class UserController : ControllerBase
             var userList = await _userRepository.GetAll();
             return Ok(new { success = true, message = "Danh sách người dùng", data = userList });
         }
-        catch (System.Exception)
+        catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
         }
@@ -51,7 +51,7 @@ public class UserController : ControllerBase
             var user = await _userRepository.GetOne(userId);
             return user == null ? NotFound(new { success = false, message = "This user is not exists!" }) : Ok(new { success = true, message = $"Thông tin người dùng {userId}", data = user });
         }
-        catch (System.Exception)
+        catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
         }
@@ -72,8 +72,9 @@ public class UserController : ControllerBase
         {
             var result = isSoftDelete ? await _userRepository.SoftDelete(userId) : await _userRepository.HardDelete(userId);
             return result ? Ok(new { success = true, message = "User has been deleted!", data = userId }) : BadRequest(new { success = false, message = $"Người dùng {userId} không còn khả dụng" });
+
         }
-        catch (System.Exception)
+        catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
         }
@@ -87,7 +88,7 @@ public class UserController : ControllerBase
             var userUpdated = await _userRepository.Update(userId, user);
             return userUpdated != null ? Ok(new { success = true, message = $"Cập nhật thông tin người dùng {userId} thành công", data = userUpdated }) : BadRequest(new { success = false, message = $"Người dùng {userId} không còn khả dụng" });
         }
-        catch (System.Exception)
+        catch (Exception)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
         }
@@ -124,9 +125,8 @@ public class UserController : ControllerBase
                 return Ok(new { success = true });
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Console.WriteLine(ex.Message);
             return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
         }
 

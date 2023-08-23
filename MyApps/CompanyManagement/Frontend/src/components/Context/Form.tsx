@@ -2,6 +2,8 @@ import React, { useState, createContext, FormEvent, useEffect } from 'react';
 import { PrimaryButton } from '../PrimaryButton';
 import { useNavigate } from 'react-router-dom';
 import { dateFmFromServer, dateSaveFm } from '../../utils/convertDateTime';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 export interface Values {
   [key: string]: any;
 }
@@ -78,6 +80,7 @@ interface Props {
   onSubmit: (value: Values) => Promise<SubmitResult>;
   submitResult?: SubmitResult;
   failureMessage?: string;
+  isLoading?: boolean;
 }
 
 export const Form = ({
@@ -88,6 +91,7 @@ export const Form = ({
   validationRules,
   onSubmit,
   failureMessage = 'Something went wrong',
+  isLoading,
 }: Props) => {
   const [values, setValues] = useState<Values>({});
   const [errors, setErrors] = useState<Errors>({});
@@ -196,11 +200,20 @@ export const Form = ({
       >
         <fieldset>
           {children}
+
           <div className="flex justify-between">
             <PrimaryButton type={type} title={submitCaption} />
           </div>
+
           {submitted && submitError && (
             <p className="text-red-500 pt-3">{failureMessage}</p>
+          )}
+          {isLoading && (
+            <FontAwesomeIcon
+              className="w-full fixed left-0 text-4xl text-white"
+              icon={faSpinner}
+              spin
+            />
           )}
         </fieldset>
       </form>
