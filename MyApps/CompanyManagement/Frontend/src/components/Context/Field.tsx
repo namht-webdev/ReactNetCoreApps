@@ -1,4 +1,4 @@
-import { useContext, ChangeEvent, useState } from 'react';
+import { useContext, ChangeEvent } from 'react';
 import { FormContext } from './Form';
 
 export interface Option {
@@ -50,7 +50,7 @@ export const Field = ({
           {label && type === 'TextArea' && (
             <label
               htmlFor={name}
-              className="text-sm text-gray-500 dark:text-gray-400 -z-10 focus:text-blue-600 peer-focus:dark:text-blue-500"
+              className="text-sm font-bold text-white -z-10 border-slate-400 focus:border-white focus:shadow-[0_0_50px_white]"
             >
               {label}
             </label>
@@ -63,7 +63,7 @@ export const Field = ({
               className={
                 type === 'Hidden'
                   ? ''
-                  : 'block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+                  : 'block py-2.5 px-0 w-full text-sm font-bold text-white bg-transparent border-0 border-b-2 border-slate-400 focus:border-white appearance-none focus:outline-none focus:ring-0 peer '
               }
               value={values[name] === undefined ? '' : values[name]}
               onChange={handleChange}
@@ -78,7 +78,7 @@ export const Field = ({
               type={type.toLowerCase()}
               id={name}
               name={name}
-              className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              className="block py-2.5 px-0 w-full font-bold text-white bg-transparent border-0 border-b-2 border-slate-400 focus:border-white appearance-none focus:outline-none focus:ring-0 peer"
               value={
                 values[name] === undefined
                   ? new Date().toISOString().split('T')[0]
@@ -93,7 +93,7 @@ export const Field = ({
             <textarea
               id={name}
               name={name}
-              className="h-[100px] box-border mb-[5px] py-2 px-[10px] border-solid border-[1px] rounded-[3px] bg-white w-full dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              className="h-[100px] box-border mb-[5px] py-2 px-[10px] border-solid border-[1px] rounded-[3px] bg-white text-slate-500 w-full focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               value={values[name] === undefined ? '' : values[name]}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -102,14 +102,18 @@ export const Field = ({
           {type === 'Select' && (
             <select
               id={name}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="border font-bold text-white bg-slate-500 text-sm rounded-md border-slate-400 focus:border-white block w-full px-2.5 py-2"
               value={values[name] === undefined ? '' : values[name]}
               onChange={handleChange}
               onBlur={handleBlur}
             >
               <option value="">{label}</option>
               {optionData?.map((data, idx) => (
-                <option key={idx} value={data.value}>
+                <option
+                  className="font-bold text-white"
+                  key={idx}
+                  value={data.value}
+                >
                   {data.name}
                 </option>
               ))}
@@ -121,7 +125,7 @@ export const Field = ({
             type !== 'File' && (
               <label
                 htmlFor={name}
-                className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                className="absolute text-sm text-slate-200 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:[text-shadow:0_0_10px_white] peer-focus:font-bold peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
               >
                 {label}
               </label>

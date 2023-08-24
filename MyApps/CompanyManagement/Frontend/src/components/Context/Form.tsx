@@ -194,7 +194,7 @@ export const Form = ({
       }}
     >
       <form
-        className="lg:px-36 md:px-32 px-10 xl:px-72 2xl:px-96"
+        className="lg:px-36 md:px-32 px-40 xl:px-72 2xl:px-96"
         noValidate={true}
         onSubmit={handleSubmit}
       >

@@ -25,10 +25,10 @@ export const NavItem = ({
       to={`${url}`}
       onClick={signOut}
     >
-      <span className="text-xs absolute w-48 text-white font-bold h-full z-50 opacity-0 hover:opacity-100 top-[-1.5rem] pb-28 text-center">
+      <span className="text-xs absolute w-32 lg:w-48 text-white font-bold h-full z-50 opacity-0 hover:opacity-100 top-[-1.5rem] lg:pb-28 pb-24 text-center">
         {title}
       </span>
-      <FontAwesomeIcon className="text-4xl" icon={navIcon} />
+      <FontAwesomeIcon className="lg:text-4xl text-xl" icon={navIcon} />
     </Link>
   );
 };

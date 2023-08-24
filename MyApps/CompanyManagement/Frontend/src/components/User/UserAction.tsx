@@ -22,7 +22,15 @@ import { PageTitle } from '../PageTitle';
 export const UserAction = () => {
   const { user_id } = useParams();
   const dispatch = useAppDispatch();
-
+  const initialValues = useMemo(() => {
+    return {
+      birth_date: new Date().toISOString(),
+      date_start: new Date().toISOString(),
+      date_end: new Date().toISOString(),
+      is_deleted: false,
+      password_hash: '11111111',
+    };
+  }, []);
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -94,7 +102,7 @@ export const UserAction = () => {
 
   const title = user ? 'CẬP NHẬT' : 'THÊM';
   return (
-    <div>
+    <div className=" h-screen overflow-y-scroll">
       <PageTitle title={`${title} NGƯỜI DÙNG`} />
       {isLoading && user_id ? (
         <div className="pl-60">
@@ -144,15 +152,16 @@ export const UserAction = () => {
               level_id: [{ validator: required }],
             }}
             failureMessage={messageReturn}
-            initialValues={user || null}
+            initialValues={user || initialValues}
           >
             <div className="grid md:grid-cols-3 md:gap-6">
               <Field name="user_id" label="Mã người dùng"></Field>
               <Field name="user_name" label="Tên người dùng"></Field>
               <Field
-                name="password_hash"
-                label="Mật khẩu đăng nhập"
-                type="Password"
+                name="gender"
+                label="Giới tính"
+                type="Select"
+                optionData={gender}
               ></Field>
             </div>
             <div className="grid md:grid-cols-3 md:gap-6">
@@ -163,21 +172,13 @@ export const UserAction = () => {
             <div className="grid md:grid-cols-3 md:gap-6">
               <Field name="birth_date" label="Ngày sinh" type="Date"></Field>
               <Field
-                name="gender"
-                label="Giới tính"
-                type="Select"
-                optionData={gender}
-              ></Field>
-            </div>
-            <CompanyInfo />
-            <div className="grid md:grid-cols-2 md:gap-6">
-              <Field
                 name="date_start"
                 label="Ngày chính thức"
                 type="Date"
               ></Field>
               <Field name="date_end" label="Ngày nghỉ" type="Date"></Field>
             </div>
+            <CompanyInfo />
             <Location ward_id={user?.ward_id} />
             <Field name="is_deleted" type="Hidden" isDisabled></Field>
           </Form>

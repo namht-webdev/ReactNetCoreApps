@@ -9,15 +9,15 @@ interface AuthContextProps {
   setUserLogin?: (isLogin: boolean) => void;
 }
 
-const userLogined = sessionStorage.getItem('user');
-const access_token = sessionStorage.getItem('access_token');
+const userLogined = localStorage.getItem('user');
+const access_token = localStorage.getItem('access_token');
 axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
 const isLoggin = userLogined && access_token ? true : false;
 export const AuthContext = createContext<AuthContextProps>({
   authUser: userLogined ? (JSON.parse(userLogined) as UserVM) : null,
-  setAuthUser: (authUser: UserVM | null) => {},
+  setAuthUser: () => {},
   userLogin: isLoggin,
-  setUserLogin: (isLogin: boolean) => {},
+  setUserLogin: () => {},
 });
 
 interface AuthorizationProps {

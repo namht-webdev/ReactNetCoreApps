@@ -22,7 +22,7 @@ const NotFound = () => {
           </Link>
         </div>
         <div className="w-full lg:flex lg:justify-end lg:w-1/2 mx-5 my-12">
-          <img src="not-found-img.svg" className="" alt="Page not found" />
+          <img src="not-found-img.png" className="" alt="Page not found" />
         </div>
       </div>
     </div>

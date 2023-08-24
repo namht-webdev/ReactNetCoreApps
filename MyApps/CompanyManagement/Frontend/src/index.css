@@ -28,15 +28,14 @@ body {
         @apply min-w-max border-spacing-0 border-separate;
     }
     table th {
-        @apply sticky bg-[#133b5c] text-[rgb(241,245,179)] text-center font-[normal] text-lg border-[1.5px] border-solid border-[black] top-0;
-    outline: 0.7px solid black;
+        @apply sticky bg-slate-500 text-white text-center font-[normal] text-lg border border-solid top-0;
     }
     table th,
     table td {
         @apply py-2.5 p-[15px];
     }
     table td {
-        @apply text-left text-[15px] border pl-5 border-solid border-[rgb(177,177,177)];
+        @apply text-left text-[15px] border pl-5 border-solid border-white;
     }
     
 }
@@ -54,10 +53,10 @@ body {
         @apply flex bg-[#232f3e] shadow-[0px_1px_2px_#232f3e];
     }
     .outer-wrapper {
-        @apply max-w-fit max-h-fit m-auto border-solid border-[black] mt-12;
+        @apply max-w-fit max-h-fit m-auto px-20 lg:px-0;
     }
     .table-wrapper {
-        @apply overflow-y-scroll overflow-x-scroll h-fit max-h-[66.4vh] mt-[22px] m-[15px];
+        @apply overflow-y-scroll overflow-x-scroll h-fit max-h-[66.4vh] mt-[22px] m-4 shadow-[0_0_50px_white];
     }
     .home-nav a{
         @apply flex items-center justify-center font-bold relative py-5 px-6 mx-4 uppercase text-xl transition-all duration-500 tracking-widest hover:delay-75 hover:before:w-full hover:before:h-full hover:after:w-full hover:after:h-full;    }

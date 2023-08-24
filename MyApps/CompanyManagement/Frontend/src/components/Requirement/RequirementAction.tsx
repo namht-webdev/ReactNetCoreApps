@@ -6,7 +6,6 @@ import { addNew, getOne, update } from '../../reducers/dataSlice';
 import { Form, Values, required } from '../Context/Form';
 import { Field } from '../Context/Field';
 import { PageTitle } from '../PageTitle';
-import { dateShowFm } from '../../utils/convertDateTime';
 import { useAuth } from '../Context/Authorization';
 
 export const RequirementAction = () => {
@@ -19,7 +18,7 @@ export const RequirementAction = () => {
     requirement_id: 'YC'.concat(Date.now().toString()),
     from_user: authUser?.user_id,
     to_user: 'namht',
-    date: dateShowFm(new Date().toISOString()),
+    date: new Date().toISOString(),
   };
   const req: ApiRequest = useMemo(() => {
     return {
@@ -67,7 +66,7 @@ export const RequirementAction = () => {
       >
         <div className="grid md:grid-cols-2 md:gap-6">
           <Field name="requirement_id" label="Mã yêu cầu" isDisabled></Field>
-          <Field name="date" label="Ngày" isDisabled></Field>
+          <Field name="date" label="Ngày" type="Date"></Field>
         </div>
         <div className="grid md:grid-cols-2 md:gap-6">
           <Field name="from_user" label="Từ người dùng" isDisabled></Field>

@@ -11,7 +11,7 @@ import { deleteOne, fetchAll } from '../reducers/dataSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Values } from './Context/Form';
-
+import { v4 as uuidv4 } from 'uuid';
 interface TableDataProps {
   header: Values;
   req: ApiRequest;
@@ -44,7 +44,7 @@ export const TableData = ({ req, header }: TableDataProps) => {
       </div>
     );
   return (
-    <div className="px-10">
+    <div className="px-12 sm:px-10">
       {data.length > 0 && (
         <div className="outer-wrapper">
           <div className="table-wrapper">
@@ -66,20 +66,20 @@ export const TableData = ({ req, header }: TableDataProps) => {
                   </tr>
                 )}
                 {data.map((d: any) => (
-                  <tr key={d[`${req.route}_id`]}>
+                  <tr key={uuidv4()}>
                     {Object.keys(header).map((k) => (
-                      <td key={k}>{d[k as keyof typeof d]}</td>
+                      <td key={uuidv4()}>{d[k as keyof typeof d]}</td>
                     ))}
                     <td className="w-64">
                       <div className="flex justify-between w-full text-center">
                         <Link
                           to={`${d[`${req.route}_id`]}`}
-                          className="font-medium text-yellow-600 hover:underline w-full"
+                          className="font-medium text-cyan-400 hover:underline w-full"
                         >
                           Cập nhật
                         </Link>
                         <span
-                          className="font-bold hover:underline cursor-pointer text-red-700 w-full"
+                          className="font-bold hover:underline cursor-pointer text-orange-400 w-full"
                           onClick={() => {
                             setShowModal(true);
                             setRemoveDelete &&

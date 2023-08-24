@@ -73,6 +73,7 @@ public class UserRepository : IUserRepository
     public async Task<User> GetOne(string userId)
     {
         var user = await _dbContext.user.FindAsync(userId);
+        user.password_hash = "********";
         return user;
     }
 
@@ -93,10 +94,19 @@ public class UserRepository : IUserRepository
         var userExists = await _dbContext.user.FindAsync(userId);
         if (userExists != null)
         {
-            _dbContext.user.Remove(userExists);
-            await _dbContext.SaveChangesAsync();
-            user.password_hash = HashPassword(user.user_id, user.password_hash);
-            await _dbContext.AddAsync(user);
+            userExists.avatar = user.avatar;
+            userExists.birth_date = user.birth_date;
+            userExists.email = user.email;
+            userExists.date_end = user.date_end;
+            userExists.date_start = user.date_start;
+            userExists.department_id = user.department_id;
+            userExists.gender = user.gender;
+            userExists.level_id = user.level_id;
+            userExists.phone_number = user.phone_number;
+            userExists.role_id = user.role_id;
+            userExists.salary = user.salary;
+            userExists.user_name = user.user_name;
+            userExists.ward_id = user.ward_id;
             await _dbContext.SaveChangesAsync();
             return user;
         }

@@ -16,6 +16,7 @@ export const ScheduleAction = () => {
   const initialValues = {
     schedule_id: 'LT'.concat(Date.now().toString()),
     user_id: 'namht',
+    date: new Date().toISOString(),
   };
   const req: ApiRequest = useMemo(() => {
     return {
@@ -81,6 +82,7 @@ export const ScheduleAction = () => {
             optionData={timeLine}
           ></Field>
         </div>
+        <Field name="note" label="Nội dung" type="TextArea"></Field>
       </Form>
     </div>
   );

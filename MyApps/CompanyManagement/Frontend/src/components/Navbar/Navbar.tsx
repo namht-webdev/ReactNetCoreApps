@@ -11,7 +11,7 @@ import {
 
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../Context/Authorization';
-import { NavItem } from '../Home/NavItem';
+import { NavItem } from './NavItem';
 import { Fragment } from 'react';
 
 const NavBar = ({ isHomePage }: { isHomePage?: boolean }) => {
@@ -20,8 +20,8 @@ const NavBar = ({ isHomePage }: { isHomePage?: boolean }) => {
   const handleLogout = () => {
     if (setUserLogin) {
       setUserLogin(false);
-      sessionStorage.removeItem('access_token');
-      sessionStorage.removeItem('user');
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('user');
     }
     navigate('/login');
   };
@@ -30,10 +30,10 @@ const NavBar = ({ isHomePage }: { isHomePage?: boolean }) => {
       className={`flex items-center ${
         isHomePage
           ? ' h-screen'
-          : 'fixed w-full bottom-0 mx-auto justify-center'
+          : 'fixed md:w-full bottom-0 mx-auto sm:justify-center'
       }`}
     >
-      <div className="max-w-full mx-auto p-10">
+      <div className={`max-w-full lg:p-10 p-3 ${isHomePage ? 'mx-auto' : ''}`}>
         <div
           className={`grid home-nav ${
             isHomePage

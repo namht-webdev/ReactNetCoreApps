@@ -36,8 +36,10 @@ export const Login = () => {
       if (setUserLogin && setAuthUser && response.data.success) {
         setUserLogin(true);
         setAuthUser(response.data.user!);
-        sessionStorage.setItem('access_token', response.data.token!);
-        sessionStorage.setItem('user', JSON.stringify(response.data.user!));
+        axios.defaults.headers.common['Authorization'] = `Bearer ${response.data
+          .token!}`;
+        localStorage.setItem('access_token', response.data.token!);
+        localStorage.setItem('user', JSON.stringify(response.data.user!));
         navigate('/');
       } else {
         setFailMessage(response.data.message);
@@ -58,7 +60,7 @@ export const Login = () => {
   }, [userLogin]);
 
   return (
-    <div className="h-full bg-slate-200">
+    <div className="h-full bg-slate-800">
       <div className="top-1/3 relative py-10 sm:w-3/4 lg:w-2/3 mx-auto">
         <div className="p-5">
           <Form

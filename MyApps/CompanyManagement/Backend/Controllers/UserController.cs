@@ -116,7 +116,7 @@ public class UserController : ControllerBase
 
                 var result = await _userRepository.UpdateAvatar(userId, fileName);
                 if (!result) return BadRequest(new { success = false });
-                if (!isCreate) System.IO.File.Delete(oldPath);
+                if (!isCreate && System.IO.File.Exists(oldPath)) System.IO.File.Delete(oldPath);
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await fileUpload.CopyToAsync(stream);
@@ -125,8 +125,9 @@ public class UserController : ControllerBase
                 return Ok(new { success = true });
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            Console.WriteLine(ex.Message);
             return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
         }
 

@@ -1,7 +1,7 @@
 export const dateShowFm = (dateString: string): string => {
   if (dateString && dateString.includes('-')) {
     const date = dateString.split('T')[0];
-    return date.split('-').reverse().join('/');
+    return date.split('-').join('/');
   }
   return dateString;
 };
