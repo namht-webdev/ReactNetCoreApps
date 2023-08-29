@@ -37,7 +37,7 @@ function App() {
           <Route path="/" element={<HomePage />}></Route>
           <Route path="requirement" element={<RequirementList />}></Route>
           <Route
-            path="requirement/:requirement_id"
+            path="requirement/update/:requirement_id"
             element={<RequirementAction />}
           />
           <Route
@@ -46,25 +46,28 @@ function App() {
           ></Route>
 
           <Route path="schedule" element={<ScheduleList />}></Route>
-          <Route path="schedule/:schedule_id" element={<ScheduleAction />} />
+          <Route
+            path="schedule/update/:schedule_id"
+            element={<ScheduleAction />}
+          />
           <Route path="schedule/create" element={<ScheduleAction />}></Route>
         </Route>
         <Route element={<PrivateRoute />}>
           <Route path="user" element={<UserList />}></Route>
           <Route path="user/create" element={<UserAction />}></Route>
-          <Route path="user/:user_id" element={<UserAction />}></Route>
+          <Route path="user/update/:user_id" element={<UserAction />}></Route>
 
           <Route path="role" element={<RoleList />}></Route>
-          <Route path="role/:role_id" element={<RoleAction />} />
+          <Route path="role/update/:role_id" element={<RoleAction />} />
           <Route path="role/create" element={<RoleAction />}></Route>
 
           <Route path="level" element={<LevelList />}></Route>
-          <Route path="level/:level_id" element={<LevelAction />} />
+          <Route path="level/update/:level_id" element={<LevelAction />} />
           <Route path="level/create" element={<LevelAction />}></Route>
 
           <Route path="department" element={<DepartmentList />}></Route>
           <Route
-            path="department/:department_id"
+            path="department/update/:department_id"
             element={<DepartmentAction />}
           />
           <Route

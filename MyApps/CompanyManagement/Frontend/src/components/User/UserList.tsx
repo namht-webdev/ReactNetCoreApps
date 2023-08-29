@@ -3,7 +3,6 @@ import { ApiRequest } from '../../reducers';
 import { Fragment, useMemo } from 'react';
 import { UserVM } from '../../interfaces';
 import { PageTitle } from '../PageTitle';
-import { AddButton } from '../AddButton';
 
 export const UserList = () => {
   const req: ApiRequest = useMemo(() => {
@@ -24,7 +23,6 @@ export const UserList = () => {
   return (
     <Fragment>
       <PageTitle title="DANH SÁCH NGƯỜI DÙNG" />
-      <AddButton />
       <TableData req={req} header={header} />
     </Fragment>
   );

@@ -94,7 +94,7 @@ export const Location = ({ ward_id }: { ward_id?: string | null }) => {
       <div className="relative z-0 w-full mb-6 group">
         <select
           id="province_id"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="border font-bold text-white bg-slate-500 text-sm rounded-md border-slate-400 focus:border-white block w-full px-2.5 py-1.5"
           onChange={(e) => handleChangeLocation(e, true)}
           value={province ? province : ''}
         >
@@ -109,7 +109,7 @@ export const Location = ({ ward_id }: { ward_id?: string | null }) => {
       <div className="relative z-0 w-full mb-6 group">
         <select
           id="district_id"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          className="border font-bold text-white bg-slate-500 text-sm rounded-md border-slate-400 focus:border-white block w-full px-2.5 py-1.5"
           onChange={(e) => handleChangeLocation(e, false)}
           value={district ? district : ''}
         >

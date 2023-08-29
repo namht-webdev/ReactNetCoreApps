@@ -110,7 +110,7 @@ export const UserAction = () => {
         </div>
       ) : (
         <Fragment>
-          <div className="px-10 text-lg pb-10">
+          <div className="px-10 text-lg pb-3">
             <div className="text-center">
               <input
                 type="file"
@@ -131,7 +131,7 @@ export const UserAction = () => {
                       : `/uploads/${user?.avatar ? user.avatar : 'avatar.jpg'}`
                   }
                   alt="Selected"
-                  className="sm:w-40 object-cover sm:h-40 w-28 h-28 rounded-full"
+                  className="object-cover w-28 h-28 rounded-full"
                 />
               </label>
             </div>

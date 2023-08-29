@@ -1,7 +1,6 @@
 import { Fragment, useMemo } from 'react';
 import { ApiRequest } from '../../reducers';
 import { PageTitle } from '../PageTitle';
-import { AddButton } from '../AddButton';
 import { TableData } from '../TableData';
 
 export const DepartmentList = () => {
@@ -14,7 +13,6 @@ export const DepartmentList = () => {
   return (
     <Fragment>
       <PageTitle title="DANH SÁCH PHÒNG BAN" />
-      <AddButton />
       <TableData req={req} header={{}} />
     </Fragment>
   );

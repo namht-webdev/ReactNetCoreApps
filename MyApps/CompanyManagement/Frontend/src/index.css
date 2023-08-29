@@ -9,7 +9,7 @@ html, body, #root{
 }
 
 body {
-    background-image: url('../public/bg-img.jpg');
+    /* background-image: url('../public/bg-img.jpg'); */
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -17,6 +17,9 @@ body {
 }
 
 @layer base{
+    body{
+        @apply bg-slate-800;
+    }
     nav ul li{
         @apply cursor-pointer hover:text-slate-800 p-3 sm:text-xl;
     }
@@ -60,11 +63,32 @@ body {
     }
     .home-nav a{
         @apply flex items-center justify-center font-bold relative py-5 px-6 mx-4 uppercase text-xl transition-all duration-500 tracking-widest hover:delay-75 hover:before:w-full hover:before:h-full hover:after:w-full hover:after:h-full;    }
-        
-        .home-nav a:before{
+    .home-nav a:before{
         @apply content-[''] absolute top-0 left-0 w-4 h-4 border-t-4 border-l-4 border-solid transition-all duration-500;
     }
-    .home-nav a:after{
+        .home-nav a:after{
         @apply content-[''] absolute bottom-0 right-0 w-4 h-4 border-b-4 border-r-4 border-solid transition-all duration-500;
+    }
+}
+
+
+@media screen and ( max-height: 730px )
+{
+    .hidNav{
+        display: none;
+    }
+}
+
+@media screen and ( max-height: 800px )
+{
+    .navItem{
+        font-size: 0.5rem;
+    }
+}
+
+@media screen and ( max-height: 400px )
+{
+    .hidTable{
+        display: none;
     }
 }

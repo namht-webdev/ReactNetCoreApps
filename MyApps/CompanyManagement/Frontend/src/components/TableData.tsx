@@ -44,9 +44,9 @@ export const TableData = ({ req, header }: TableDataProps) => {
       </div>
     );
   return (
-    <div className="px-12 sm:px-10">
+    <div className="px-12 sm:px-10 pt-6">
       {data.length > 0 && (
-        <div className="outer-wrapper">
+        <div className="outer-wrapper hidTable">
           <div className="table-wrapper">
             <table>
               <thead>
@@ -73,7 +73,7 @@ export const TableData = ({ req, header }: TableDataProps) => {
                     <td className="w-64">
                       <div className="flex justify-between w-full text-center">
                         <Link
-                          to={`${d[`${req.route}_id`]}`}
+                          to={`update/${d[`${req.route}_id`]}`}
                           className="font-medium text-cyan-400 hover:underline w-full"
                         >
                           Cập nhật

@@ -1,6 +1,5 @@
 import { ApiRequest } from '../../reducers';
 import { PageTitle } from '../PageTitle';
-import { AddButton } from '../AddButton';
 import { TableData } from '../TableData';
 import { Fragment, useMemo } from 'react';
 
@@ -14,7 +13,6 @@ const LevelList = () => {
   return (
     <Fragment>
       <PageTitle title="DANH SÁCH CHỨC VỤ" />
-      <AddButton />
       <TableData req={req} header={{}} />
     </Fragment>
   );

@@ -46,7 +46,11 @@ export const Field = ({
   return (
     <FormContext.Consumer>
       {({ values, errors }) => (
-        <div className="relative z-0 w-full mb-6 group">
+        <div
+          className={`relative z-0 w-full mb-6 group ${
+            type === 'Hidden' ? 'hidden' : ''
+          }`}
+        >
           {label && type === 'TextArea' && (
             <label
               htmlFor={name}
@@ -63,7 +67,7 @@ export const Field = ({
               className={
                 type === 'Hidden'
                   ? ''
-                  : 'block py-2.5 px-0 w-full text-sm font-bold text-white bg-transparent border-0 border-b-2 border-slate-400 focus:border-white appearance-none focus:outline-none focus:ring-0 peer '
+                  : 'block py-1.5 px-0 w-full text-sm font-bold text-white bg-transparent border-0 border-b-2 border-slate-400 focus:border-white appearance-none focus:outline-none focus:ring-0 peer '
               }
               value={values[name] === undefined ? '' : values[name]}
               onChange={handleChange}
@@ -78,7 +82,7 @@ export const Field = ({
               type={type.toLowerCase()}
               id={name}
               name={name}
-              className="block py-2.5 px-0 w-full font-bold text-white bg-transparent border-0 border-b-2 border-slate-400 focus:border-white appearance-none focus:outline-none focus:ring-0 peer"
+              className="block py-1.5 px-0 w-full font-bold text-white bg-transparent border-0 border-b-2 border-slate-400 focus:border-white appearance-none focus:outline-none focus:ring-0 peer"
               value={
                 values[name] === undefined
                   ? new Date().toISOString().split('T')[0]
@@ -93,7 +97,7 @@ export const Field = ({
             <textarea
               id={name}
               name={name}
-              className="h-[100px] box-border mb-[5px] py-2 px-[10px] border-solid border-[1px] rounded-[3px] bg-white text-slate-500 w-full focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              className="h-[100px] box-border mb-[5px] py-1.5 px-[10px] border-solid border-[1px] rounded-[3px] bg-white text-slate-500 w-full focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               value={values[name] === undefined ? '' : values[name]}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -102,7 +106,7 @@ export const Field = ({
           {type === 'Select' && (
             <select
               id={name}
-              className="border font-bold text-white bg-slate-500 text-sm rounded-md border-slate-400 focus:border-white block w-full px-2.5 py-2"
+              className="border font-bold text-white bg-slate-500 text-sm rounded-md border-slate-400 focus:border-white block w-full px-2.5 py-1.5"
               value={values[name] === undefined ? '' : values[name]}
               onChange={handleChange}
               onBlur={handleBlur}
