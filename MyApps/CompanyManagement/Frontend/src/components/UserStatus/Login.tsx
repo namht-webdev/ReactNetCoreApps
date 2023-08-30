@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Field } from '../Context/Field';
 import {
   Form,
@@ -7,7 +7,7 @@ import {
   mustBeEmail,
   required,
 } from '../Context/Form';
-import { AuthContext } from '../Context/Authorization';
+import { useAuth } from '../Context/Authorization';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserVM } from '../../interfaces';
@@ -21,7 +21,7 @@ interface UserLoginResponse {
 }
 
 export const Login = () => {
-  const { userLogin, setUserLogin, setAuthUser } = useContext(AuthContext);
+  const { userLogin, setUserLogin, setAuthUser } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [failMessage, setFailMessage] = useState('');
@@ -40,7 +40,7 @@ export const Login = () => {
           .token!}`;
         localStorage.setItem('access_token', response.data.token!);
         localStorage.setItem('user', JSON.stringify(response.data.user!));
-        navigate('/');
+        navigate('/home');
       } else {
         setFailMessage(response.data.message);
       }

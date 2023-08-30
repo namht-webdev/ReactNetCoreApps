@@ -5,7 +5,7 @@ public interface IUserRepository
 {
     Task<User> Login(string email, string password);
     Task<bool> Add(User user);
-    Task<User> GetOne(string userId);
+    Task<User> GetOne(string userId, bool isUploadAvatar = false);
     Task<IEnumerable<UserVM>> GetAll();
     Task<IEnumerable<User>> GetUsersWithRole(string roleId);
     Task<IEnumerable<User>> GetUsersInDepartment(string departmentId);

@@ -70,10 +70,10 @@ public class UserRepository : IUserRepository
         return usersVm;
     }
 
-    public async Task<User> GetOne(string userId)
+    public async Task<User> GetOne(string userId, bool isUploadAvatar = false)
     {
         var user = await _dbContext.user.FindAsync(userId);
-        user.password_hash = "********";
+        if (!isUploadAvatar) user.password_hash = "********";
         return user;
     }
 

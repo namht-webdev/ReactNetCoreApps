@@ -43,9 +43,11 @@ public class LoginController : ControllerBase
             }
             return BadRequest(new { success = false, message = "Email hoặc mật khẩu không đúng" });
         }
-        catch (System.Exception)
+        catch (System.Exception ex)
         {
+            Console.WriteLine(ex.Message);
             return StatusCode(StatusCodes.Status500InternalServerError, new { success = false, message = "Có lỗi từ hệ thống", statusCode = 500 });
+
         }
 
     }

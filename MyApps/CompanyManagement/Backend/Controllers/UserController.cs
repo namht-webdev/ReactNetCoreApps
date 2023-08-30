@@ -111,7 +111,7 @@ public class UserController : ControllerBase
                 //var filePath = Path.Combine(_env.ContentRootPath, string.Concat(@"..\", @"Frontend"), @"public\uploads", fileName);.
                 var filePath = Path.Combine(_env.ContentRootPath, string.Concat(@"..\"), "Frontend", @"public\uploads", fileName);
                 // Save the file to the server
-                var user = await _userRepository.GetOne(userId);
+                var user = await _userRepository.GetOne(userId, isUploadAvatar: true);
                 var oldPath = Path.Combine(_env.ContentRootPath, string.Concat(@"..\"), "Frontend", @"public\uploads", string.IsNullOrEmpty(user.avatar) == true ? "" : user.avatar);
 
                 var result = await _userRepository.UpdateAvatar(userId, fileName);
