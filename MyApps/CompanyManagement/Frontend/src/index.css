@@ -72,7 +72,7 @@ body {
 }
 
 
-@media screen and ( max-height: 730px )
+@media screen and ( max-height: 700px )
 {
     .hidNav{
         display: none;

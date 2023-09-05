@@ -56,16 +56,12 @@ public class LoginController : ControllerBase
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var tokenKey = Encoding.UTF8.GetBytes(_configuration["JWT:Key"]!);
-        var claims = new[]
-            {
-                new Claim(ClaimTypes.Role, user.role_id)
-                // You can add more claims as needed (e.g., roles, user id, etc.)
-            };
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Role, user.role_id)
+                    new Claim(ClaimTypes.Role, user.role_id),
+                    new Claim(ClaimTypes.NameIdentifier, user.user_id)
                 }),
             Expires = DateTime.UtcNow.AddHours(1),
             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)

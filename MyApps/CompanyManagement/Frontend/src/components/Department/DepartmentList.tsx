@@ -10,10 +10,17 @@ export const DepartmentList = () => {
       route: 'department',
     };
   }, []);
+  const header = useMemo(() => {
+    return {
+      department_id: 'Mã bộ phận',
+      department_name: 'Tên bộ phận',
+      floor: 'Khu vực làm việc',
+    };
+  }, []);
   return (
     <Fragment>
       <PageTitle title="DANH SÁCH PHÒNG BAN" />
-      <TableData req={req} header={{}} />
+      <TableData req={req} header={header} />
     </Fragment>
   );
 };

@@ -10,10 +10,16 @@ const LevelList = () => {
       title: 'level',
     };
   }, []);
+  const header = useMemo(() => {
+    return {
+      level_id: 'Chức vụ',
+      level_name: 'Tên chức vụ',
+    };
+  }, []);
   return (
     <Fragment>
       <PageTitle title="DANH SÁCH CHỨC VỤ" />
-      <TableData req={req} header={{}} />
+      <TableData req={req} header={header} />
     </Fragment>
   );
 };

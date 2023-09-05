@@ -46,7 +46,7 @@ export const DepartmentAction = () => {
 
   return (
     <div>
-      <PageTitle title={`${title} PHÒNG BAN`} />
+      <PageTitle title={`${title} BỘ PHẬN`} />
       <Form
         submitCaption={title}
         onSubmit={handleSubmit}
@@ -61,11 +61,11 @@ export const DepartmentAction = () => {
         <div className="grid md:grid-cols-3 md:gap-6">
           <Field
             name="department_id"
-            label="Mã phòng ban"
+            label="Mã bộ phận"
             isDisabled={department_id ? true : false}
           ></Field>
-          <Field name="department_name" label="Tên phòng ban"></Field>
-          <Field name="floor" label="Tầng"></Field>
+          <Field name="department_name" label="Tên bộ phận"></Field>
+          <Field name="floor" label="Khu vực làm việc"></Field>
         </div>
       </Form>
     </div>

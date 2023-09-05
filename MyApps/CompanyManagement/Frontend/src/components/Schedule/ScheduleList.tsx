@@ -10,11 +10,19 @@ export const ScheduleList = () => {
       route: 'schedule',
     };
   }, []);
-
+  const header = useMemo(() => {
+    return {
+      schedule_id: 'Mã lịch trình',
+      date: 'Ngày',
+      note: 'Nội dung',
+      time_start: 'Giờ bắt đầu',
+      time_end: 'Giờ kết thúc',
+    };
+  }, []);
   return (
     <Fragment>
       <PageTitle title="LỊCH LÀM VIỆC" />
-      <TableData req={req} header={{}} />
+      <TableData req={req} header={header} />
     </Fragment>
   );
 };

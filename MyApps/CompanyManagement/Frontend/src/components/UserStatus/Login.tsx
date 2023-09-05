@@ -25,6 +25,10 @@ export const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const [failMessage, setFailMessage] = useState('');
+  const initialValues = {
+    email: localStorage.getItem('loginEmail') || '',
+    password: localStorage.getItem('loginPassword') || '',
+  };
   const handleLogin = async (values: Values) => {
     try {
       setIsLoading(true);
@@ -44,12 +48,21 @@ export const Login = () => {
       } else {
         setFailMessage(response.data.message);
       }
+      if (localStorage.getItem('passwordRemember') === '1') {
+        localStorage.setItem('loginEmail', values.email);
+        localStorage.setItem('loginPassword', values.password);
+      } else {
+        localStorage.removeItem('loginEmail');
+        localStorage.removeItem('loginPassword');
+        localStorage.removeItem('passwordRemember');
+      }
     } catch (error) {
       if (error instanceof Error && error.message.includes('400')) {
         setFailMessage('Email hoặc password không chính xác');
       } else setFailMessage('Có lỗi xảy ra');
     }
     setIsLoading(false);
+
     return { success: false };
   };
   useEffect(() => {
@@ -58,7 +71,6 @@ export const Login = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userLogin]);
-
   return (
     <div className="h-full bg-slate-800">
       <div className="top-1/3 relative py-10 sm:w-3/4 lg:w-2/3 mx-auto">
@@ -75,9 +87,15 @@ export const Login = () => {
             submitCaption="Đăng nhập"
             failureMessage={failMessage}
             isLoading={isLoading}
+            initialValues={initialValues || null}
           >
             <Field name="email" label="Email"></Field>
             <Field name="password" label="Mật khẩu" type="Password"></Field>
+            <Field
+              name="passwordRemember"
+              label="Mật khẩu"
+              type="Checkbox"
+            ></Field>
           </Form>
 
           <div className="w-2/3 text-right pt-10">

@@ -1,4 +1,4 @@
-import { useContext, ChangeEvent } from 'react';
+import { useContext, ChangeEvent, useState } from 'react';
 import { FormContext } from './Form';
 
 export interface Option {
@@ -16,7 +16,8 @@ interface Props {
     | 'Select'
     | 'Date'
     | 'Hidden'
-    | 'File';
+    | 'File'
+    | 'Checkbox';
   optionData?: Option[] | null;
 }
 
@@ -28,6 +29,9 @@ export const Field = ({
   optionData,
 }: Props) => {
   const { setValue, touched, validate, setTouched } = useContext(FormContext);
+  const [passwordRemember, setPasswordRemember] = useState(
+    localStorage.getItem('passwordRemember') === '1',
+  );
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
   ) => {
@@ -47,7 +51,7 @@ export const Field = ({
     <FormContext.Consumer>
       {({ values, errors }) => (
         <div
-          className={`relative z-0 w-full mb-6 group ${
+          className={`relative z-0 w-full mb-3 group ${
             type === 'Hidden' ? 'hidden' : ''
           }`}
         >
@@ -123,10 +127,28 @@ export const Field = ({
               ))}
             </select>
           )}
+          {type === 'Checkbox' && (
+            <input
+              checked={passwordRemember}
+              readOnly
+              className="mb-3 w-5 h-5 peer"
+              name={name}
+              id={name}
+              type="checkbox"
+              onChange={() => {
+                localStorage.setItem(
+                  'passwordRemember',
+                  Number(!passwordRemember).toString(),
+                );
+                setPasswordRemember(!passwordRemember);
+              }}
+            />
+          )}
           {label &&
             type !== 'TextArea' &&
             type !== 'Select' &&
-            type !== 'File' && (
+            type !== 'File' &&
+            type !== 'Checkbox' && (
               <label
                 htmlFor={name}
                 className="absolute text-sm text-slate-200 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:[text-shadow:0_0_10px_white] peer-focus:font-bold peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
@@ -134,7 +156,14 @@ export const Field = ({
                 {label}
               </label>
             )}
-
+          {label && type === 'Checkbox' && (
+            <label
+              className="absolute text-sm px-3 peer-checked:[text-shadow:0_0_10px_white] peer-checked:font-bold peer-placeholder-shown:translate-y-0 peer-checked:scale-75 duration-300 transform"
+              htmlFor={name}
+            >
+              Nhớ mật khẩu
+            </label>
+          )}
           {errors[name] &&
             errors[name].length > 0 &&
             errors[name].map((error) => (
